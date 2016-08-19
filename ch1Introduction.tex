@@ -1,8 +1,12 @@
 \chapter{Introduction}\label{sec:chIntrosecHistory}
 
-This chapter introduces the reader to the concept of computational sensing and provides the groundwork for why there is a need to address the practical issues in experimental computational sensing. Rather than a rigorous discussion, this chapter will focus on a big picture view of computational sensing and provide intuitive understand to the reader. 
+This chapter introduces the reader to the concept of computational sensing and provides the motivation for the need to address the practical issues in experimental computational sensing. 
 
-The chapter is designed to provide a conversational discussion of the field and the main contribution of this disseration. A rigorous discussion of the concepts is given in \autoref{chap:Formalism}.
+Computational sensing is the concept that a joint design of the sensor hardware, often though coding of the analog signal combined with task specific algorithms can exceed the performance of a traditional sensor, which we call \emph{isomorphic sensors}. While isomorphic sensors can provide flexible sensing in multiple applications. A computational sensor's task specific design---which considers both the architecture of the sensor and coding of the analog signal ---naturally lends to performance increases. 
+
+Throughout this chapter and the rest of this dissertation we will provide many examples that highlight the differences between computational and isomorphic sensing. 
+
+Rather than a rigorous discussion, this chapter will discuss some of the major developments and contributions to the field of computational sensing on an intuitive level. This will familiarize the reader with important terminology and techniques common in the computational sensing community. The projects presented in this dissertation are a natural evolution of these developments. A rigorous discussion of the concepts is given in \autoref{chap:Formalism}. Then I will briefly discuss some of the challenges I and many other experimentalists and engineers have faced when developing computational sensing prototypes. Then the chapter will close with a brief look ahead to the rest of the dissertation. 
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -10,9 +14,17 @@ The chapter is designed to provide a conversational discussion of the field and 
 
 \section{A Historical Development of Computational Sensing}\label{sec:chIntrosecHistory}
 
-As field, computational sensing was not formed from a single seminal paper or discovery but rather a series of disparete 
+\subsection{Isomorphic Sensing}
 
-It can be argued that computational sensing began around World War II. Computational sensing is at least several decades old. Argubly the first 
+Traditional sensors perform isomorphic sensing. In Greek, the word isomorphic loosely translates to equal in form. In the context of this dissertation, an isomorphic sensor is any sensor whose output signal resembles the signal of interest. 
+
+An good example related to this dissertation is the photographic camera. In the camera, the signal of interest is the object that is being photographed. Let's say the object is a tree. The analog instrument consists of the lens which is designed and fabricated to create an image that nearly \emph{diffraction limited}---which means aberration free and therefore the only image degradation is due to the effect of diffraction from the finite aperture size of the lens---the analog hardware produces a nearly perfect image of the object at the image sensor, in this case a minified version of the tree.
+
+
+
+The output signal should is a perfect (and perhaps scaled) copy of the object being photographed. Since we are ignoring the effects of optical resolution in this case, the spatial resolution of the camera is a function of the size of the optical image formed on the sensor divided by the pixel size. This makes sense because is the image is so small that it fits on a single pixel then
+
+\section{Dissertation Overview}
 
 %This section explores a brief history of the development of nuclear weapons---from their development and first use in 1945 to the buildup of the arms race (\cref{sec:chIntrosecHistorysubsecBuildup}). This culminated in the Cuban Missile Crisis (\cref{sec:chIntrosecHistorysubsecCMC}), which is considered the height of the Cold War. A summary is presented of important treaties signed between the United States (U.S.), Soviet Union (U.S.S.R.) and other nuclear and non-nuclear states over the past several decades in~\cref{sec:chIntrosecHistorysubsecNPT}. To verify compliance with future treaties, new technologies will be needed. The challenges associated with these different problems are summarized in~\cref{sec:chIntrosecHistorysubsecFuture}. More details, and summaries of interesting historical events, can be found in Charles Loeber's book~\citep{IntroBuildingtheBomb}. 
 
