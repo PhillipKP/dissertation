@@ -1,28 +1,38 @@
-\chapter{Introduction}\label{sec:chIntrosecHistory}
+
+
+\chapter{Introduction}
+
+Chop the \gls{cabbage}, \glspl{potato} and \glspl{carrot}.
 
 This chapter introduces the reader to the concept of computational sensing and provides the motivation for the need to address the practical issues in experimental computational sensing. 
 
-Computational sensing is the concept that a joint design of the sensor hardware, often though coding of the analog signal combined with task specific algorithms can exceed the performance of a traditional sensor, which we call \emph{isomorphic sensors}. While isomorphic sensors can provide flexible sensing in multiple applications. A computational sensor's task specific design---which considers both the architecture of the sensor and coding of the analog signal ---naturally lends to performance increases. 
+Computational sensing is the concept that a joint design of the sensor hardware, often though coding of the analog signal combined with task-specific algorithms can exceed the performance of a traditional sensor, which we call \emph{isomorphic sensors}. While isomorphic sensors can provide flexible sensing in multiple applications. A computational sensor's task specific design---which considers both the architecture of the sensor and coding of the analog signal ---naturally lends to performance increases \cite{neifeld2006taskSpecificSensing}. 
 
 Throughout this chapter and the rest of this dissertation we will provide many examples that highlight the differences between computational and isomorphic sensing. 
 
 Rather than a rigorous discussion, this chapter will discuss some of the major developments and contributions to the field of computational sensing on an intuitive level. This will familiarize the reader with important terminology and techniques common in the computational sensing community. The projects presented in this dissertation are a natural evolution of these developments. A rigorous discussion of the concepts is given in \autoref{chap:Formalism}. Then I will briefly discuss some of the challenges I and many other experimentalists and engineers have faced when developing computational sensing prototypes. Then the chapter will close with a brief look ahead to the rest of the dissertation. 
 
+%History%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%History%%%%%%%%%%%%%%%%%%%%
-
-\section{A Historical Development of Computational Sensing}\label{sec:chIntrosecHistory}
+\section{A Historical Development of Computational Sensing}
 
 \subsection{Isomorphic Sensing}
 
-Traditional sensors perform isomorphic sensing. In Greek, the word isomorphic loosely translates to equal in form. In the context of this dissertation, an isomorphic sensor is any sensor whose output signal resembles the signal of interest. 
-
-An good example related to this dissertation is the photographic camera. In the camera, the signal of interest is the object that is being photographed. Let's say the object is a tree. The analog instrument consists of the lens which is designed and fabricated to create an image that nearly \emph{diffraction limited}---which means aberration free and therefore the only image degradation is due to the effect of diffraction from the finite aperture size of the lens---the analog hardware produces a nearly perfect image of the object at the image sensor, in this case a minified version of the tree.
+In Greek, the word isomorphic loosely translates to equal in form. Traditional sensors perform isomorphic sensing. In the context of this dissertation, an isomorphic sensor is any sensor whose output signal resembles the signal-of-interest. In this paradigm, the analog instrument, sampling scheme, and task-specifc algorithms are seperated, see Figure \ref{fig:isomorphicsesingflowchart}.
 
 
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{isomorphicsensorflowchart}
+    \caption{A high level view of a traditional sensing scheme. The signal-of-interest is incident upon the analog instrument. The analog instrument forms an isomorphism of the signal which is tern periodically sampled point by point through an analog-to-digital converter (ADC) device. Once the signal is in digital form, post-processing algorithms are often used to perform various tasks such as noise reduction, detection, and classification. Notice that the analog instrument, sampling scheme, and processing are all seperated. }
+    \label{fig:isomorphicsesingflowchart}
+\end{figure}
 
-The output signal should is a perfect (and perhaps scaled) copy of the object being photographed. Since we are ignoring the effects of optical resolution in this case, the spatial resolution of the camera is a function of the size of the optical image formed on the sensor divided by the pixel size. This makes sense because is the image is so small that it fits on a single pixel then
+An good example of an isomorphic sensor, which is also useful for later comparison in this dissertation, is the photographic camera. In the camera, the signal-of-interest is the object that is being photographed. The analog instrument consists of the lens which is designed and fabricated to produce an intensity distribution---an image---that is nearly diffraction limited at the focal-plane array (FPA). The focal-plane array then samples and quantizes the image and produces a digital representation of the object. Often stored digital image is post-processed using software to increased desired effects such noise removal or to locate the object. 
+
+There are two major compoents in the camera which dominate ones ability to perform tasks-specific sensing are the optics and the FPA. Ideally, the optics (the analog instrument in this case) must produce an point-spread function (PSF) which is infinitely small in diameter. In tasks such as detection of a star from several neighboring stars in the night sky, the ability to discriminate the signal-of-interest from  will be dominated by the size of the PSF. If the PSF is so large such that different objects cannot be seperated then our ability to detect the object of interest will be degraded.
+
+As establish by the Raleigh-Criterion [CITE FOURIER OPTICS]the resolution of the optics is limited by diffration. Notice that in the resolution of the camera i
 
 \section{Dissertation Overview}
 

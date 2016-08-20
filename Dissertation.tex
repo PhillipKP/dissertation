@@ -1,3 +1,11 @@
+% The sequence of commands that you need to run. 
+% Note: We are using the xindy option of the glossaries package. That must be installed as well as Perl. 
+% 
+% pdflatex Dissertation
+% makeglossaries Dissertation
+% pdflatex Dissertation
+
+
 \documentclass[dissertation,CC-BY-ND]{uathesis}
 
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
@@ -5,7 +13,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{authblk}
 \usepackage{graphicx}
-\usepackage{natbib}
+%\usepackage{natbib}
 %\usepackage{chapterbib}
 \usepackage[cmex10]{amsmath}
 \usepackage{amssymb}
@@ -15,55 +23,32 @@
 \usepackage{url}
 \usepackage[bookmarks,colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
 \usepackage{cleveref}
+\usepackage[utf8]{inputenc}
+
+\usepackage[xindy]{glossaries}
+
+\makeglossaries
+
+
+\newglossaryentry{potato}{name={potato},plural={potatoes}, description={starchy tuber}}
+\newglossaryentry{cabbage}{name={cabbage}, description={vegetable with thick green or purple leaves}}
+\newglossaryentry{carrot}{name={carrot}, description={orange root}}
+
 \crefname{section}{Section}{Sections}
 \crefname{figure}{Figure}{Figures}
 \crefname{table}{Table}{Tables}
 \setcounter{secnumdepth}{3} 
 \setcounter{tocdepth}{3}
 
-\newcommand{\Tmat}{\textbf{T}}
-\newcommand{\vvec}{\textbf{v}}
-\newcommand{\meanvvec}{\overline{\vvec}}
-\newcommand{\delmeanvvec}{\Delta \meanvvec}
-\newcommand{\vnhvec}{\boldsymbol{v_0}}
-\newcommand{\vonevec}{\boldsymbol{v_1}}
-\newcommand{\vtwovec}{\boldsymbol{v_2}}
+\include{newcommands}
 
-\newcommand{\gvec}{\textbf{g}}
-\newcommand{\meangvec}{\overline{\gvec}}
-\newcommand{\delmeangvec}{\Delta \meangvec}
-\newcommand{\gnhvec}{\boldsymbol{g_0}}
-\newcommand{\gonevec}{\boldsymbol{g_1}}
-\newcommand{\gtwovec}{\boldsymbol{g_2}}
-
-\newcommand{\fvec}{\textbf{f}}
-\newcommand{\xvec}{\textbf{x}}
-\newcommand{\nvec}{\textbf{n}}
-\newcommand{\rvec}{\textbf{r}}
-\newcommand{\pvec}{\textbf{p}}
-\newcommand{\Hmat}{\textbf{H}}
-\newcommand{\Xvec}{\textbf{X}}
-\newcommand{\Wvec}{\textbf{W}}
-
-\newcommand{\Wv}{\textbf{W}_\textbf{v}}
-\newcommand{\Wg}{\textbf{W}_\textbf{g}}
-\newcommand{\WH}{\textbf{W}_\textbf{H}}
-
-\newcommand{\Kv}{\textbf{K}_\textbf{v}}
-\newcommand{\Kg}{\textbf{K}_\textbf{g}}
-\newcommand{\Kx}{\textbf{K}_\textbf{x}}
-\newcommand{\Kone}{\textbf{K}_\textbf{1}}
-\newcommand{\Ktwo}{\textbf{K}_\textbf{2}}
-\newcommand{\Kj}{\textbf{K}_\textbf{j}}
-
-% Set up some values.
 \completetitle{Practical Considerations in Experimental Computational Sensing}
 \fullname{Phillip K. Poon}			% Grad college wants your full name here.
 \degreename{Doctor of Philosophy}	% Title of your degree.
 
 \begin{document}
 \maketitlepage
-{COLLEGE OF OPTICAL SCIENCES} % Title of your department.
+{COLLEGE OF OPTICAL SCIENCES} % Title of the department
 {2016}	
 
 \approval
@@ -95,18 +80,24 @@
 % Include the ``Abstract''
 \incabstract{abstract}
 
+
+
+
 \include{ch1Introduction}
 \include{ch2Formalism}
-\include{ch3Scout}
-\include{ch4Afssic}
-\include{ch5Csu}
-\include{ch6Conclusion}
+%\include{ch3Scout}
+%\include{ch4Afssic}
+%\include{ch5Csu}
+%\include{ch6Conclusion}
 
 
 \renewcommand{\baselinestretch}{1}		% chaning the value
 \small\normalsize						% switch size to make the value take
 
-\bibliographystyle{uabibnat}  
+\printglossaries
+
+
+\bibliographystyle{IEEEtran.bst}
 \bibliography{Dissertation}
 
 \end{document}
