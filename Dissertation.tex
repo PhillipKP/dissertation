@@ -25,11 +25,19 @@
 \usepackage{cleveref}
 \usepackage[utf8]{inputenc}
 
-\usepackage[xindy]{glossaries}
+% This package allows us to make a list of acronyms, the option nomain is used
+% because we actually don't want a glossary, the second option is used because 
+% we want to define acronyms and display a list of used acronyms, 
+\usepackage[nomain,acronyms,xindy]{glossaries}
 
+% This is rquires to make a glossary, a list of acronyms, or a list of 
 \makeglossaries
+\glstoctrue
 
+% Define acronyms here
+\newacronym{svm}{svm}{support vector machine}
 
+% Define glossary entries here
 \newglossaryentry{potato}{name={potato},plural={potatoes}, description={starchy tuber}}
 \newglossaryentry{cabbage}{name={cabbage}, description={vegetable with thick green or purple leaves}}
 \newglossaryentry{carrot}{name={carrot}, description={orange root}}
@@ -80,8 +88,7 @@
 % Include the ``Abstract''
 \incabstract{abstract}
 
-
-
+%\printglossary[type=htypei]
 
 \include{ch1Introduction}
 \include{ch2Formalism}
@@ -90,10 +97,10 @@
 %\include{ch5Csu}
 %\include{ch6Conclusion}
 
-
 \renewcommand{\baselinestretch}{1}		% chaning the value
 \small\normalsize						% switch size to make the value take
 
+%\printglossaries[type=acryonym]
 \printglossaries
 
 
