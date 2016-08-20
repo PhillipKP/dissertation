@@ -2,9 +2,6 @@
 
 \chapter{Introduction}
 
-%Chop the \gls{cabbage}, \glspl{potato} and \glspl{carrot}.
-
-\gls{svm}
 
 This chapter introduces the reader to the concept of computational sensing and provides the motivation for the need to address the practical issues in experimental computational sensing. 
 
@@ -20,7 +17,7 @@ Rather than a rigorous discussion, this chapter will discuss some of the major d
 
 \subsection{Isomorphic Sensing}
 
-In Greek, the word isomorphic loosely translates to equal in form. Traditional sensors perform isomorphic sensing. In the context of this dissertation, an isomorphic sensor is any sensor whose output signal resembles the signal-of-interest. In this paradigm, the analog instrument, sampling scheme, and task-specifc algorithms are seperated, see Figure \ref{fig:isomorphicsesingflowchart}.
+In Greek, the word isomorphic loosely translates to equal in form. Traditional sensors perform isomorphic sensing. In the context of this dissertation, an isomorphic sensor is any sensor which attempts to produce an output signal that resembles the signal-of-interest. In this paradigm, the analog instrument, sampling scheme, and task-specific algorithms are seperated, see Figure \ref{fig:isomorphicsesingflowchart}.
 
 
 \begin{figure}
@@ -30,9 +27,11 @@ In Greek, the word isomorphic loosely translates to equal in form. Traditional s
     \label{fig:isomorphicsesingflowchart}
 \end{figure}
 
-An good example of an isomorphic sensor, which is also useful for later comparison in this dissertation, is the photographic camera. In the camera, the signal-of-interest is the object that is being photographed. The analog instrument consists of the lens which is designed and fabricated to produce an intensity distribution---an image---that is nearly diffraction limited at the focal-plane array (FPA). The focal-plane array then samples and quantizes the image and produces a digital representation of the object. Often stored digital image is post-processed using software to increased desired effects such noise removal or to locate the object. 
+A good example of an isomorphic sensor is the photographic camera. In the camera, the signal-of-interest is the object that is being photographed. The analog instrument consists of the lens which is designed and fabricated to produce an intensity distribution---an image---that is nearly diffraction limited at the \gls{fpa}. The \gls{fpa} then samples and quantizes the image and produces a digital representation of the object. Often stored digital image is post-processed using software to increased desired effects such noise removal or to locate the object. 
 
-There are two major compoents in the camera which dominate ones ability to perform tasks-specific sensing are the optics and the FPA. Ideally, the optics (the analog instrument in this case) must produce an point-spread function (PSF) which is infinitely small in diameter. In tasks such as detection of a star from several neighboring stars in the night sky, the ability to discriminate the signal-of-interest from  will be dominated by the size of the PSF. If the PSF is so large such that different objects cannot be seperated then our ability to detect the object of interest will be degraded.
+There are two major components in the camera which determine how well it be used to perform a specific task: the optics and the FPA. Ideally, the optics (the analog instrument in this case) will produce a \gls{psf} which is infinitely small in diameter. For example, in a task such as the detection of a star from several neighboring stars in the night sky, if the  \gls{psf} much larger than the center to center seperation of the two stars in the optical image, it will be quite difficult to detect. A careful reader will note that this is essentially the argument used by Lord Raleigh in proposing his resolution criterion. 
+
+Similarly, the camera must be able to sample the intensity distribution with a small enough resolution---pixel spacing---to be able to produce a digital signal that
 
 As establish by the Raleigh-Criterion [CITE FOURIER OPTICS]the resolution of the optics is limited by diffration. Notice that in the resolution of the camera i
 

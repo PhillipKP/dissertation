@@ -2,9 +2,13 @@
 % Note: We are using the xindy option of the glossaries package. That must be installed as well as Perl. 
 % 
 % pdflatex Dissertation
+% pdflatex Dissertation
 % makeglossaries Dissertation
 % pdflatex Dissertation
-
+% bibtex Dissertation
+% pdflatex Dissertation
+%
+% Alternatively you can just run the custom script by typing sh compileAll.sh
 
 \documentclass[dissertation,CC-BY-ND]{uathesis}
 
@@ -34,13 +38,22 @@
 \makeglossaries
 \glstoctrue
 
-% Define acronyms here
-\newacronym{svm}{svm}{support vector machine}
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Define acronyms here% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% Define glossary entries here
-\newglossaryentry{potato}{name={potato},plural={potatoes}, description={starchy tuber}}
-\newglossaryentry{cabbage}{name={cabbage}, description={vegetable with thick green or purple leaves}}
-\newglossaryentry{carrot}{name={carrot}, description={orange root}}
+\newacronym{svm}{SVM}{support vector machine}
+\newacronym{fpa}{FPA}{focal-plane array}
+\newacronym{psf}{PSF}{point spread function}
+\newacronym{adc}{ADC}{analog-to-digital converter}
+\newacronym{afssi-c}{AFSSI-C}{Adaptive Feature Specific Spectral Imaging-Classifier}
+\newacronym{pca}{PCA}{Principal Component Analysis}
+\newacronym{LENS}{LENS}{Laboratory for Engineering Non-Traditional Sensors}
+\newacronym{scout}{SCOUT}{Static Computational Optical Undersampled Tracker}
+\newacronym{disp}{DISP}{Duke Imaging and Spectroscopy Program}
+\newacronym{lcos}{LCOS}{Liquid Crystal on Silicon}
+\newacronym{slm}{SLM}{Spatial Light Modulator}
+
+
+%%%%%%%%%%%%%%%%%%% End of acryonym defintions here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \crefname{section}{Section}{Sections}
 \crefname{figure}{Figure}{Figures}
