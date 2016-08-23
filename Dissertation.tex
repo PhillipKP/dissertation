@@ -1,5 +1,6 @@
 % The sequence of commands that you need to run. 
-% Note: We are using the xindy option of the glossaries package. That must be installed as well as Perl. 
+% Note: We are using the xindy option of the glossaries package. 
+% That must be installed as well as Perl. 
 % 
 % pdflatex Dissertation
 % pdflatex Dissertation
@@ -32,10 +33,13 @@
 % This package allows us to make a list of acronyms, the option nomain is used
 % because we actually don't want a glossary, the second option is used because 
 % we want to define acronyms and display a list of used acronyms, 
-\usepackage[nomain,acronyms,xindy]{glossaries}
+\usepackage[nomain,acronyms,symbols,xindy]{glossaries}
 
 % This is rquires to make a glossary, a list of acronyms, or a list of 
 \makeglossaries
+
+% Adds any glossaries, list of acronyms, list of symbols we want to the table 
+% of contents
 \glstoctrue
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Define acronyms here% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,16 +57,28 @@
 \newacronym{slm}{SLM}{Spatial Light Modulator}
 \newacronym{snr}{SNR}{Signal-To-Noise Ratio}
 \newacronym{swap-c}{SWAP-C}{Size, Weight and Power-Cost}
+\newacronym{ct}{CT}{Computed Tomography}
+\newacronym{spect}{SPECT}{Single-Photon Emission Computed Tomography}
+\newacronym{pet}{PET}{Positron Emission Tomography}
+\newacronym{mri}{MRI}{Magnetic Resonance Imaging}
+\newacronym{radar}{Radar}{RAdio Detection And Ranging}
+\newacronym{sar}{SAR}{Synthetic Aperture Radar}
 
-%%%%%%%%%%%%%%%%%%% End of acryonym defintions here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newglossaryentry{specres}{type=symbols, name={$ \delta \lambda $}, symbol={$ \delta \lambda $} ,sort=delta, description={Spectral Resolution}}
+
+\newglossaryentry{numspecchan}{type=symbols,name={$ N_{\lambda} $}, symbol={$ N_{\lambda} $},sort=Nlambda, description={The Number of Spectral Channels}}
+
+\newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={The Measurement Vector}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \crefname{section}{Section}{Sections}
 \crefname{figure}{Figure}{Figures}
 \crefname{table}{Table}{Tables}
 \setcounter{secnumdepth}{3} 
 \setcounter{tocdepth}{3}
-
-\include{newcommands}
 
 \completetitle{Practical Considerations in Experimental Computational Sensing}
 \fullname{Phillip K. Poon}			% Grad college wants your full name here.
