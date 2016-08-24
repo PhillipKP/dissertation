@@ -127,9 +127,20 @@ The development of the \gls{cmos} \gls{fpa} was also important. While in scienti
 
 Algorithms for efficient and reliable storage and transmission of digital images became important. Over time the pixel count continued to increase and the sheer volume of digtal image and video data being generated and transmitted over networks began to outpaced improvements in storage and transmission capacity. While many engineers developed new technology to combat the hardware limitations of storage and transmission. This also led to a renewed effort by researchers to develop more efficient image and video compression algorithms \cite{kobayashi1974image, ziv1978compression}. 
 
+The while a multitude of compression techniques exist, they all follow the same basic process, see figure \ref{fig:imagecompressionflowchart}. Once the \gls{ccd} produces samples the optical signal and produes the digital data, the encoder usings the compression algorithm to look for redundancies in the data and produce a lower dimensional representation of the image. The compressed data can then either be stored or transmitted or both. The decoder solves the inverse problem of reconstructing the image. 
+
+\begin{figure}
+    \centering
+    \includegraphics[scale=1]{imagecompressionflowchart}
+    \caption{An general flowchart for image and data compression techniques.}
+    \label{fig:imagecompressionflowchart}
+\end{figure}
+
 As mentioned in at the beginning of this chapter, computational sensing lies at the intersection of the design of the analog hardware, sampling schemes, and processing algorithms. Many of the algorithms used in computational sensing are the same as or inspired by the techniques used by the image processing community. This is because a major effort of computational sensing is the desire to make more resource efficient measurements. 
 
 \section{From Multiplexing to Compressive Sensing}\label{sec:multiplexingtocompressivesensing}
+
+
 
 \section{Practical Considerations in Computational Sensing}
 
