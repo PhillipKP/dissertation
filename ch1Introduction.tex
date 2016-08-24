@@ -1,8 +1,8 @@
 \chapter{Introduction}
 
-This chapter introduces the reader to the concept of isomorphic sensing and computational sensing and provides the motivation for the need to address the practical issues in experimental computational sensing. 
+This chapter introduces the reader to the concept of isomorphic sensing, multiplexing, indirect imaging, compressive sensing and computational sensing and provides the motivation for the need to address the practical issues in experimental computational sensing. 
 
-\emph{Isomorphic sensing} is the concept that a sensor's measurements resemble the signal of interest. Isomorhic sensing is often called traditional sensing. In isomorphic sensing the analog hardware, \acrfull{adc}, and processing algorithms are all seperate components, see Figure \ref{fig:isomorphicsesingflowchart}. Computational sensing is the concept that a joint design of the sensor, often though coding of the analog signal, with task-specific algorithms can exceed the performance of an isomorphic sensor, see Figure \ref{fig:computationalsensingflowchart} \cite{neifeld2006taskSpecificSensing}. While isomorphic sensors can provide flexible sensing in multiple applications, a computational sensor's joint design naturally lends to performance increases. Throughout this chapter and the rest of this dissertation we will provide many examples that highlight the differences between computational and isomorphic sensing. 
+\emph{Isomorphic sensing} is the concept that a sensor's measurements resemble the signal of interest. Isomorhic sensing is often called traditional sensing. In isomorphic sensing the analog hardware, \acrfull{adc}, and processing algorithms are all seperate components, see Figure \ref{fig:isomorphicsesingflowchart}. Computational sensing is the concept that a joint design of the sensor, often though coding of the analog signal, with task-specific algorithms can exceed the performance of an isomorphic sensor. Computational sensors exist at the intersection of this processes, see figure \ref{fig:computationalsensingflowchart} \cite{neifeld2006taskSpecificSensing}. While isomorphic sensors can provide flexible sensing in multiple applications, a computational sensor's joint design naturally lends to performance increases. Throughout this chapter and the rest of this dissertation we will provide many examples that highlight the differences between computational and isomorphic sensing. 
 
 \begin{figure}
     \centering
@@ -113,11 +113,21 @@ In medicine, an imaging modality that now common is X-Ray \gls{ct}, one is force
 
 In general, non-isomorphic sensing such as indirect imaging schemes which include X-ray \gls{ct}, \gls{spect}, \gls{pet}, \gls{mri} and certain forms of sonic and radio wave imaging all require a data-processing or reconstruction step to solve an inverse problem \cite{barrett2013foundations}. In summary, the forward model of a sensor is essentially accounting for the physics which govern the measurement while the solving the inverse problem is a mathematical problem which attempts to either reconstruct the object or to calculate task-specific data of the object. 
 
-We now turn to what are arguably the two most important inventions of optical sensing in the last several centuries, the digital image sensor and the digital computer. 
+We now turn to what are arguably the most important inventions of optical sensing in the last several centuries, the digital image sensor. 
 
 \section{The Digital Imaging Revolution}
 
-Shannon, Nyquist, Wittaker and others established the theory for determining what the pixel spacing must be in order to properly sample the analog signal without loosing any information \cite{shannon1949communication, nyquist1924certain, nyquist1928certain}. 
+In 1969 Boyle and Smith invented the \gls{ccd} \cite{boyle1970charge}. The \gls{ccd} is the first integrated circuit device which using a 2-dimensional arrangement of pixels which could reliably convert an image's intensity distribution to a digital signal. The \gls{ccd} is a type of \gls{fpa}. 
+
+The \gls{ccd} was a major breakthrough for entire fields and industries who depended on the reliable sampling, storage and transmission of optical phenomena. Until then one either had to use film or bulky tubes that required an electron beam to be scanned across an image scene, such as the Image orthicon \cite{w1975image}. For their invention, Boyle and Smith both received the Nobel Prize in Physics in 2009 \cite{nobelprize2009physics}
+
+The invention of the digital camera by Sasson followed shortly after \cite{kodaksfirstdigital2015}. In the spectrometer, replacing the exit slit by the \gls{ccd} allowed for simultaenous measurement of the entire spectrum in a compact architecture \cite{moore1979spectrometer}. 
+
+The development of the \gls{cmos} \gls{fpa} was also important. While in scientific settings, it could not rival the quality of the \gls{ccd}, its cheaper cost brought digital imaging to the consumer level. Other technology like the digital computers and computer networking also provided major contributions to the democratization of imaging and optical sensing. While optical instrumentation was and is still expensive, the researcher could at least capture, process, and share data with significantly less effort. 
+
+Algorithms for efficient and reliable storage and transmission of digital images became important. Over time the pixel count continued to increase and the sheer volume of digtal image and video data being generated and transmitted over networks began to outpaced improvements in storage and transmission capacity. While many engineers developed new technology to combat the hardware limitations of storage and transmission. This also led to a renewed effort by researchers to develop more efficient image and video compression algorithms \cite{kobayashi1974image, ziv1978compression}. 
+
+As mentioned in at the beginning of this chapter, computational sensing lies at the intersection of the design of the analog hardware, sampling schemes, and processing algorithms. Many of the algorithms used in computational sensing are the same as or inspired by the techniques used by the image processing community. This is because a major effort of computational sensing is the desire to make more resource efficient measurements. 
 
 \section{From Multiplexing to Compressive Sensing}\label{sec:multiplexingtocompressivesensing}
 

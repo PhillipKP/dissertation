@@ -25,7 +25,7 @@
 \usepackage{amsthm}
 \usepackage{mathrsfs}
 \usepackage{hyphenat}
-\usepackage{url}
+\usepackage{url} % Allows readers to click on urls in the pdf.
 \usepackage[bookmarks,colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
 \usepackage{cleveref}
 \usepackage[utf8]{inputenc}
@@ -34,6 +34,9 @@
 % because we actually don't want a glossary, the second option is used because 
 % we want to define acronyms and display a list of used acronyms, 
 \usepackage[nomain,acronyms,symbols,xindy]{glossaries}
+
+
+\graphicspath{{Figures/}}
 
 % This is rquires to make a glossary, a list of acronyms, or a list of 
 \makeglossaries
@@ -63,6 +66,8 @@
 \newacronym{mri}{MRI}{Magnetic Resonance Imaging}
 \newacronym{radar}{Radar}{RAdio Detection And Ranging}
 \newacronym{sar}{SAR}{Synthetic Aperture Radar}
+\newacronym{ccd}{CCD}{Charge-Coupled Device}
+\newacronym{cmos}{CMOS}{Complementary Metal–Oxide–Semiconductor}
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -84,7 +89,9 @@
 \fullname{Phillip K. Poon}			% Grad college wants your full name here.
 \degreename{Doctor of Philosophy}	% Title of your degree.
 
+
 \begin{document}
+	
 \maketitlepage
 {COLLEGE OF OPTICAL SCIENCES} % Title of the department
 {2016}	
