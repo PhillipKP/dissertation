@@ -29,6 +29,7 @@
 \usepackage[bookmarks,colorlinks=true,urlcolor=black,linkcolor=black,citecolor=black]{hyperref}
 \usepackage{cleveref}
 \usepackage[utf8]{inputenc}
+\usepackage{appendix}
 
 % This package allows us to make a list of acronyms, the option nomain is used
 % because we actually don't want a glossary, the second option is used because 
@@ -44,6 +45,21 @@
 % Adds any glossaries, list of acronyms, list of symbols we want to the table 
 % of contents
 \glstoctrue
+
+%%%%%%%%%%%%%%%%%%%%%%%% Define new commands here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Shorter command for math bold font
+\newcommand{\mb}[1]{\mathbf{#1}}
+% Custom command to to math bold font with a transpose operator
+\newcommand{\mbt}[1]{\mathbf{#1}^T}
+\newcommand{\mbi}[1]{\mathbf{#1}^{-1}}
+\newcommand{\mbh}[1]{\hat{ \mathbf{#1} } }
+\newcommand{\smb}[1]{$ \mathbf{#1} $}
+\newcommand{\smbh}[1]{$ \hat { \mathbf{#1} } $}
+%%%%%%%%%%%%%%%%%%%%%%% Define new environments here %%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\newenvironment{\smb}[1]{$ \mathbf{#1} $}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%% Define acronyms here% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -133,6 +149,12 @@
 %\include{ch4Afssic}
 %\include{ch5Csu}
 %\include{ch6Conclusion}
+
+
+\begin{appendices}
+	\include{apLeastSquares}
+\end{appendices}
+
 
 \renewcommand{\baselinestretch}{1}		% chaning the value
 \small\normalsize						% switch size to make the value take

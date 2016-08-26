@@ -34,63 +34,28 @@ The Nyquist-Shannon Sampling Theorem states one must sample a signal with a samp
 
 \subsubsection{Least Squares}
 
-Suppose $\mathbf{g} = \mathbf{H} \mathbf{r}$
+Suppose 
 
-We want to solve for $\mathbf{r}$ given $\mathbf{g}$ and $\mathbf{H}$. What we can do is define a residual
-
-\begin{equation}
-	\mathbf{e} = \mathbf{Hr-g}
-\end{equation}
-and attempt to find a proposed solution $\mathbf{r}$ that makes the residual square of $\mathbf{e}$ small as possible. This is called the Least Squares Solution also known as the Least Squares Estimator. 
-
-Note that 
-
-\begin{equation}
-	\mathbf{ \lVert \mathbf{e} \rVert }^2 =  \sum_{i=1}^{N} e_i^{2} = \mathbf{e}^T \mathbf{e} =( \mathbf{Hr-g} ) ^{T} ( \mathbf{Hr-g} )
+\begin{equation}\label{eq:lineareq1}
+	\mb{g} = \mb{Hr} 
 \end{equation}
 
-The transpose is linear 
+Given \smb{g} and \smb{H} we want to solve for \smb{r}. If the matrix is full rank then we can simply multiply both sides of equation \ref{eq:lineareq1} by $\mbi{H}$ 
 
 \begin{equation}
-	 ( \mathbf{Hr-g} )^{T} = ( \mathbf{Hr} )^{T} - \mathbf{g}^{T} 
+	\mbi{H} \mb{g} = \mbi{H} \mb{Hr} = \mb{I} \mb{r} = \mb{r}
 \end{equation}
 
-The transpose of a product of matrices equals the product of their transposes in reverse order
+If \smb{H} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{r} that minimizes the least squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
+
+\begin{equation}\label{eq:squarederror1}
+	\mathbf{ \lVert \mathbf{e} \rVert }^2 =    \mb{ \lVert \mb{Hr-g} \rVert }^2
+\end{equation}
+
+\noindent To minimize the error, we take the derivative of equation \ref{eq:squarederror1} with respect to \smb{r} and set it equal to zero and solve for \smb{r}. The full derivation which shows each step is given in Appendix \ref{app:Derivation of the Least Squares Estimator}. The least squares estimate:
 
 \begin{equation}
-	 ( \mathbf{Hr} )^{T} = \mathbf{r}^{T} \mathbf{H}^{T} 
-\end{equation}
-
-So 
-\begin{equation}
-	\begin{split}
-		\mathbf{ \lVert \mathbf{e} \rVert }^2 & = ( \mathbf{r}^{T} \mathbf{H}^{T}  - \mathbf{g}^{T} )  ( \mathbf{Hr-g} ) \\
-		& = \mathbf{r}^T \mathbf{H}^T \mathbf{H} \mathbf{r} - \mathbf{r}^T \mathbf{H}^T \mathbf{g} - \mathbf{g}^T \mathbf{H} \mathbf{t} + \mathbf{g}^T \mathbf{g}
-	\end{split}
-\end{equation}
-let $\mathbf{k} = \mathbf{Hr}$ then we can see the two middle terms are just the inner product of two vectors which commutes, $\mathbf{g}^T \mathbf{k} = \mathbf{k}^T \mathbf{g}$
-\begin{equation}\label{eq:lsgradstep1}
-	\mathbf{ \lVert \mathbf{e} \rVert }^2 =  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r} - 2 \mathbf{g}^{T} \mathbf{H} \mathbf{r} +   \mathbf{g}^T \mathbf{g}  
-\end{equation}	
-To find the least squares solution, take the gradient w.r.t $\mathbf{r}$ and set it equal to zero. The gradient of the constant term goes away. We first tackle the first term on the right hand side in equation \ref{eq:lsgradstep1}
-\begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r} 
-\end{equation}
-Since $\mathbf{K} = \mathbf{H}^T \mathbf{H}$ we can use the identity
-\begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{K} \mathbf{r} = \mathbf{r}^T ( \mathbf{K} + \mathbf{K}^T)
-\end{equation}
-since $\mathbf{K}=\mathbf{K}^T$ then 
-\begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r}  = 2 \mathbf{r}^T \mathbf{H}^T \mathbf{H} = 2 \mathbf{H}^T \mathbf{H} \mathbf{r}
-\end{equation}
-The last step is realizing the middle statement is a row vector but we want a column vector so if we apply the transpose and again remember that $ \mathbf{H}^T \mathbf{H} $ is symmetric we get the statement on the right.   Clearly the gradient of the third term in equation \ref{eq:lsgradstep1} w.r.t $\mathbf{r}$ is $0$ and the gradient of the middle term in equation \ref{eq:lsgradstep1} is simply $- 2 \mathbf{H}^{T} \mathbf{g}$ so 
-\begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} } \mathbf{ \lVert \mathbf{e} \rVert }^2  = 2 \mathbf{H}^T \mathbf{H} \mathbf{r} - 2 \mathbf{g}^{T} \mathbf{H}
-\end{equation}
-setting it equal to zero and solving for r gives the least squares estimate
-\begin{equation}
-	\hat{\mathbf{r}} = ( \mathbf{H}^{T} \mathbf{H} )^{-1} \mathbf{H}^T \mathbf{g}
+	\hat{ \mb{r} } = ( \mbt{H} \mb{H} )^{-1} \mbt{H} \mb{g}
 \end{equation}
 
 \subsubsection{L0 and L1 Norm Minimization}
