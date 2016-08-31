@@ -6,6 +6,8 @@ A rigorous discussion of multiplexing and signal-to-noise ratio will be discusse
 
 Since the \gls{afssi-c} relies on a variation of Principal Component Analysis (PCA) and a Bayesian algorithm for coding design we will discuss some of the fundamental of Bayesian probability and the Log-Likelihood Ratios. 
 
+The measurement process implements a mapping from the 
+
 
 \section{Isomorphic Sensing}
 
@@ -23,12 +25,29 @@ where \gls{measvec} is the measurement vector.
 
 \section{Compressive Sensing}
 
+
+
 \subsection{The Nyquist-Shannon Sampling Theorem}
 
 The Nyquist-Shannon Sampling Theorem states one must sample a signal with a sampling rate that is at least twice the maximum frequency of the signal to prevent aliasing \cite{shannon1949communication}.
 
 
 \subsection{Sparsity, Incoherence, and the Restricted Isometry Property}
+
+At first glance, compressive sensing is unintuitive. Going back to the weighing example, if we have hundreds of itmes we can group the items together to increase the precision of our measurements. However, we still have to take as many measurements as their are items, to solve for their weight. If the number of measurements is less than the number of objects, then a unique solution is impossible. If we have some sort of helpful information, we can significantly reduce the number of solutions, discarding away solutions that are inconsistent with this prior information. 
+
+In compressive sensing, this helpful knowledge is called \emph{sparsity}. A signal is sparse if only a few elements of the signal is non-zero. For compressive sensing to work, the signal-of-interst itself doesn't need to be sparse.  if one only needs to describe it with a few representation vectors relative to the native dimensionality of the signal. Note that the sign  Sparsity is quite similar to how compressiable a signal is. Most real world signals aren't sparse, they are compressible. However, we know from lossy compression techinques that we can throw away most of the data, that much of the information is not sparse. The reconstruction algorithms rely on the assumption of sparsity to correctly estimate the original signal from the small number of measurements \cite{}.
+
+The actual question of how to code the analog signal-of-interest to produce the most compressive measurements as possible is still an active area of research \cite{}. Many in the compressive sensing community refer to the codes as the measurement basis. This interpretation of the coding scheme allows us to think of the measurement data as projections of the signal-of-interst onto a set of vectors. Incoherence is the concept that the measurement basis and the represetation basis should have low correlation with each other. The more incoherent---lower correlation---the two bases are, the higher the probability of succesful reconstruction of compressive measurements. Random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}, which is why they are so popular in experimental prototypes \cite{} since it simplified the task of having to design the measurement basis. However, as we will see random measurements do not always lead to the best reconstruction results since they are agnostic to the signal-of-interest. The choice of the measurement basis can be a difficult task depending on the application, however it has 
+
+oherence,  However, mathematicians have shown that the measurement basis should have a low maximum correlation with the representation basis, the basis in which the object signal has a sparse representation. This allows the signal to get 
+
+
+scheme relies of the coherence of the representation basis and the measurement basis. Up till now the representation basis has been the canoncial Dirac basis. 
+
+Quite surpriseling, Other than sparsity, when other knowledge of the signal can be made often random measurements are the optimal measurements. 
+
+
 
 \subsection{Inversion}
 
@@ -61,6 +80,8 @@ If \smb{H} is not full rank then its inverse does not exist. However we can try 
 \subsubsection{L0 and L1 Norm Minimization}
 
 \subsubsection{LASSO and sparsity regularization}
+
+$  \mathfrak{F} \{ \iint\limits_{a}^{b}  g( \xi, \eta )  h( x - \xi, y - \eta )  d \xi d \eta \}  $
 
 %\bibliographystyle{IEEEtranS}  
 %\bibliography{ThesisBib}
