@@ -13,13 +13,13 @@ Given \smb{g} and \smb{H} we want to solve for \smb{r}. If the matrix is full ra
 	\mbi{H} \mb{g} = \mbi{H} \mb{Hr} = \mb{I} \mb{r} = \mb{r}
 \end{equation}
 
-If \smb{H} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{r} that minimizes the least squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
+If \smb{H} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{r} that minimizes the squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
 
 \begin{equation}\label{eq:squarederrorAp1}
 	\mathbf{ \lVert \mathbf{e} \rVert }^2 =    \mb{ \lVert \mb{Hr-g} \rVert }^2
 \end{equation}
 
-\noindent To minimize the error, we take the derivative of equation \ref{eq:squarederrorAp1} with respect to \smb{r} and set it equal to zero and solve for \smb{r}. Note that the equation \ref{eq:squarederrorAp1} can be expanded in terms to a inner product 
+\noindent To minimize the error, we take the derivative of equation \ref{eq:squarederrorAp1} with respect to \smb{r} and set it equal to zero and solve for \smb{r}. Note that the equation \ref{eq:squarederrorAp1} can be expanded in terms of an inner product 
 
 \begin{equation} \label{eq:squarederrorAp2}
 	\mathbf{ \lVert \mathbf{e} \rVert }^2 =    \mb{ \lVert \mb{Hr-g} \rVert }^2 = \sum_{i=1}^{N} e_i^{2} = \mathbf{e}^T \mathbf{e} =(\mathbf{Hr-g} ) ^{T} ( \mathbf{Hr-g} )
