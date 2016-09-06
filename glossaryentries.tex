@@ -1,0 +1,204 @@
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Define acronyms here% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newacronym{svm}{SVM}{support vector machine}
+\newacronym[plural=FPAs,firstplural=focal-plane arrays (FPAs)]{fpa}{FPA}{focal-plane array}
+\newacronym{psf}{PSF}{point spread function}
+\newacronym{adc}{ADC}{analog-to-digital converter}
+\newacronym{afssi-c}{AFSSI-C}{Adaptive Feature Specific Spectral Imaging-Classifier}
+\newacronym{pca}{PCA}{Principal Component Analysis}
+\newacronym{LENS}{LENS}{Laboratory for Engineering Non-Traditional Sensors}
+\newacronym{scout}{SCOUT}{Static Computational Optical Undersampled Tracker}
+\newacronym{disp}{DISP}{Duke Imaging and Spectroscopy Program}
+\newacronym{lcos}{LCOS}{Liquid Crystal on Silicon}
+\newacronym{slm}{SLM}{Spatial Light Modulator}
+\newacronym{snr}{SNR}{signal-to-noise ratio}
+\newacronym{swap-c}{SWAP-C}{size, weight and power-cost}
+\newacronym{ct}{CT}{Computed Tomography}
+\newacronym{spect}{SPECT}{Single-Photon Emission Computed Tomography}
+\newacronym{pet}{PET}{Positron Emission Tomography}
+\newacronym{mri}{MRI}{Magnetic Resonance Imaging}
+\newacronym{radar}{Radar}{RAdio Detection And Ranging}
+\newacronym{sar}{SAR}{Synthetic Aperture Radar}
+\newacronym{ccd}{CCD}{Charge-Coupled Device}
+\newacronym{cmos}{CMOS}{Complementary Metal–Oxide–Semiconductor}
+\newacronym{cassi}{CASSI}{Coded Aperture Snapshot Spectral Imaging}
+\newacronym{dmd}{DMD}{Digital Micro-Mirror Display}
+\newacronym{cosi}{COSI}{Computational Optical Sensing and Imaging}
+%%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newglossaryentry{specres}{type=symbols, name={$ \delta \lambda $}, symbol={$ \delta \lambda $} ,sort=delta, description={Spectral Resolution}}
+
+\newglossaryentry{numspecchan}{type=symbols,name={$ N_{\lambda} $}, symbol={$ N_{\lambda} $},sort=Nlambda, description={The Number of Spectral Channels}}
+
+\newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={The Measurement Vector}}
+
+%%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newglossaryentry{isomorphic sensing}
+{
+name={Isomorphic sensing},
+text={isomorphic sensing},
+description={An isomorphic sensor is any sensor that attempts to produce measurement data that resembles the signal-of-interest. An isomorphic measurement is a measurement that resembles the signal-of-interest. An isomorphic measurement can be described as a one-to-one mapping from the signal-of-interest to the measurement, and is represented in matrix notation with an identity matrix. Isomorphic sensing is synonomous with traditional sensing.}
+}
+
+\newglossaryentry{isomorphic}
+{
+name={Isomorphic},
+text={isomorphic},
+description={\emph{See} \gls{isomorphic sensing}}
+}
+
+\newglossaryentry{isomorphic sensor}
+{
+name={Isomorphic sensor},
+text={isomorphic sensor},
+plural={isomorphic sensors},
+description={\emph{See} \gls{isomorphic sensing}}
+}
+
+\newglossaryentry{traditional sensing}
+{
+name={Traditional sensing},
+text={traditional sensing},
+description={\emph{See} \gls{isomorphic sensing}}
+}
+
+\newglossaryentry{multiplex sensing}
+{
+name={multiplex sensing},
+description={A multiplexing sensor is any sensor that attempts to combine the physical phenomena of the analog signal-of-interest in to a few or one analog-to-digital sample to overcome limits due to signal-to-noise ratio. .The measurement data that does resemble the signal-of-interest. A matrix representation of a multiplex measurement will not look like an identity matrix}
+}
+
+\newglossaryentry{multiplexing}
+{
+name={Multiplexing},
+text={multiplexing},
+description={ \emph{See} \gls{multiplex sensing}}
+}
+
+\newglossaryentry{indirect-imaging}
+{
+name={Indirect-imaging},
+text={indirect-imaging},
+description={An imaging sensor that attempts to reconstruct an image of an object using non-isomorphic measurements. A computational step is required to reconstruct the object signal-of-interest. X-Ray \gls{ct} and \gls{sar} are examples types of indirect-imaging.  }
+}
+
+\newglossaryentry{task-specific sensing}
+{
+name={Task-specific sensing},
+text={task-specific sensing},
+description={A sensor that does not attempt to reconstruct the signal-of-interest to perform a signal processing task such as detection, estimation, and classification. The \gls{afssi-c} is an example of a task-specific sensor. }
+}
+
+\newglossaryentry{compressive sensing}
+{
+name={Compressive sensing},
+text={compressive sensing},
+description={A sensing technique that attempts to directly a compressive or sparse representation of the signal-of-interest during the measurement. Compressive sensors attempt to uses significantly less measurements than the dimensionality of the signal-of-interest. Compressive sensing relies on non-linear optimization algorithms to perform reconstruction or task-specific sensing from highly underdetermined inverse problems. These algorithms often rely on sparsity to avoid overfitting.}
+}
+
+\newglossaryentry{compressive sensors}
+{
+name={Compressive sensors},
+plural={compressive sensors},
+%text={compressive sensors},
+description={ \emph{See} \gls{compressive sensing}}
+}
+
+\newglossaryentry{compressive sampling}
+{
+name={Compressive sampling},
+plural={compressive sampling},
+text={compressive sampling},
+description={ \emph{See} \gls{compressive sensing}}
+}
+
+\newglossaryentry{computational sensing}
+{
+name={Computational sensing},
+text={computational sensing},
+description={Any sensing technique in which the sensor uses \gls{indirect-imaging}, \gls{multiplex sensing}, \gls{compressive sensing}, or \gls{task-specific sensing}.}
+}
+
+\newglossaryentry{computational sensor}
+{
+name={Computational sensor},
+text={computational sensor},
+plural={computational sensors},
+description={ \emph{See} \gls{computational sensing}}
+}
+
+
+\newglossaryentry{measurement}
+{
+name={Measurement},
+text={measurement},
+description={A process that converts a physical phenomena to a collection of data}
+}
+
+\newglossaryentry{monochromator}
+{
+name={monochromator},
+text={monochromator},
+plural={monochromator},
+description={An optical instrument that transmits a selectable narrow wavelength band of light chosen from a wider range of wavelengths available at the input.}
+}
+
+\newglossaryentry{pixel pitch}
+{
+name={Pixel pitch},
+text={pixel pitch},
+description={The center to center distance between pixels on a focal-plane array such as a CCD or CMOS image sensor.}
+}
+
+\newglossaryentry{spectral resolution}
+{
+name={Spectral resolution},
+text={spectral resolution},
+description={The smallest the smallest difference in wavelength the instrument or sensor can discern.}
+}
+
+\newglossaryentry{data processing inequality}
+{
+name={Data processing inequality},
+text={data processing inequality},
+description={An theorem from information theory that proves the information of a signal cannot be increased via a local physical operation.}
+}
+
+\newglossaryentry{coding}
+{
+name={Coding},
+text={coding},
+description={In the context of computational sensing, coding is the process of modifying or modulating an analog signal during measurement. Coding is often used to reduce degeneracy in the measurement data. In the context of spectroscopy, the spectral filters act to code the spectrum.  }
+}
+
+\newglossaryentry{code}
+{
+name={Code},
+text={code},
+description={ \emph{See} \gls{coding}}
+}
+
+\newglossaryentry{forward model}
+{
+name={Forward model},
+text={forward model},
+description={A numerical model, typically an equation, that explains the mapping of the analog signal-of-interest to the measurement data.}
+}
+
+\newglossaryentry{inverse problem}
+{
+name={Inverse problem},
+text={inverse problem},
+description={The problem of taking the measurement data and calculating a reconstruction of the signal-of-interst or task-specific parameters. In computational sensing, computer algorithms are used to solve inverse problems.}
+}
+
+\newglossaryentry{sparse}
+{
+name={Sparse},
+text={sparse},
+description={A vector or matrix in which most of the elements are zero.} 
+}
+
