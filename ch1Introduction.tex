@@ -1,4 +1,5 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{chap:Introduction}
+
 
 This chapter introduces the reader to the concepts of \gls{isomorphic sensing}, \gls{multiplex sensing}, \gls{indirect-imaging}, \gls{task-specific sensing}, \gls{compressive sensing} and \gls{computational sensing}. It also provides the motivation for the need to address the practical issues in experimental computational sensing. 
 
@@ -70,9 +71,9 @@ In many cases, the signal is redundant and high resolution sampling becomes a wa
 
 The isomorphic sensor has served humanity well, however with all the weakness that I have discussed, I will now begin to discuss some of major techniques in computational sensing that can be used to address some or all of the issues that I just stated. 
 
-\section{Development of Multiplexing in Sensing}
+\section{Development of Multiplexing in Sensing}\label{sec:multiplexInSensing}
 
-\Gls{multiplexing} in sensing allows each measurement sample to be a combination of multiple points of the signal-of-interest. Multiplexing is a powerful tool that can be exploited by the sensor designer to eliminate or relax design trade-offs. 
+\Gls{multiplexing} in sensing allows each measurement sample to be a combination of multiple points of the signal-of-interest.  Multiplexing is a powerful tool that can be exploited by the sensor designer to eliminate or relax design trade-offs. 
 
 A simple example which illustrates the usefulness of multiplex sensing is weighing objects. In this example, we are given a 100 sheets of paper. Let's assume that the scale's measurement error is insignificant. Isomorphic measurement sensing means one would need to measure each sheet of paper individually. Requiring 100 measurements. 
 
@@ -83,8 +84,6 @@ However, we can be a little smarter. We can measure all 100 sheets at the same t
 The weighing problem is analogous to the spectroscopy example. As discussed earlier in \autoref{sec:Isomorphic Sensing}, there is trade-off between light collection and spectral resolution. Increasing the slit-width to increase the amount of light has the effect of degrading the spectral resolution \gls{specres}. Around the late 1940's and early 1950's, several important papers and inventions demonstrated the effectiveness of multiplexing in spectroscopy. At the time the \gls{fpa} was non-existant, so in the slit spectrometer shown in Figure \ref{fig:slitspectrometer}, where the \gls{fpa} is pictured, there was actually another slit. To record the intensity at each spectral channel, either the dispersive element or the exit slit had to be mechanically translated, making the measurements even slower by a factor of \gls{numspecchan}, the number of spectral channels of interest. 
 
 Golay was the first to propose multiplexing the slit spectrometer by creating a pattern of binary (1's and 0's) entrance and exit slits \cite{golay1949multi}. The idea borrowed heavily from communications theory which is concerned with the reliable transmission of information over a noisey channel. In the Golay multi-slit spectrometer, the patterns of entrance and exit slits are matched based on mathematically useful properties, this is similar to coding and decoding signals in commucations. In communications theory the process of structuring the data from the source to the receiver is referred to as \gls{coding}. Similarly, in computational sensing, the transmission of information between a object signal-of-interest and the sensor is considered a coding problem \cite{brady2009optical}. In the multi-slit spectrometer, the entrance slits act to code the spectrum while the exit slits decoded the coded spectrum. Intuitively, the ability to use multiple entrance and exit slits increases the optical throughput of the spectrometer. Golay's idea dramatically increased the optical throughput without degrading the spectral resolution. 
-
-Fellgett devised an alternative approach to multiplex spectroscopy, the Fourier Transform spectrometer \cite{fellgett1958principes}. He is generally credited with discovering the multiplex advantage, so it is often called the Fellgett advantage instead.
 
 Another example that is pertinant to this dissertation is coded aperture imaging. Coded aperture imaging can be thought of as the multiplexed version of a pinhole camera. As mentioned earlier in \autoref{sec:Isomorphic Sensing}, there is a trade-off between the throughput and spatial resolution. However in many fields, such as high-energy particle imaging, refractive lenses and reflective mirrors are non-existant or underdeveloped. By using multiple pinholes the throughput is increased without sacraficing spatial resolution. However, the pattern of the pinholes, which is the code, in this case must be carefully designed in order to the reconstruction to be feasible. Fenimore, Canon, and Gottesman were the first to create an elegant solution to coded aperture design called uniformly redundant arrays \cite{fenimore1978coded, gottesman1989new}.
 

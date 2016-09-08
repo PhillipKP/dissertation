@@ -26,13 +26,33 @@
 \newacronym{cassi}{CASSI}{Coded Aperture Snapshot Spectral Imaging}
 \newacronym{dmd}{DMD}{Digital Micro-Mirror Display}
 \newacronym{cosi}{COSI}{Computational Optical Sensing and Imaging}
+\newacronym{mse}{MSE}{Mean Squared Error}
+\newacronym{rmse}{RMSE}{Root corollaryMean Squared Error}
+\newacronym{fts}{FTS}{Fourier Transform Spectrometer}
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newglossaryentry{specres}{type=symbols, name={$ \delta \lambda $}, symbol={$ \delta \lambda $} ,sort=delta, description={Spectral Resolution}}
+\newglossaryentry{specres}{type=symbols, name={$ \delta_{\lambda} $}, symbol={$ \delta_{\lambda} $} ,sort=delta, description={Spectral resolution}}
 
-\newglossaryentry{numspecchan}{type=symbols,name={$ N_{\lambda} $}, symbol={$ N_{\lambda} $},sort=Nlambda, description={The Number of Spectral Channels}}
+\newglossaryentry{numspecchan}{type=symbols,name={$ N_{\lambda} $}, symbol={$ N_{\lambda} $},sort=Nlambda, description={Number of spectral channels}}
 
-\newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={The Measurement Vector}}
+\newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={Measurement vector}}
+
+\newglossaryentry{objvec}{type=symbols,name={$ \mathbf{f} $}, symbol={$ \mathbf{f} $},sort=f, description={Object signal-of-interest}}
+
+\newglossaryentry{estobjvec}{type=symbols,name={$ \mathbf{ \hat{ f }} $}, symbol={$ \mathbf{ \hat{ f }} $},sort=fhat, description={Estimated object}}
+
+\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_n $}, symbol={$ \mathbf{ H }_n $}, sort=hadamard, description={A Hadamard matrix of size $n \times n$}}
+
+\newglossaryentry{noisevec}{type=symbols,name={$ \mathbf{ e } $}, symbol={$ \mathbf{ e } $}, sort=e, description={Additive noise vector}}
+
+\newglossaryentry{nummeas}{type=symbols,name={$ N_{m} $}, symbol={$ N_{m} $}, sort=Nm, description={Total number of measurements}}
+
+\newglossaryentry{m}{type=symbols,name={$ m $}, symbol={$ m $}, sort=m, description={measurement number/index}}
+
+\newglossaryentry{n}{type=symbols,name={$ n $}, symbol={$ n $}, sort=n, description={The number of elements in the object \gls{objvec} }}
+
+
+
 
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -68,7 +88,7 @@ description={\emph{See} \gls{isomorphic sensing}}
 \newglossaryentry{multiplex sensing}
 {
 name={multiplex sensing},
-description={A multiplexing sensor is any sensor that attempts to combine the physical phenomena of the analog signal-of-interest in to a few or one analog-to-digital sample to overcome limits due to signal-to-noise ratio. .The measurement data that does resemble the signal-of-interest. A matrix representation of a multiplex measurement will not look like an identity matrix}
+description={A multiplexing sensor is any sensor that attempts to combine the physical phenomena of the analog signal-of-interest in to a few or one analog-to-digital sample to overcome limits due to signal-to-noise ratio. The measurement data that does resemble the signal-of-interest. A matrix representation of a multiplex measurement will not look like an identity matrix}
 }
 
 \newglossaryentry{multiplexing}
@@ -135,7 +155,7 @@ description={ \emph{See} \gls{computational sensing}}
 {
 name={Measurement},
 text={measurement},
-description={A process that converts a physical phenomena to a collection of data}
+description={A process that converts a physical phenomena to single datum or a set of data. In the context of this dissertation it used synonomously with the detector readout.}
 }
 
 \newglossaryentry{monochromator}
@@ -202,3 +222,17 @@ text={sparse},
 description={A vector or matrix in which most of the elements are zero.} 
 }
 
+
+\newglossaryentry{multiplex advantage}
+{
+name={Multiplex advantage},
+text={multiplex advantage},
+description={The improvement in \gls{snr} that is due to multiplexed measurements rather than isomorphic measurements. This is often referred to as the Fellgett advantage since it was first discovered by Peter Fellgett. \emph{See} \gls{multiplex sensing}} 
+}
+
+\newglossaryentry{Fellgett advantage}
+{
+name={Fellgett advantage},
+text={Fellgett advantage},
+description={\emph{See} \gls{multiplex advantage}} 
+}
