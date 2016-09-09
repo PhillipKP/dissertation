@@ -141,18 +141,48 @@ The advantage that multiplexing provides over an isomorphic measurement depends 
 
 \section{Principal Component Analysis}
 
-Principal component analysis (PCA) is a technique that is used to look at the redundancies in a dataset and provides a new set of basis vectors in which the strong correlations in the original data are mapped to the same direction. While subsets that are strongly anti-correlated will map to orthogonal directions. It repeats the process until it has produced a set of vectors that are all orthogonal. This set of vectors are called the principal components. 
+Principal component analysis (PCA) is a technique that attempts to recast a dataset in manner which allows us to maximally discriminate the data with just a few vectors. The first vector points in the direction of maximum variance. The second vector points in a direction that also maximizes variance but is orthogonal to the first vector and so on. These new vectors are called the \emph{principal components}. We will say the \emph{rows} of matrix $\mb{P}$ are the principal components. 
 
-By projecting (taking the inner product) the original dataset 
+Let's say we have a dataset $\mb{S}$ which consists of $N$ spectra with \gls{numspecchan} spectral channels. Instead of looking at the data as just intensity versus spectral channel, \gls{pca} attempts to construct a set of new vectors (also called features) that show as much variation in the spectra as possible. In other words, first direction (principal component) is used to recast the data to look as different (uncorrelated) as possible. This allows us to discriminate the data, as best we can with just one direction. The second principal component is the direction that provides the second most ability to discriminate the data, and so on. 
 
+The covariance matrix is defined as
+\begin{equation}
+\mb{C_{X}} = \frac{1}{N} \mb{S} \mb{S}^{T}.
+\end{equation}
+Each element in the covariance matrix $C_{Xmn}$ is the covariance of the $m^{th}$ spectrum $\mb{s}_m$ and the $n^{th}$ spectrum $\mb{s}_n$. 
+\begin{equation}
+C_{Xmn} = \frac{1}{N} \mb{s}_m \mb{s}_n^{T}.
+\end{equation}
 
-By only using the first several veThis new vector space with a lower dimension that the dimension of vector space of the original data. PCA looks for directions of correlation that are orthogonal. These directions are called the prinicpal components. PCA is extemely useful in computational sensing because since coding schemes based on the principal components can provide a \gls{Fellgett advantage} and a compressive measurements. 
+Note that large covariance means they look quite alike and therefore are difficult to disambiguate.
 
-Let's say we have a dataset in which consists on 100 measurements of spectra with 1000 spectral channels \gls{numspecchan}. We want to know how many of the spectra are unique. Detector noise and and the dimensionality of the problem make it difficult to ascertain. 
+If the entire collection of spectra $\mb{S}$ were mutually orthogonal, being able to tell one spectrum apart from another would be easy. You would just have a collection of spikes at different spectral channels. The covariance matrix in this case would be a diagonal matrix. 
 
+Since there is typically some redundancy between spectra, the off-diagonal elements of the covariance matrix will be non-zero. The principal components allow us to recast the data to make it as uncorrelated as possible in a new basis. 
+\begin{equation}
+	\mb{Y} = \mb{PX}
+\end{equation}
+where $\mb{Y}$ is the data projected onto the principal component basis $\mb{P}$. The covariance of the projected data
+\begin{equation}
+	\mb{C_{Y}} = \frac{1}{N} \mb{Y} \mb{Y}^{T} 
+\end{equation}
+is a now diagonal matrix. Indeed, the principal components are the optimal way to discriminate the spectra in the dataset \cite{}.
 
+It turns out there is a way to calculate the principal components in closed form. The \emph{eigenvectors of the covariance matrix are the principal components} \cite{shlens2014tutorial}. 
 
-Since the \gls{afssi-c} relies on a variation of Principal Component Analysis (PCA) and a Bayesian algorithm for coding design we will discuss some of the fundamental of Bayesian probability and the Log-Likelihood Ratios. 
+Since the full set of principal components forms a basis, each spectra $\mb{s}$ in $\mb{S}$ can be written as a superposition of principal components without any error
+\begin{equation}
+\mb{s} = \sum_{\lambda = 1}^{N_{\lambda}} y_{\lambda} \mb{v}_{\lambda}
+\end{equation}
+In many cases, only a few of the first principal components are needed in the summation to approximate the original data well.
+\begin{equation}
+{\mb{s}} \approx \sum_{\lambda = 1}^{M} y_{\lambda} \mb{v}_{\lambda}
+\end{equation}
+Where $M \ll N_{\lambda} $. Note that each eigenvector has an associated eigenvalue. The eigenvalues are also informative because they can tell us how many principal components are really needed to discriminate all of the spectra. The magnitude of the eigenvalue tells us how well it's associated eigenvector is at discriminating the data.
+
+This is another reason why \gls{pca} is so useful. It can be used as a type of lossy compression code and as a measurement matrix for compressive sensing. Simply project the data onto the first several principal compoenents associated with the largest $M$ eigenvalues. 
+
+The \gls{afssi-c} relies on a variation of Principal Component Analysis (PCA) for discriminating between spectra. In addition to \gls{pca} the AFSSI-C uses a Bayesian probability to create adaptive codes. We will now discuss some of fundamentals of Bayesian probability and the Log-likelihood ratios. 
 
 \section{Bayesian Rules and Log-Likelihood Ratios}
 
