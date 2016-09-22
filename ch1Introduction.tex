@@ -8,16 +8,15 @@ A \gls{measurement} is a process that converts a physical phenomena to a collect
 \begin{figure}
     \centering
     \includegraphics[scale=1]{isomorphicsensorflowchart}
-    \caption{A systems view of a traditional sensing scheme. The signal-of-interest is incident upon the analog instrument. The analog instrument forms an isomorphism of the signal which is then periodically sampled point-by-point through an \gls{adc} device. Once the signal is in digital form, post-processing algorithms are often used to perform various tasks such as noise reduction, detection, and classification. Notice that the analog instrument, sampling scheme, and processing are all seperated. }
+    \captionof{figure}[A systems view of a traditional sensing scheme.]{ The signal-of-interest is incident upon the analog instrument. The analog instrument forms an isomorphism of the signal which is then periodically sampled point-by-point through an \gls{adc} device. Once the signal is in digital form, post-processing algorithms are often used to perform various tasks such as noise reduction, detection, and classification. Notice that the analog instrument, sampling scheme, and processing are all seperated. }
     \label{fig:isomorphicsesingflowchart}
 \end{figure}
 
 
 \begin{figure}
-    \centering
-    \includegraphics[scale=1]{computationalsensingflowchart}
-    \caption{A systems view of a computational sensing scheme. The signal-of-interest is incident upon the analog instrument.  }
-    \label{fig:computationalsensingflowchart}
+	\includegraphics[scale=1]{computationalsensingflowchart}
+	\captionof{figure}[A systems view of a computational sensing scheme.]{In a computational sensor, the analog instrument, the algorithms, and sampling scheme are often combined. Computational sensors are at the intersection of these traditional disparate systems.}
+	\label{fig:computationalsensingflowchart}
 \end{figure}
 
 
@@ -39,9 +38,8 @@ There are two major sub-systems in the photographic camera which determine how w
 The pinhole camera consists of a small hole and a box which prevents any light except from the pinhole to enter, see Figure \ref{fig:pinholecamera}. The pinhole camera is useful for imaging in parts of the electromagnetic spectrum and particles for which there is no direct analog to refractive lens or reflective mirror. Like the photographic camera, the pinhole camera also attempts to produce a small \gls{psf} for better spatial resolution and a human observer, film, or \gls{fpa} can be used to measure the object scene. As the hole size decreases, the spatial resolution increase at the cost of reducing the signal strength.
 
 \begin{figure}
-    \centering
     \includegraphics[scale=1]{pinholecamera}
-    \caption{A pinhole camera.}
+    \captionof{figure}[A pinhole camera.]{A pinhole camera is a simple imaging system that forms an image without a lens or mirror. This is due to the ray nature of light. A small hole will only admit a small amount of rays from an object point that is radiating light. Each point on a object emits light at different angles, and the image formed is a superposition of different rays. The smaller the hole, the less blurry the image. However, small holes also limit the amount of light}
     \label{fig:pinholecamera}
 \end{figure}
 
@@ -49,9 +47,8 @@ In the spectrometer, the signal of interest is the spectrum of the object. The o
 
 
 \begin{figure}
-    \centering
     \includegraphics[scale=1]{slitspectrometer}
-    \caption{An isomorphic slit spectrometer with a 4F configuration.}
+    \captionof{figure}[An isomorphic slit spectrometer with a 4F configuration.]{An isomorphic slit spectrometer with a 4F configuration. The slit limits the lateral extent of the object (or intermediate image). The light from the slit is collimated and seperated into different angles based on the wavelength. A second lens then images wavelength shifted copies of the slit on the image plane where the detector is. As the slit size decreases, less light is allowed, but we gain spectral resolution by rejected light from neighboring locations on the object. }
     \label{fig:slitspectrometer}
 \end{figure}
 
@@ -132,7 +129,7 @@ While a multitude of compression techniques exist, they all follow the same basi
 \begin{figure}
     \centering
     \includegraphics[scale=1]{imagecompressionflowchart}
-    \caption{An general flowchart for image and data compression techniques.}
+    \captionof{figure}[A general flowchart for image and data compression techniques.]{A general flowchart for image and data compression techniques. The digital image is analyzed by the encoder and compressed into a compressed form where it can be efficiently stored or transmitted. The decoder takes the compressed image and converts it back into an image that resembles the original digital image. }
     \label{fig:imagecompressionflowchart}
 \end{figure}
 
@@ -160,9 +157,8 @@ One useful example of compressive sensing versus traditional sensing is the sing
 
 
 \begin{figure}
-    \centering
     \includegraphics[scale=1]{singlepixelcamera}
-    \caption{A single pixel camera architecture.}
+    \captionof{figure}[A single pixel camera architecture.]{A single pixel camera architecture. The object scene (or intermediate image) is imaged onto a \gls{dmd}. The each micro-mirror of \gls{dmd} reflects light towards the photodiode or to another direction. This acts as a point-by-point multiplication of the discrete image with the DMD pattern. The condenser lens sums any light reflected by the \gls{dmd} and focuses it onto the photodiode. This can be described mathematically as a vector multiplication of the image with the \gls{dmd} pattern. }
     \label{fig:singlepixelcamera}
 \end{figure}
 

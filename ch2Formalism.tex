@@ -132,12 +132,13 @@ The advantage that multiplexing provides over an isomorphic measurement depends 
 	\text{MSE} = 2 \frac{\sigma^2}{N_{\lambda}} 
 \end{equation}
 
+
 \begin{figure}
-    \centering
-    \includegraphics[scale=1]{fourierTransformSpec}
-    \caption{The architecture of the Fourier Transform Spectrometer.}
-    \label{fig:fourierTransformSpec}
+	\includegraphics[scale=1]{fourierTransformSpec}
+	\captionof{figure}[The architecture of the Fourier Transform Spectrometer.]{The architecture of the Fourier Transform Spectrometer resembles the Michelson interferometer. One of the mirrors is translated back and forth. The interferogram is the detected intensity versus mirror delay which is related to the autocorrelation of signal. The Fourier transform of the autocorrelation provides the spectrum.}
+	\label{fig:fourierTransformSpec}
 \end{figure}
+
 
 \section{Principal Component Analysis}
 
@@ -184,34 +185,163 @@ This is another reason why \gls{pca} is so useful. It can be used as a type of l
 
 The \gls{afssi-c} relies on a variation of Principal Component Analysis (PCA) for discriminating between spectra. In addition to \gls{pca} the AFSSI-C uses a Bayesian probability to create adaptive codes. We will now discuss some of fundamentals of Bayesian probability and the Log-likelihood ratios. 
 
-\section{Bayesian Rules and Log-Likelihood Ratios}
+\section{Bayesian statistics and Maximum a Posteriori}
+
+In the real world, measurements are corrupted by noise. The random nature of noise corrupted measurements lends itself to a stochastic perspective of signals. A hypothesis can be associated with various parameters or aspects of a signal. A hypothesis is nothing more than a claim or premise that one is interested in verifying. In imaging and spectroscopy, one example is that at a certain location in the field of view, the hypothesis is that a spectrum is present or not present. Another hypothesis is that the mean value of the signal is some value. Instead of attempting to determine whether a hypothesis is true, often times we are interested in estimating parameters of stochastic processes, which we denote $\theta$.
+
+Bayesian statistics allows one to treat the hypothesis or parameters as random variables rather than deterministric constants. A wide variety of Bayesian approaches exist and each require a heavy reliance on Bayes's theorem. Bayes' theorem is a way of computing probabilities of a hypothesis given some evidence which are related to the hypothesis. For example, Bayes' theorem can be used to decide which of two bags of candy has been opened or if a spectrum is present. The idea is that we can make a more informed calculation of probability if we are able to account or update the probability given some new piece of evidence that we may have not had at the beginning.
+
+The derivation of Bayes' theorem follows from the definition of conditional probability, the conditional probability of event $A$ occuring given that $B$ occured is:
+
+\begin{equation}
+	P \left( A \given[\big] B \right) = \frac{ P \left( A \cap B \right) }{ P \left( B \right)}
+\end{equation} 
+this can be seen graphically in Figure
+
+
+\begin{figure}
+	\includegraphics[scale=1]{definitionOfConditionalProbability}
+	\captionof{figure}[Graphical demonstration of joint probability.]{Graphical demonstration of joint probability. The probability of event $A$ is $P(A)=3/4$. The probability of event $B$ is $P(B)=3/4$. The joint probability of events $A$ and $B$ is $P(A \cap B) = 1/4$. The probability of event $A$ occuring given that event $B$ has occured is $P( A \given B) = 1/3$. This is consistent with the equation $ P(A \cap B) = P(A \given B) P(B) $}
+	\label{fig:definitionOfConditionalProbability}
+\end{figure}
+
+solving for the joint probability $ P \left( A \cap B \right) $ gives
+\begin{equation}
+ P \left( A \cap B \right) =	P \left( A \given[\big] B \right)  P \left( B \right)
+\label{eq:bayeStep2}
+\end{equation} 
+since the joint probability commutes $ P \left( A \cap B \right) = P \left( B \cap A \right) $, we can also write
+\begin{equation}
+ P \left( A \cap B \right) =	P \left( B \given[\big] A \right)  P \left( A \right)
+\label{eq:bayeStep3}
+\end{equation} 
+equatin the right hand side of Equation \ref{eq:bayeStep2} and Equation \ref{eq:bayeStep3} gives use Bayes' theorem (also called Bayes' rule)
+\begin{equation}
+	P \left( A \given[\big] B \right) = \frac{ P \left( A \right) P \left( B \given[\big] A \right) }{ P \left( B \right) }
+\end{equation}
+
+One interpretation of Bayes' theorem is called the Diachronic interpretation, which says that conditional probability of the hypothesis or parameter $\theta$ given knowledge of some evidence or measurement data $g$ is given by 
+
+\begin{equation}
+	P \left( \theta \given[\big] g \right) = \frac{ P \left( \theta \right) P \left( g \given[\big] \theta \right) }{ P \left( g \right) }
+	\label{eq:diachronic}
+\end{equation}
+
+The term $ P \left( \theta \given[\big] g \right) $ is called the posterior. It represents our belief in the hypothesis given the data. The term $ P \left( \theta \right) $ is called the prior. $P \left( g \given[\big] \theta \right)$ is called the Likelihood. $P \left( \theta \right)$ is called the normalizing constant. In general the normalizing constant can be written as 
+\begin{equation}
+P \left( \theta \right) = \sum_{i} P \left( \theta_i \right) P \left( g_i \given[\big] \theta_i \right)
+\label{eq:normalizingConstant}
+\end{equation}
+One can repeatly apply Bayes' theorem given new measurement data. We will use a simple example to illustrate how to update the belief. Imagine we have two bags of candy. Bag 1, which we denote $B_1$, has 10 pieces of cherry flavored candy, denoted as $C$, and has 30 pieces of strawberry flavored candy, denoted as $S$. Bag 2, $B_2$, has 20 pieces of cherry candy and 20 pieces of strawberry candy. At the beginning, the prior probability of selecting bag 1 or bag 2 is both equal
+\begin{equation}
+	P \left( B_1 \right) = P \left( B_2 \right) = \frac{1}{2}
+\end{equation}
+Someone then picks a bag at random and takes out a piece of candy that turns out to be strawberry flavor. What is the probability that bag 1 was selected? We can use Bayes' theorem to compute this
+
+\begin{equation}
+	P \left( B_1 \given[\big] S \right) = \frac{ P \left( B_1 \right) P \left( S \given[\big] B_1 \right) }{ P \left( S \right) }
+\end{equation}
+
+Where $ P \left( S \given[\big] B_1 \right) $ means the probability of selecting a strawberry candy assuming we have selected bag 1, which is $3/4$. The $ P \left( S \right) $ is the probability of selecting a strawberry candy from either bag 1 or bag 2, which $5/8$. Thus
+
+\begin{equation}
+	P \left( B_1 \given[\big] S \right) = \dfrac {\left( \dfrac {1} {2}\right) \left( \dfrac {3} {4}\right) } {\left( \dfrac {5} {8}\right) } = \frac{3}{5}
+\end{equation}
+Similarly, the probability that the person chosen bag 2 is $P \left( B_2 \given[\big] S \right) = 2/5$. Qualatatively, this makes sense, since bag 1 contained more strawberry flavored candy, the belief that bag 1 was chosen should increase and the belief that bag 2 was not chosen should decrease.
+
+Now let's continue the example. Say we put the first piece of candy back in the bag and draw another piece of candy, which turns out to be cherry flavor. Now we must update the beliefs with this new piece of information. We can keep using Baye's theorem, but the trick is that the posterior from the last draw is now used as the prior for the current update.
+
+\begin{equation}
+	P \left( B_1 \given[\big] C \right) = \frac{ P \left( B_1 \given[\big] S \right) P \left( C \given[\big] B_1 \right) }{ P \left( C \right) }
+\label{eq:updatedBayes1}
+\end{equation}
+
+\begin{equation}
+	P \left( B_2 \given[\big] C \right) = \frac{ P \left( B_2 \given[\big] S \right) P \left( C \given[\big] B_2 \right) }{ P \left( C \right) }
+\label{eq:updatedBayes2}
+\end{equation}
+
+The probability of drawing a cherry flavored candy assuming bag 1 was chosen is $ 1/4$ and the probability of drawing a cherry flavored candy assuming bag 2 was chosen is $1/2$. We now must use Equation \ref{eq:normalizingConstant} to compute the normalizing constant, otherwise the posterior probabilities will not sum to 1. In this case $ P(C) = 7/20 $. Plugging these numbers into Equations \ref{eq:updatedBayes1} and \ref{eq:updatedBayes2} gives the updated posterior probabilities
+
+\begin{equation}
+	P \left( B_1 \given[\big] C \right) = \frac{3}{7} \approx 0.43
+\end{equation}
+
+\begin{equation}
+	P \left( B_2 \given[\big] C \right) = \frac{4}{7} \approx 0.57
+\end{equation}
+
+Intuitively, drawing a cherry flavored candy has reduced our belief that bag 1 was chosen since bag 1 consist of only $1/4$ cherry flavor candies while bag 2 consisted of $1/2$ cherry candy. 
+
+Sometimes one is given a set of possible parameters that we are interested in estimating, $ \mb{\theta} $, given some measurement data $ g $. The method of \acrfull{map} says the parameters  $ \mb{\theta} $ which maximize the posterior probability are the most likely parameters. 
+
+\begin{equation}
+	\mb{\theta}_{map} = \argminA_{\mb{\theta}} \: p\left( \mb{\theta} \given[\big] g \right) 
+	\label{eq:map}
+\end{equation} 
+Using Bayes' theorem we can rewrite Equation \ref{eq:map} as 
+\begin{equation}
+	\mb{\theta}_{map} = \argminA_{\mb{\theta}} \: \frac{ p\left( g  \given[\big] \mb{\theta} \right) p\left( \mb{\theta} \right) } { p\left(  g \right) }
+\end{equation} 
+Maximizing the posterior is now equal to maximizing the likelihood and prior. In certain cases, one needs to decide between two sets of parameters or hypotheses. One can do an analogous technique of comparing the posteriors by using a ratio
+
+\begin{equation}
+	\frac{ p( \theta_i | g ) }{ p( \theta_j | g ) } = \frac{ p(g|\theta_i) }{ p(g|\theta_j)} \frac{p(\theta_i)}{p(\theta_j)}
+\end{equation}
+If the ratio is larger than some threshold value then one choses parameter $\theta_i$ and if the ratio is less than the threshold then one choses $\theta_j$. Similar to the earlier example of updating the posterior based on new data, one can update the \gls{map} decision based on new data. Define the likelihood ratio of the $m^{th}$ measurement as 
+\begin{equation}
+	\Lambda_m = \frac{ p(g_m|\theta_i) }{ p(g_m|\theta_j)}
+\end{equation}
+After each new set of measurement data $g_{m}$ is collected, one can update the posterior ratios by multiplying the likelihood ratio from the old set of data with the likelihood ratio of the new set of data. The ratio which includes all the updates from measurement $m = 1$ to measurement $m = N_m$ is written as
+\begin{equation}
+	\frac{ p( \theta_i| \{ g \} _{N_m} ) }{ p( \theta_j | \{ g \} _{N_m} ) } = \displaystyle\prod_{m=1}^{N_m} \Lambda_m \frac{p(\theta_i)}{p(\theta_j)}
+\end{equation}
+where the notation $\{ g \} _{N_m}$ represents the set of all data from measurement $m$ to $N_m$.
+
+Bayesian statistics is a useful way to update one's belief in a hypothesis or estimate a set of parameters. The Bayesian perspective is a different from the classical perspective. A classical approach to statistical estimation views parameters of interest as deterministic but unknown constants. The Bayesian approach assumes that $\theta$ is a random variable whose particular realization we must estimate.
+
+As we've just seen through the Bayesian approach, the ability to take advantage of new measurement data and prior knowledge is a powerful concept. We will continue on this theme as we discuss \gls{compressive sensing} which relies heavily on the prior assumption of \gls{sparsity}.
 
 \section{Compressive Sensing}
 
+As we discussed in \Cref{chap:Introduction}, the fundamental approach of \gls{compressive sensing} is that rather than sampling  at a high rate and then compressing the sample data, one can dramatically reduce the number of samples by sampling the signal a compressed form. We will now discuss some of the more formal concepts of compressive sensing and some techniques to compressively sampling signals. A brief discussion of the Nyquist-Shannon sampling theorem will impart upon the reader the power of \gls{compressive sensing}.
 
 
 \subsection{The Nyquist-Shannon Sampling Theorem}
 
-The Nyquist-Shannon Sampling Theorem states one must sample a signal with a sampling rate that is at least twice the maximum frequency of the signal to prevent aliasing \cite{shannon1949communication}.
+One of the most important results concerning the \gls{sampling} of continuous signals is the Nyquist-Shannon sampling theorem. The Nyquist-Shannon sampling theorem is so important to sampling theory, that it is often referred to as the \emph{sampling theorem} for short. The sampling theorem says that exact reconstruction of a continuous \gls{bandlimited signal} $f(x)$ is possible if the sampling frequency $f_s$ is atleast twice the maximum frequency $ B $ of the signal \cite{shannon1949communication}. 
 
+Assuming that a bandlimited signal $f(x)$ has been sampled according to the sampling theorem, then exact recovery from the discrete samples $f_n$ is possible. If the sampling frequency $f_s = 1/T$ is less than $2B$ then aliasing may occur in the reconstruction. Aliasing is the effect that high frequencies in the original signal will represented as lower frequencies after reconstruction and information contianed in the high frequencies will be potentially lost \cite{proakis1988introduction}. 
 
-
-\begin{equation}
-	g_{mn} = \int\displaylimits_{\infty}^{\infty} \int\displaylimits_{\infty}^{\infty}   \int\displaylimits_{-X/2}^{X/2} \int\displaylimits_{-Y/2}^{Y/2} \mb{f}( \mb{x} ) h_i ( \mb{x} ) d \mb{x}
-\end{equation}
-
-In a linear shift-invariant imaging system, the continuous object is blurred by the shift-invariant \gls{psf} . The image is sampled  
-
-optical imaging system with a \gls{fpa} this reduces to
-
-\begin{equation}
-	g_{mn} = \int\displaylimits_{\infty}^{\infty} \int\displaylimits_{\infty}^{\infty}   \int\displaylimits_{-X/2}^{X/2} \int\displaylimits_{-Y/2}^{Y/2} \mb{f}( \mb{x} ) h_i ( \mb{x} ) d \mb{x}
-\end{equation}
+Before we continue, it's important to clarify a small but important distinction between the meaning of \gls{sampling} and the meaning of a \gls{measurement}. A measurement is any physical process that that maps physical phenomena which contains a signal-of-interest into measurement data. The measurement data may or may not be discrete. A sample has a more precise definition, it is the process of maps a continuous signal $ f(x)$ into a sequence of discrete numbers $ f_n$ . In modern sensing, the measurement data is almost always discrete to take advantage of computer hardware which is extremely cheap and reliable due to Moore's law. 
 
 
 \subsection{Sparsity, Incoherence, and the Restricted Isometry Property}
 
-At first glance, compressive sensing is unintuitive. Going back to the weighing example, if we have hundreds of itmes we can group the items together to increase the precision of our measurements. However, we still have to take as many measurements as their are items, to solve for their weight. If the number of measurements is less than the number of objects, then a unique solution is impossible. If we have some sort of helpful information, we can significantly reduce the number of solutions, discarding away solutions that are inconsistent with this prior information. 
+At first glance, compressive sensing seems to go against the Nyquist-Shannon sampling theorem, however the sampling theorem is only a guarantee of exact reconstruction and relies on the assumption of a bandlimited signal and uniform periodic sampling. However the prior knowledge of \gls{sparsity} and \gls{incoherence} along with other properties and techniques from compressive sensing allow us to use far less samples of a signal and reconstruct it without major poss of information. 
+
+Before we discuss how to actually do compressive sensing and some of its drawbacks, it is important to have a formal discussion about theses concepts.
+
+As we discussed in \Cref{chap:Introduction} sparsity is based on the intuition that many natural signals are redundant and are often sampled only to be compressed in post-processing, converting the signal to a sparse form. 
+
+A continuous function or signal $f(x)$ is can be writen a discrete summation of basis functions
+
+\begin{equation}
+	f(x) = \sum_{n=1}^{N} a_n \psi_n(x)
+\end{equation}
+
+Where $a_n$ are the coefficients and $\mb{f}$ the coefficient vector. When a signal is sparse most of its coefficients are zero. A coefficient vector is called K-sparse if it has at most $K$ non-zero coefficients. When a signal is compressible most of the smaller coefficients can be set to zero and the result approximation $\hat{f}(x)=\Psi a_S$ will be nearly indistinguishable from the original. 
+
+In most compression algorithms, the continuous signal $f() $ is mapped to aA discrete signal $\mb{f}$ is sparse if most of its coefficients are zero. In practice, most signals are not strictly sparse 
+with only a few non-zero valuesMany signals however, are not strictly sparse in some domain, however they are often \gls{compressible}, which means most of the sampled functions are either zero or can be approximately zero relative to the largest values in the discrete signal. 
+
+\begin{equation}
+f(x) = 
+\end{equation}
+
+It extends the idea that  can be converted in a form with much less data. Thcompressive sensing requires the signals $f(x)$ to be sparse in some \gls{representation basis}. 
+
+However bandlimited signals are often is unintuitive. Going back to the weighing example, if we have hundreds of itmes we can group the items together to increase the precision of our measurements. However, we still have to take as many measurements as their are items, to solve for their weight. If the number of measurements is less than the number of objects, then a unique solution is impossible. If we have some sort of helpful information, we can significantly reduce the number of solutions, discarding away solutions that are inconsistent with this prior information. 
 
 In compressive sensing, this helpful knowledge is called \emph{sparsity}. A signal is sparse if only a few elements of the signal is non-zero. For compressive sensing to work, the signal-of-interst itself doesn't need to be sparse.  if one only needs to describe it with a few representation vectors relative to the native dimensionality of the signal. Note that the sign  Sparsity is quite similar to how compressiable a signal is. Most real world signals aren't sparse, they are compressible. However, we know from lossy compression techinques that we can throw away most of the data, that much of the information is not sparse. The reconstruction algorithms rely on the assumption of sparsity to correctly estimate the original signal from the small number of measurements \cite{}.
 
