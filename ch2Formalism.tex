@@ -304,63 +304,89 @@ As we've just seen through the Bayesian approach, the ability to take advantage 
 
 \section{Compressive Sensing}
 
-As we discussed in \Cref{chap:Introduction}, the fundamental approach of \gls{compressive sensing} is that rather than sampling  at a high rate and then compressing the sample data, one can dramatically reduce the number of samples by sampling the signal a compressed form. We will now discuss some of the more formal concepts of compressive sensing and some techniques to compressively sampling signals. A brief discussion of the Nyquist-Shannon sampling theorem will impart upon the reader the power of \gls{compressive sensing}.
+The fundamental approach of \gls{compressive sensing} is that rather than sampling at a high rate and then compressing the sampled data, one can dramatically reduce the number of samples by sampling the signal in a compressed form. I will now discuss some of the more formal concepts of compressive sensing and some techniques to compressively sampling signals. This allows one to build some intuition about compressive sensing. In order to understand why compressive sensing is so powerful we should first discuss the conventional sampling strategy.
 
 
 \subsection{The Nyquist-Shannon Sampling Theorem}
 
-One of the most important results concerning the \gls{sampling} of continuous signals is the Nyquist-Shannon sampling theorem. The Nyquist-Shannon sampling theorem is so important to sampling theory, that it is often referred to as the \emph{sampling theorem} for short. The sampling theorem says that exact reconstruction of a continuous \gls{bandlimited signal} $f(x)$ is possible if the sampling frequency $f_s$ is atleast twice the maximum frequency $ B $ of the signal \cite{shannon1949communication}. 
+One of the most important results concerning the \gls{sampling} of continuous signals is the Nyquist-Shannon sampling theorem (often referred to as the \emph{sampling theorem} for short). The sampling theorem says that exact reconstruction of a continuous \gls{bandlimited signal} $f(x)$ is possible if the sampling frequency $f_s$ is atleast twice the maximum frequency $ B $ of the signal \cite{shannon1949communication}. Assuming that a bandlimited signal $f(x)$ has been sampled according to the sampling theorem, then exact recovery from the discrete samples $f_n$ is guaranteed.
 
-Assuming that a bandlimited signal $f(x)$ has been sampled according to the sampling theorem, then exact recovery from the discrete samples $f_n$ is possible. If the sampling frequency $f_s = 1/T$ is less than $2B$ then aliasing may occur in the reconstruction. Aliasing is the effect that high frequencies in the original signal will represented as lower frequencies after reconstruction and information contianed in the high frequencies will be potentially lost \cite{proakis1988introduction}. 
+However, if the sampling frequency is less than twice the maximum bandwidth $f_s < 2B$, then aliasing may occur in the reconstruction. Aliasing is the effect that high frequencies in the original signal will represented as lower frequencies after reconstruction and information contained in the high frequencies will be potentially lost \cite{proakis1988introduction}. 
 
-Before we continue, it's important to clarify a small but important distinction between the meaning of \gls{sampling} and the meaning of a \gls{measurement}. A measurement is any physical process that that maps physical phenomena which contains a signal-of-interest into measurement data. The measurement data may or may not be discrete. A sample has a more precise definition, it is the process of maps a continuous signal $ f(x)$ into a sequence of discrete numbers $ f_n$ . In modern sensing, the measurement data is almost always discrete to take advantage of computer hardware which is extremely cheap and reliable due to Moore's law. 
-
+Before we continue, it's important to clarify a small but important distinction between the meaning of \gls{sampling} and the meaning of a \gls{measurement}. A measurement is any process that maps physical phenomena which contains a signal-of-interest into measurement data. The measurement data may or may not be discrete. Sampling has a more precise mathematical definition. It is the process of mapping a continuous signal into a sequence of discrete numbers which are called the samples. 
 
 \subsection{Sparsity, Incoherence, and the Restricted Isometry Property}
 
-At first glance, compressive sensing seems to go against the Nyquist-Shannon sampling theorem, however the sampling theorem is only a guarantee of exact reconstruction and relies on the assumption of a bandlimited signal and uniform periodic sampling. However the prior knowledge of \gls{sparsity} and \gls{incoherence} along with other properties and techniques from compressive sensing allow us to use far less samples of a signal and reconstruct it without major poss of information. 
+At first glance, \gls{compressive sensing} seems to go against the Nyquist-Shannon sampling theorem, however the sampling theorem's guarantee of exact reconstruction of a continuous signal relies on the assumption of a bandlimited signal and uniform periodic sampling, which leads to isomorphic sampling. \Gls{compressive sensing} makes different assumptions:  \gls{sparsity} and \gls{incoherence}. Combined with non-linear optimization techniques, \gls{compressive sensing} allows one to take far less samples without significant loss of information. Before we discuss how to actually do compressive sensing and some of its drawbacks, it is important to have a formal discussion of these concepts.
 
-Before we discuss how to actually do compressive sensing and some of its drawbacks, it is important to have a formal discussion about theses concepts.
-
-As we discussed in \Cref{chap:Introduction} sparsity is based on the intuition that many natural signals are redundant and are often sampled only to be compressed in post-processing, converting the signal to a sparse form. 
-
-A continuous function or signal $f(x)$ is can be writen a discrete summation of basis functions
-
+Most continuous signals $f(x)$ can be writen as a discrete summation of orthonormal basis functions
 \begin{equation}
-	f(x) = \sum_{n=1}^{N} a_n \psi_n(x)
+	f(x) = \sum_{n=1}^{N} a_n \Psi_n(x),
+	\label{eq:expansionEquation1}
+\end{equation}
+where $a_n$ are the coefficients. I will call the vector $\mb{a} = [ a_{1} \: a_{2} \: \dots \: a_{N} ]^T$ the representation vector of the signal and $\mb{\Psi}$ the representation basis. This allows us to rewrite the signal as a matrix multiplication
+\begin{equation}
+	\mb{f} = \mb{\Psi}\mb{a}.
 \end{equation}
 
-Where $a_n$ are the coefficients and $\mb{f}$ the coefficient vector. When a signal is sparse most of its coefficients are zero. A coefficient vector is called K-sparse if it has at most $K$ non-zero coefficients. When a signal is compressible most of the smaller coefficients can be set to zero and the result approximation $\hat{f}(x)=\Psi a_S$ will be nearly indistinguishable from the original. 
+As we discussed in \Cref{chap:Introduction}, any vector $\mb{a}$ is \gls{sparse} when all but a few of its entries are zero. A vector is called $K$-sparse when it has at most $K$ non-zero entries. In real situations, signals with strictly sparse representation vectors are unlikely. Fortunately, it is possible to have approximately sparse representation vectors, which are called \gls{compressible}. In other words, the sorted magnitudes of the coefficients $|a_n|$ quickly decay. When a signal has an expansion in terms of a compressible representation vector, we can intuitively understand \Cref{eq:expansionEquation1}. Discarding smaller coefficients will not significantly degrade the information in the signal \cite{candes2008introduction}. \footnote{From now on, I will use the words \gls{sparse} and \gls{compressible} interchangeably.} 
 
-In most compression algorithms, the continuous signal $f() $ is mapped to aA discrete signal $\mb{f}$ is sparse if most of its coefficients are zero. In practice, most signals are not strictly sparse 
-with only a few non-zero valuesMany signals however, are not strictly sparse in some domain, however they are often \gls{compressible}, which means most of the sampled functions are either zero or can be approximately zero relative to the largest values in the discrete signal. 
+The concept of \gls{sparsity} is important in compressive sensing. Sparsity determines how efficiently one can acquire the signals. All things being equal, if $K$ decreases, then the reconstruction error tends to decrease. Sparse representations of the signal are not the only important prequisite for high probability reconstruction.
+
+The random sensing basis is useful because of it's mathematical convience however, we shall show heuristically that incorporating additional prior knowledge of the statistics of the signal can reduce reconstruction error in reconstruction but other computational sensing tasks such as spectral classification. However, the options for compressive sensing bases are still quite limited.
+
+In practice, the signal is sampled in a different basis than the representation basis. For example, while many natural signals have a sparse or compressible representation in various wavelet bases or Fourier bases, sampling using the representation basis is not practical or desirable in many cases. Often a sensing basis \gls{H} is used to perform the sampling. In traditional Nyquist-Shannon sampling, the sensing basis is a collection of delta functions. In compressive sensing for example, the sensing basis is the binary random coded aperture mask in a compressive imaging system \cite{duarte2008single}. In an \gls{lcos} based compressive sensing spectrometer, the sensing basis is a finite set of spectral filters \cite{oiknine2016along, yuan2015compressive}. In short, the representation basis allows a signal to be represented as a sparse vector, while the sensing basis is composed of the functionals that one samples with.
+
+The equation which combines these concepts to model a compressive measurement is
 
 \begin{equation}
-f(x) = 
+	\mb{g} = \mb{H} \mb{\Psi} \mb{a} = \mb{H} \mb{f}
+	\label{eq:gHf2}
 \end{equation}
+where \gls{measvec} is a $N_m \times 1$ measurement vector, \gls{H} is a $N_m \times N$ measurement vector, and $\mb{a}$ is an $N \times 1$ vector. A forward model in compressive sensing obeys \Cref{eq:gHf2} when $N_m \ll N$. 
 
-It extends the idea that  can be converted in a form with much less data. Thcompressive sensing requires the signals $f(x)$ to be sparse in some \gls{representation basis}. 
+One important concept in \gls{compressive sensing} is coherence. The coherence between the sensing basis $\mb{H}$ and the representation basis $\mb{\Psi}$ is
+\begin{equation}
+	\mu \left( \mb{H}, \mb{\Psi} \right) = \sqrt{n} \max_{1 \leq k, 1 \leq n}  | \langle h_k, \psi_j \rangle | ,
+	\label{eq:coherenceDef1}
+\end{equation}
+which defines coherence as a measure of the largest correlation between any two elements of $\mb{H}$ and $\mb{\Psi}$. There is an alternate definition of coherence which is concerned with only the sensing matrix $\mb{H}$ (the sensing matrix is also called the measurement matrix or the system matrix).
 
-However bandlimited signals are often is unintuitive. Going back to the weighing example, if we have hundreds of itmes we can group the items together to increase the precision of our measurements. However, we still have to take as many measurements as their are items, to solve for their weight. If the number of measurements is less than the number of objects, then a unique solution is impossible. If we have some sort of helpful information, we can significantly reduce the number of solutions, discarding away solutions that are inconsistent with this prior information. 
+\begin{equation}
+	\mu \left( \mb{H} \right) =  \max_{k \neq j } \frac{ | \langle h_k, h_j \rangle | } { \left\| h_k \right\|_2 \left\| h_j \right\|_2 }.
+	\label{eq:coherenceDef2}
+\end{equation}
+In this definition, the coherence is the maximum correlation between columns of the system matrix. 
 
-In compressive sensing, this helpful knowledge is called \emph{sparsity}. A signal is sparse if only a few elements of the signal is non-zero. For compressive sensing to work, the signal-of-interst itself doesn't need to be sparse.  if one only needs to describe it with a few representation vectors relative to the native dimensionality of the signal. Note that the sign  Sparsity is quite similar to how compressiable a signal is. Most real world signals aren't sparse, they are compressible. However, we know from lossy compression techinques that we can throw away most of the data, that much of the information is not sparse. The reconstruction algorithms rely on the assumption of sparsity to correctly estimate the original signal from the small number of measurements \cite{}.
+Ideally, one would like to use as less measurements $N_m$ as possible without degrading the reconstructed signal. In \gls{compressive sensing}, the amount of measurements needed is a function of the sparsity and the coherence. Given a coefficient sequence $\mb{a}$ that is $K$-sparse then one needs
+\begin{equation}
+N_m \geq C \cdot \mu^2 ( \mb{H} , \mb{\Psi} ) \cdot K \cdot \log n
+\label{eq:minMeas1}
+\end{equation}
+for a high probability of reconstruction, where $C$ is just a constant and $n$ is the dimensionality of the original signal.
 
-The actual question of how to code the analog signal-of-interest to produce the most compressive measurements as possible is still an active area of research \cite{}. Many in the compressive sensing community refer to the codes as the measurement basis. This interpretation of the coding scheme allows us to think of the measurement data as projections of the signal-of-interst onto a set of vectors. Incoherence is the concept that the measurement basis and the represetation basis should have low correlation with each other. The more incoherent---lower correlation---the two bases are, the higher the probability of succesful reconstruction of compressive measurements. Random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}, which is why they are so popular in experimental prototypes \cite{} since it simplified the task of having to design the measurement basis. However, as we will see random measurements do not always lead to the best reconstruction results since they are agnostic to the signal-of-interest. The choice of the measurement basis can be a difficult task depending on the application, however it has 
+\Cref{eq:minMeas1} shows the importance of sparsity and coherence in compressive sensing. Lower coherence and sparsity allows one to use less measurements \cite{duarte2008single}. The more incoherent---lower correlation---the two bases are, the higher the probability of succesful reconstruction of compressive measurements. Random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}. Using the alternate definition of coherence from \Cref{eq:coherenceDef2} produces similar qualitative results \cite{tropp2006just}. 
 
-oherence,  However, mathematicians have shown that the measurement basis should have a low maximum correlation with the representation basis, the basis in which the object signal has a sparse representation. This allows the signal to get 
+The isometery constant $\delta_K$ of a matrix \gls{T} $=\mb{H}\mb{\Psi}$ is the smallest number such that 
+\begin{equation}
+\left( 1 - \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} \leq \left\| \mb{T} \mb{a} \right\|_{\ell_2}^{2} \leq \left( 1 + \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} 
+\end{equation}
+for all $K$-sparse vectors $\mb{a}$. The matrix \gls{T} obeys the \emph{restricted isometry property} (RIP) of order $K$ if $\delta_K$ is not too close to one \cite{candes2008introduction}. If RIP is satisfied, the sensing matrix \gls{T} approximately preserves the Euclidean length of signals. The \gls{rip} is an important theorectical result which allows robust compressive sensing where signals are corrupted by noise. Sensing matrices which have random entries obey the \gls{rip} with high probability \cite{candes2008introduction, duarte2008single, foucart2013mathematical}. 
 
-
-scheme relies of the coherence of the representation basis and the measurement basis. Up till now the representation basis has been the canoncial Dirac basis. 
-
-Quite surpriseling, Other than sparsity, when other knowledge of the signal can be made often random measurements are the optimal measurements. 
+All of the concepts I have just discussed can be understood at an intuitive level. Sparsity is the idea that the information content of a signal is relatively small compared to the amount of data which originally described the signal. Coherence extends that concept of how invertable a matrix is, the more linearly independent the system of equations, the easier it is to invert the matrix. The restricted isometry property is basically saying that any matrix with a small isometry constant will keep the distance between signal vectors the same. Why is this important? Think of a geometric picture, imagine noise as a sphere of uncertainty around the signal vectors. When the noise is small, two signal vectors can be mapped to a small part of the measurement space and still fit in that space. When one extracts the signal from the measurements, one can tell them apart. As the noise increases one wants the distance between measured signal vectors to at least stay the same and certainly not dramatic decrease, otherwise it will be difficult to tell the signals apart. The \gls{rip} is basically a way of seeing if a measurement matrix will pack the signal vectors with the space distance between them. A small amount of noise will lead to a small amount of reconstruction error instead of a small amount of noise leading to a large reconstruction error. 
 
 
 
 \subsection{Inversion}
 
+As mentioned in \Cref{chap:Introduction}, solving \Cref{eq:gHf2} when $N_m \ll N$ is highly underdetermined. While the sparsity, incoherence, and the \gls{rip} only provide garuntees for robust reconstruction, I have not talked about how to actually estimate the signal from the compressive measurement \gls{measvec}. There are several standard inverse problems are designed for reconstruction from a compressive measurement. These include $\ell_1$ minimization, sparsity constrained $\ell_2$ minimization, 
+
+I have discussed some of the imporant properties for our signal $\mb{f}$ and the sensor $\mb{H}$ must satisfy for compressive sensing to work well. The question remains, once one has a compressive measurement data $\mb{g}$ how does one actually reconstruct the original signal $\mbh{f}$. We will next discuss some of the more common techniques used in the computationally sensing and compressive sensing community to perform reconstruction. 
+
 \subsubsection{Least Squares}
 
-Suppose 
+The most straight forward technique of estimating or reconstructing a signal from its measurement data given a linear system is through the least squares estimator. 
+
 
 \begin{equation}\label{eq:lineareq1}
 	\mb{g} = \mb{Hr} 
