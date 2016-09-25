@@ -367,23 +367,38 @@ for a high probability of reconstruction, where $C$ is just a constant and $n$ i
 
 \Cref{eq:minMeas1} shows the importance of sparsity and coherence in compressive sensing. Lower coherence and sparsity allows one to use less measurements \cite{duarte2008single}. The more incoherent---lower correlation---the two bases are, the higher the probability of succesful reconstruction of compressive measurements. Random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}. Using the alternate definition of coherence from \Cref{eq:coherenceDef2} produces similar qualitative results \cite{tropp2006just}. 
 
-The isometery constant $\delta_K$ of a matrix \gls{T} $=\mb{H}\mb{\Psi}$ is the smallest number such that 
+The isometery constant $\delta_K$ of a matrix \gls{A} $=\mb{H}\mb{\Psi}$ is the smallest number such that 
 \begin{equation}
-\left( 1 - \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} \leq \left\| \mb{T} \mb{a} \right\|_{\ell_2}^{2} \leq \left( 1 + \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} 
+\left( 1 - \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} \leq \left\| \mb{A} \mb{a} \right\|_{\ell_2}^{2} \leq \left( 1 + \delta_K \right) \left\| \mb{a} \right\|_{\ell_2}^{2} 
 \end{equation}
-for all $K$-sparse vectors $\mb{a}$. The matrix \gls{T} obeys the \emph{restricted isometry property} (RIP) of order $K$ if $\delta_K$ is not too close to one \cite{candes2008introduction}. If RIP is satisfied, the sensing matrix \gls{T} approximately preserves the Euclidean length of signals. The \gls{rip} is an important theorectical result which allows robust compressive sensing where signals are corrupted by noise. Sensing matrices which have random entries obey the \gls{rip} with high probability \cite{candes2008introduction, duarte2008single, foucart2013mathematical}. 
+for all $K$-sparse vectors $\mb{a}$. The matrix \gls{A} obeys the \emph{restricted isometry property} (RIP) of order $K$ if $\delta_K$ is not too close to one \cite{candes2008introduction}. If RIP is satisfied, the sensing matrix \gls{A} approximately preserves the Euclidean length of signals. The \gls{rip} is an important theorectical result which allows robust compressive sensing where signals are corrupted by noise. Sensing matrices which have random entries obey the \gls{rip} with high probability \cite{candes2008introduction, duarte2008single, foucart2013mathematical}. 
 
 All of the concepts I have just discussed can be understood at an intuitive level. Sparsity is the idea that the information content of a signal is relatively small compared to the amount of data which originally described the signal. Coherence extends that concept of how invertable a matrix is, the more linearly independent the system of equations, the easier it is to invert the matrix. The restricted isometry property is basically saying that any matrix with a small isometry constant will keep the distance between signal vectors the same. Why is this important? Think of a geometric picture, imagine noise as a sphere of uncertainty around the signal vectors. When the noise is small, two signal vectors can be mapped to a small part of the measurement space and still fit in that space. When one extracts the signal from the measurements, one can tell them apart. As the noise increases one wants the distance between measured signal vectors to at least stay the same and certainly not dramatic decrease, otherwise it will be difficult to tell the signals apart. The \gls{rip} is basically a way of seeing if a measurement matrix will pack the signal vectors with the space distance between them. A small amount of noise will lead to a small amount of reconstruction error instead of a small amount of noise leading to a large reconstruction error. 
+\gls{A}
 
 
+\subsection{Solving Inverse Problems For Compressive Sensing}
 
-\subsection{Inversion}
 
-As mentioned in \Cref{chap:Introduction}, solving \Cref{eq:gHf2} when $N_m \ll N$ is highly underdetermined. While the sparsity, incoherence, and the \gls{rip} only provide garuntees for robust reconstruction, I have not talked about how to actually estimate the signal from the compressive measurement \gls{measvec}. There are several standard inverse problems are designed for reconstruction from a compressive measurement. These include $\ell_1$ minimization, sparsity constrained $\ell_2$ minimization, 
+I will now discuss inverse problems and several general strategies which allows one to find solutions for the compressive sensing problem when $N_m \ll N$. 
 
-I have discussed some of the imporant properties for our signal $\mb{f}$ and the sensor $\mb{H}$ must satisfy for compressive sensing to work well. The question remains, once one has a compressive measurement data $\mb{g}$ how does one actually reconstruct the original signal $\mbh{f}$. We will next discuss some of the more common techniques used in the computationally sensing and compressive sensing community to perform reconstruction. 
+The least squares estimator (LSE) solves the problem of 
+\begin{equation}
+	\mb{g} = \mb{Ax} + \mb{n}
+	\label{eq:gTan}
+\end{equation}
+by minimizing the objective function 
+\begin{equation}
+	\argminA_{\mb{x}} \: \sum_{n=1}^{N} \left( \mb{g} - \mb{Ta} \right)^2 = \| \mb{g} - \mb{Ta} \|_{2}^{2}.
+\end{equation}
+which is the $\ell_2$ norm. The goal is to minimize the square difference between the given data \gls{measvec} and the forward signal model for the data $\mb{Ta}$. There are no probabilistic assumptions about the measurement data. It turns out that a close form version of the LSE exist
 
-\subsubsection{Least Squares}
+\begin{equation}
+	\mbh{a} = \left( \mb{A}^T \mb{A} \right)^{-1} \mb{A}^T \mb{g}.
+\end{equation}
+Alternatively, if the matrix $\mb{A}$ is very large, one may us gradient descent and other convex optimization algorithms to solve the least squares problem. While the \gls{lse} may provide a solution when $N_m \ll N$ these solutions tends to overfit the data in these situations and does not take advantage of the prior knowledge of sparsity in reduce the solution space.
+
+solves \Cref{eq:gHf2} when $\mb{A}$ is linearly independent and when $N_m > N$ then can solve for $\mbh{a}$
 
 The most straight forward technique of estimating or reconstructing a signal from its measurement data given a linear system is through the least squares estimator. 
 
@@ -394,9 +409,7 @@ The most straight forward technique of estimating or reconstructing a signal fro
 
 Given \smb{g} and \smb{H} we want to solve for \smb{r}. If the matrix is full rank then we can simply multiply both sides of equation \ref{eq:lineareq1} by $\mbi{H}$ 
 
-\begin{equation}
-	\mbi{H} \mb{g} = \mbi{H} \mb{Hr} = \mb{I} \mb{r} = \mb{r}
-\end{equation}
+
 
 If \smb{H} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{r} that minimizes the least squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
 
@@ -410,9 +423,31 @@ If \smb{H} is not full rank then its inverse does not exist. However we can try 
 	\hat{ \mb{r} } = ( \mbt{H} \mb{H} )^{-1} \mbt{H} \mb{g}
 \end{equation}
 
-\subsubsection{L0 and L1 Norm Minimization}
 
-\subsubsection{LASSO and sparsity regularization}
+
+
+Given measurements \gls{measvec} and knowledge that $\mb{a}$ is sparse or compressible, solving an optimization problem of the form 
+\begin{equation}
+	\mbh{a} = \argminA_{\mb{a}} \: \| x \|_{0} \text{\; subject to \;} \mb{Ta} = \mb{g}
+	\label{eq:l0min}
+\end{equation}
+where $\| x \|_{0}$ is the $\ell_0$ norm, which is equal to the number of nonzero entries in vector $\mb{a}$.\footnote{The $\ell_0$ norm is not strictly a norm and is actually a quasi-norm.} \Cref{eq:l0min} return $\mbh{a}$ that resembles $\mb{a}$ as long as the measurement noise is small. This is referred to as $\ell_0$-minimization. The "subject to" constraint ensures the solution agrees with the observed measurement data. Unfortunately, $\ell_0$-minimization is nonconvex which means that iterative methods may not converge to a solution. On the other hand, a convex problem has the property that any local minimum is also a global minimum. It has been shown that for general matrices $\mb{A}$, $\ell_0$- minimization is computationally intractable \cite{aggarwal2007data}. 
+
+Fortunately, one can use practical optimization techniques to find sparse solutions of \label{eq:gTa+e} using
+\begin{equation}
+	\mbh{a} = \argminA_{\mb{a}} \: \| x \|_{1} \text{\; subject to \;} \mb{Ta} = \mb{g}
+	\label{eq:l1min}
+\end{equation}
+where $\| \mb{a} \|_1 = \sum_{n}^{N}|a_n|$. In other words, \gls{l1}-minimization is a convex problem which allows for fast and accurate reconstruction \cite{foucart2013mathematical}. A more practical version of \Cref{eq:l1min} is written as
+\begin{equation}
+	\mbh{a} = \argminA_{\mb{a}} \: \| \mb{Ta} = \mb{g} \|_{2}^{2} + \tau \| \mb{a} \|_1
+	\label{eq:l1regls}
+\end{equation}
+where $\tau$ is a non-negative number. \gls{tau} is called the regularization parameter and serves to change the sparsity level of the solution and can be used to account for noise in the vector which increases the robustness of the optimization. In this form, the problem is called $\ell_1$ regularized least squares (LS). $\ell_1$ regularization also appears in the context of basis pursuit denoising \cite{chen2001atomic}. In statistics, $\ell_1$ regularization is used in the LASSO algorithm for feature selection, therefore one often refers to \Cref{eq:l1regls} as the LASSO problem \cite{tibshirani1996regression}. 
+
+ 
+ is also called Basis Pursu
+
 
 $  \mathfrak{F} \{ \iint\limits_{a}^{b}  g( \xi, \eta )  h( x - \xi, y - \eta )  d \xi d \eta \}  $
 
