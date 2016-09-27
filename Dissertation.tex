@@ -34,8 +34,9 @@
 % This package allows us to make a list of acronyms, the option nomain is used
 % because we actually don't want a glossary, the second option is used because 
 % we want to define acronyms and display a list of used acronyms, 
-\usepackage[acronyms,symbols,xindy]{glossaries}
+\usepackage[acronyms,symbols,xindy,nonumberlist]{glossaries}
 
+\usepackage[font=small,labelfont=bf, justification=justified,format=plain]{caption} % 'format=plain' avoids hanging indentation
 
 \graphicspath{{Figures/}}
 
@@ -56,12 +57,21 @@
 
 % Shorter command for math bold font
 \newcommand{\mb}[1]{\mathbf{#1}}
+
 % Custom command to to math bold font with a transpose operator
 \newcommand{\mbt}[1]{\mathbf{#1}^T}
+
 \newcommand{\mbi}[1]{\mathbf{#1}^{-1}}
 \newcommand{\mbh}[1]{\hat{ \mathbf{#1} } }
 \newcommand{\smb}[1]{$ \mathbf{#1} $}
 \newcommand{\smbh}[1]{$ \hat { \mathbf{#1} } $}
+\newcommand\given[1][]{\:#1\vert\:}
+
+%%%% Define new ams math commands %%%%%%%%%%%%%%
+
+% These require the amsmath package to be used.
+\DeclareMathOperator*{\argminA}{arg\,min} 
+
 %%%%%%% Load a seperate files where I define different glossary entries %%%%%%%%
 
 \loadglsentries{glossaryentries}
@@ -86,7 +96,7 @@
 {2016}	
 
 \approval
-{12 December 2016}		% Defense Date	
+{9 December 2016}		% Defense Date	
 {Amit Ashok}  		% 1st committee member
 {Rongguang Liang}		% 2nd committee membe
 {Michael E. Gehm}
@@ -134,7 +144,6 @@
 
 %\printglossaries[type=acryonym]
 \printglossaries
-
 
 \bibliographystyle{IEEEtran.bst}
 \bibliography{Dissertation}

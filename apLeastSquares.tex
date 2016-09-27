@@ -1,85 +1,85 @@
 \chapter{Derivation of the Least Squares Estimator}\label{app:Derivation of the Least Squares Estimator}
 
-
 Suppose 
 
 \begin{equation}\label{eq:lineareqAp1}
-	\mb{g} = \mb{Hr} 
+	\mb{g} = \mb{A}\mb{x} 
 \end{equation}
 
-Given \smb{g} and \smb{H} we want to solve for \smb{r}. If the matrix is full rank then we can simply multiply both sides of equation \ref{eq:lineareqAp1} by $\mbi{H}$ 
+Given \smb{g} and \smb{A} we want to solve for \smb{x}. If the matrix is full rank then we can simply multiply both sides of equation \ref{eq:lineareqAp1} by $\mbi{A}$ 
 
 \begin{equation}
-	\mbi{H} \mb{g} = \mbi{H} \mb{Hr} = \mb{I} \mb{r} = \mb{r}
+	\mbi{A} \mb{g} = \mbi{A}  \mb{Ax} = \mb{I} \mb{x} = \mb{x}
 \end{equation}
+where $\mb{I}$ is the identity matrix.
 
-If \smb{H} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{r} that minimizes the squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
+If \smb{A} is not full rank then its inverse does not exist. However we can try to find a solution \smbh{x} that minimizes the squared error. This is called the \emph{Least Squares Solution} also known as the \emph{Least Squares Estimator}, \emph{Ordinary Least Squares} and by many other names. We define the squared error as
 
 \begin{equation}\label{eq:squarederrorAp1}
-	\mathbf{ \lVert \mathbf{e} \rVert }^2 =    \mb{ \lVert \mb{Hr-g} \rVert }^2
+	\mathbf{ \lVert \mathbf{\epsilon} \rVert }^2 =    \mb{ \lVert \mb{Ax-g} \rVert }^2
 \end{equation}
 
-\noindent To minimize the error, we take the derivative of equation \ref{eq:squarederrorAp1} with respect to \smb{r} and set it equal to zero and solve for \smb{r}. Note that the equation \ref{eq:squarederrorAp1} can be expanded in terms of an inner product 
+\noindent To minimize the error, we take the derivative of equation \ref{eq:squarederrorAp1} with respect to \smb{x} and set it equal to zero and solve for \smb{x}. Note that the equation \ref{eq:squarederrorAp1} can be expanded in terms of an inner product 
 
 \begin{equation} \label{eq:squarederrorAp2}
-	\mathbf{ \lVert \mathbf{e} \rVert }^2 =    \mb{ \lVert \mb{Hr-g} \rVert }^2 = \sum_{i=1}^{N} e_i^{2} = \mathbf{e}^T \mathbf{e} =(\mathbf{Hr-g} ) ^{T} ( \mathbf{Hr-g} )
+	\mathbf{ \lVert \mathbf{\epsilon} \rVert }^2 =    \mb{ \lVert \mb{Ax-g} \rVert }^2 = \sum_{i=1}^{N} \epsilon_i^{2} = \mathbf{\epsilon}^T \mathbf{\epsilon} =(\mathbf{Ax-g} ) ^{T} ( \mathbf{Ax-g} )
 \end{equation}
 
 \noindent The transpose is distributive 
 
 \begin{equation}
-	 ( \mathbf{Hr-g} )^{T} = ( \mathbf{Hr} )^{T} - \mathbf{g}^{T} 
+	 ( \mathbf{Ax-g} )^{T} = ( \mathbf{Ax} )^{T} - \mathbf{g}^{T} 
 \end{equation}
 
 \noindent The transpose of a product of matrices equals the product of their transposes in reverse order
 
 \begin{equation}
-	 ( \mathbf{Hr} )^{T} = \mathbf{r}^{T} \mathbf{H}^{T} 
+	 ( \mathbf{Ax} )^{T} = \mathbf{x}^{T} \mathbf{A}^{T} 
 \end{equation}
 
 \noindent So equation \ref{eq:squarederrorAp2} becomes
 \begin{equation}
 	\begin{split}
-		\mathbf{ \lVert \mathbf{e} \rVert }^2 & = ( \mathbf{r}^{T} \mathbf{H}^{T}  - \mathbf{g}^{T} )  ( \mathbf{Hr-g} ) \\
-		& = \mathbf{r}^T \mathbf{H}^T \mathbf{H} \mathbf{r} - \mathbf{r}^T \mathbf{H}^T \mathbf{g} - \mathbf{g}^T \mathbf{H} \mathbf{r} + \mathbf{g}^T \mathbf{g}
+		\mathbf{ \lVert \mathbf{\epsilon} \rVert }^2 & = ( \mathbf{x}^{T} \mathbf{A}^{T}  - \mathbf{g}^{T} )  ( \mathbf{Ax-g} ) \\
+		& = \mathbf{x}^T \mathbf{A}^T \mathbf{A} \mathbf{x} - \mathbf{x}^T \mathbf{A}^T \mathbf{g} - \mathbf{g}^T \mathbf{A} \mathbf{x} + \mathbf{g}^T \mathbf{g}
 	\end{split}
 \end{equation}
 
-\noindent We can see that the two middle terms $\mbt{r}\mbt{H}\mb{r} = \mbt{g}\mb{Hr}$ because they are just scalars.
+\noindent We can see that the two middle terms $\mbt{x}\mbt{A}\mb{x} = \mbt{g} \mb{Ax}$ because they are just scalars.
 
 \begin{equation}\label{eq:lsgradstep1}
-	\mathbf{ \lVert \mathbf{e} \rVert }^2 =  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r} - 2 \mathbf{g}^{T} \mathbf{H} \mathbf{r} +   \mathbf{g}^T \mathbf{g}  
+	\mathbf{ \lVert \mathbf{\epsilon} \rVert }^2 =  \mathbf{x}^{T} \mathbf{A}^{T} \mathbf{A} \mathbf{x} - 2 \mathbf{g}^{T} \mathbf{A} \mathbf{x} +   \mathbf{g}^T \mathbf{g}  
 \end{equation}	
 
-To find the least squares solution, take the gradient with respect to \smb{r} and set it equal to zero. 
+To find the least squares solution, take the gradient with respect to \smb{x} and set it equal to zero. 
 
 It should be noted that there are two different notations for writing the derivative of a vector with respect to a vector $\frac{ \partial{ \mb{y} } } { \partial{ \mb{x} } }$. If the numerator \smb{y} is of size $m$ and the denominator \smb{x} of size $n$, then the result can be laid out as either an $m \times n$ matrix or $n \times m$ matrix, i.e. the elements of \smb{y} laid out in columns and the elements of \smb{x} laid out in rows, or vice versa. They are both correct and equal, which leads to confusion when switching back in forth. I will write both to reduce confusion.
 
-Clearly the gradient of the third term in equation \ref{eq:lsgradstep1} w.r.t $\mathbf{r}$ is $0$, so it goes away. We first tackle the first term on the right hand side in equation \ref{eq:lsgradstep1}
+Clearly the gradient of the third term in equation \ref{eq:lsgradstep1} w.r.t $\mathbf{x}$ is $0$, so it goes away. We first tackle the first term on the right hand side in equation \ref{eq:lsgradstep1}
 
 \begin{equation}
-	\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r} 
+	\dfrac {\partial } {\partial \mathbf{x} }  \mathbf{x}^{T} \mathbf{A}^{T} \mathbf{A} \mathbf{x} 
 \end{equation}
 
-Let $\mathbf{K} = \mathbf{H}^T \mathbf{H}$. Since \smb{K} is symmetric, we can use the identity
+Let $\mathbf{K} = \mathbf{A}^T \mathbf{A}$. Since \smb{K} is symmetric, we can use the identity
 
 \begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{K} \mathbf{r} = 2 \mathbf{r}^T \mathbf{K} = 2 \mbt{K} \mb{r}
+\dfrac {\partial } {\partial \mathbf{x} }  \mathbf{x}^{T} \mathbf{K} \mathbf{x} = 2 \mathbf{x}^T \mathbf{K} = 2 \mbt{K} \mb{x}
 \end{equation}
 
 since $\mathbf{K}=\mathbf{K}^T$ then 
 
 \begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} }  \mathbf{r}^{T} \mathbf{H}^{T} \mathbf{H} \mathbf{r}  = 2 \mathbf{r}^T \mathbf{H}^T \mathbf{H} = 2 \mathbf{H}^T \mathbf{H} \mathbf{r}
+\dfrac {\partial } {\partial \mathbf{x} }  \mathbf{x}^{T} \mathbf{A}^{T} \mathbf{A} \mathbf{x}  = 2 \mathbf{x}^T \mathbf{A}^T \mathbf{A} = 2 \mathbf{A}^T \mathbf{A} \mathbf{x}
 \end{equation}
 
 
 
-and the gradient of the middle term in equation \ref{eq:lsgradstep1} is simply $- 2 \mathbf{H}^{T} \mathbf{g}$ so 
+and the gradient of the middle term in equation \ref{eq:lsgradstep1} is simply $- 2 \mathbf{A}^{T} \mathbf{g}$ so 
 \begin{equation}
-\dfrac {\partial } {\partial \mathbf{r} } \mathbf{ \lVert \mathbf{e} \rVert }^2  = 2 \mathbf{H}^T \mathbf{H} \mathbf{r} - 2 \mathbf{g}^{T} \mathbf{H}
+\dfrac {\partial } {\partial \mathbf{x} } \mathbf{ \lVert \mathbf{\epsilon} \rVert }^2  = 2 \mathbf{A}^T \mathbf{A} \mathbf{x} - 2 \mathbf{g}^{T} \mathbf{A}
 \end{equation}
-setting it equal to zero and solving for \smb{r} gives the least squares estimate
+setting it equal to zero and solving for \smb{x} gives the least squares estimate
 \begin{equation}
-	\hat{ \mb{r} } = ( \mbt{H} \mb{H} )^{-1} \mbt{H} \mb{g}
+	\hat{ \mb{x} } = ( \mbt{A} \mb{A} )^{-1} \mbt{A} \mb{g}
 \end{equation}

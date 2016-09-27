@@ -29,6 +29,10 @@
 \newacronym{mse}{MSE}{Mean Squared Error}
 \newacronym{rmse}{RMSE}{Root corollaryMean Squared Error}
 \newacronym{fts}{FTS}{Fourier Transform Spectrometer}
+\newacronym{map}{MAP}{Maximum a posteriori}
+\newacronym{rip}{RIP}{Restricted isometry property}
+\newacronym{ls}{LS}{Least squares}
+\newacronym{osa}{OSA}{Optical Society of America}
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{specres}{type=symbols, name={$ \delta_{\lambda} $}, symbol={$ \delta_{\lambda} $} ,sort=delta, description={Spectral resolution}}
@@ -41,7 +45,9 @@
 
 \newglossaryentry{estobjvec}{type=symbols,name={$ \mathbf{ \hat{ f }} $}, symbol={$ \mathbf{ \hat{ f }} $},sort=fhat, description={Estimated object}}
 
-\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_n $}, symbol={$ \mathbf{ H }_n $}, sort=hadamard, description={A Hadamard matrix of size $n \times n$}}
+\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_n $}, symbol={$ \mathbf{ H }_n $}, sort=Hn, description={A Hadamard matrix of size $n \times n$}}
+
+\newglossaryentry{H}{type=symbols,name={$ \mathbf{ H } $}, symbol={$ \mathbf{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix.}}
 
 \newglossaryentry{noisevec}{type=symbols,name={$ \mathbf{ e } $}, symbol={$ \mathbf{ e } $}, sort=e, description={Additive noise vector}}
 
@@ -51,7 +57,11 @@
 
 \newglossaryentry{n}{type=symbols,name={$ n $}, symbol={$ n $}, sort=n, description={The number of elements in the object \gls{objvec} }}
 
+\newglossaryentry{A}{type=symbols,name={$ \mb{A} $}, symbol={$ \mb{A} $}, sort=A, description={The product of the sensing matrix and the representation matrix $\mb{A} = \mb{H}\mb{\Psi}$ }}
 
+\newglossaryentry{l1}{type=symbols,name={ $\ell_1$ }, symbol={ $\ell_1$ }, sort=l1, description={The $\ell_1$ is a norm which is defined as the sum of the absolute values of the entries a vector}}
+
+\newglossaryentry{tau}{type=symbols,name={ $\tau$ }, symbol={ $\tau$ }, sort=tau, description={Notation for a regularization parameter in an objective function for any kind of optimization}}
 
 
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -118,6 +128,15 @@ name={Compressive sensing},
 text={compressive sensing},
 description={A sensing technique that attempts to directly a compressive or sparse representation of the signal-of-interest during the measurement. Compressive sensors attempt to uses significantly less measurements than the dimensionality of the signal-of-interest. Compressive sensing relies on non-linear optimization algorithms to perform reconstruction or task-specific sensing from highly underdetermined inverse problems. These algorithms often rely on sparsity to avoid overfitting.}
 }
+
+\newglossaryentry{sparsity}
+{
+name={sparsity},
+text={sparsity},
+description={A set, vector, or matrix which contains an overwhelming majority of zeros relative to the size of the set, vector, or matrix. }
+}
+
+
 
 \newglossaryentry{compressive sensors}
 {
@@ -219,8 +238,23 @@ description={The problem of taking the measurement data and calculating a recons
 {
 name={Sparse},
 text={sparse},
-description={A vector or matrix in which most of the elements are zero.} 
+description={ \emph{See} \gls{sparsity}}
 }
+
+\newglossaryentry{sample}
+{
+name={Sample},
+text={sample},
+description={ The process of mapping a continuous signal to a discrete signal.  }
+}
+
+\newglossaryentry{sampling}
+{
+name={Sampling},
+text={sampling},
+description={ \emph{See} \gls{sample}  }
+}
+
 
 
 \newglossaryentry{multiplex advantage}
@@ -235,4 +269,43 @@ description={The improvement in \gls{snr} that is due to multiplexed measurement
 name={Fellgett advantage},
 text={Fellgett advantage},
 description={\emph{See} \gls{multiplex advantage}} 
+}
+
+\newglossaryentry{bandlimited signal}
+{
+name={Bandlimited signal},
+text={bandlimited signal},
+description={A bandlimited signal is any signal $ g(x) $ that whose Fourier transform $ G(f_x) $ is zero and remains zero past a certain frequency $ \lvert f_x \rvert \geq B$.} 
+}
+
+\newglossaryentry{basis pursuit}
+{
+name={Basis pursuit},
+text={basis pursuit},
+description={Algorithms which attempt to solve a compressive sensing problem by solving the convex optimization problem of 
+\begin{equation}
+	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{x} \|_{1} \text{\; subject to \;} \mb{A}\mb{x} = \mb{g}
+\end{equation} 
+}
+}
+
+\newglossaryentry{incoherence}
+{
+name={Incoherence},
+text={incoherence},
+description={ The idea that }
+}
+
+\newglossaryentry{compressible}
+{
+name={Compressible},
+text={compressible},
+description={ The idea that }
+}
+
+\newglossaryentry{representation basis}
+{
+name={Representation basis},
+text={representation basis},
+description={ The idea that representation basis}
 }
