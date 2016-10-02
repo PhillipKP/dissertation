@@ -29,10 +29,15 @@
 \newacronym{mse}{MSE}{Mean Squared Error}
 \newacronym{rmse}{RMSE}{Root corollaryMean Squared Error}
 \newacronym{fts}{FTS}{Fourier Transform Spectrometer}
-\newacronym{map}{MAP}{Maximum a posteriori}
-\newacronym{rip}{RIP}{Restricted isometry property}
-\newacronym{ls}{LS}{Least squares}
+\newacronym{map}{MAP}{Maximum A Posteriori}
+\newacronym{rip}{RIP}{restricted isometry property}
+\newacronym{ls}{LS}{least squares}
 \newacronym{osa}{OSA}{Optical Society of America}
+\newacronym{lar}{LAR}{Least Angle Regression}
+\newacronym{afss}{AFSS}{Adaptive Feature Specific Spectrometer}
+%\newacronym{lasso}{LASSO}{Least Absolute Shrinkage and Selection Operator}
+
+
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{specres}{type=symbols, name={$ \delta_{\lambda} $}, symbol={$ \delta_{\lambda} $} ,sort=delta, description={Spectral resolution}}
@@ -45,7 +50,7 @@
 
 \newglossaryentry{estobjvec}{type=symbols,name={$ \mathbf{ \hat{ f }} $}, symbol={$ \mathbf{ \hat{ f }} $},sort=fhat, description={Estimated object}}
 
-\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_n $}, symbol={$ \mathbf{ H }_n $}, sort=Hn, description={A Hadamard matrix of size $n \times n$}}
+\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_N $}, symbol={$ \mathbf{ H }_N $}, sort=Hn, description={A Hadamard matrix of size $N \times N$}}
 
 \newglossaryentry{H}{type=symbols,name={$ \mathbf{ H } $}, symbol={$ \mathbf{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix.}}
 
@@ -309,3 +314,56 @@ name={Representation basis},
 text={representation basis},
 description={ The idea that representation basis}
 }
+
+\newglossaryentry{posterior}
+{
+name={Posterior},
+text={posterior},
+description={ The posterior probability is the conditional probability of a hypothesis $h$ or parameter $\theta$ given some data $g$. $ P \left( \theta \given[\big] g \right) $}
+}
+
+\newglossaryentry{prior}
+{
+name={Prior},
+text={prior},
+description={ The priori probability is the probability of a hypothesis $h$ or parameter $\theta$ without any knowledge of the data data $g$. $ P \left( \theta \right) $}
+}
+
+\newglossaryentry{likelihood}
+{
+name={Likelihood},
+text={likelihood},
+description={ The likelihood is the probability of the data $g$ assuming that a hypothesis $h$ or parameter $\theta$ is true. $P \left( g \given[\big] \theta \right)$}
+}
+
+\newglossaryentry{Maximum A Posteriori}
+{
+name={Maximum A Posteriori (MAP)},
+text={Maximum A Posteriori (MAP)},
+description={Maximum A Posteriori (MAP) estimator says the parameters  $ \mb{\theta} $ which maximize the \gls{posterior} probability are the most likely parameters.}
+}
+
+\newglossaryentry{lasso}
+{
+name={lasso},
+text={lasso},
+description={The least absolute shrinkage and selection operator (lasso) is a regression analysis method that performs both variable selection and regularization. It is refers to an optimization problem, a regression technique, and an algorithm. The lasso problem is the
+%
+\begin{equation}
+	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_1
+\end{equation}
+ }
+}
+
+\newglossaryentry{ridge regression}
+{
+name={ridge regression},
+text={ridge regression},
+description={Ridge regression is a regression technique that uses $\ell_2$ regularization to prevent overfitting of the data. Ridge regression seeks coefficient estimates that fit the data well by making the objective function, the $\ell_2$ norm between the data and the linear model small, however the shrinkage penalty has the effect of shrinking estimates towards zero. 
+%
+\begin{equation}
+	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_2
+\end{equation}
+ }
+}
+

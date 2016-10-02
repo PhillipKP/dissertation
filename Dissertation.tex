@@ -38,13 +38,21 @@
 
 \usepackage[font=small,labelfont=bf, justification=justified,format=plain]{caption} % 'format=plain' avoids hanging indentation
 
-\graphicspath{{Figures/}}
+% Use these packages for algorithms
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\makeatletter
+\def\BState{\State\hskip-\ALG@thistlm}
+\makeatother
 
+% This package allows me to use different font for inline code
+\usepackage{courier}
+
+% This is the subdirectory where all the figures are stored
+\graphicspath{{Figures/}}
 
 % Makes words that are the main glossary italic on the first use
 \defglsdisplayfirst[\glsdefaulttype]{\textit{#1}}
-
-
 
 % This is rquires to make a glossary, a list of acronyms, or a list of 
 \makeglossaries
@@ -57,20 +65,25 @@
 
 % Shorter command for math bold font
 \newcommand{\mb}[1]{\mathbf{#1}}
-
-% Custom command to to math bold font with a transpose operator
+% Custom command to math bold font with a transpose operator
 \newcommand{\mbt}[1]{\mathbf{#1}^T}
-
+% Custom command math bold font with an inverse sign
 \newcommand{\mbi}[1]{\mathbf{#1}^{-1}}
+% Custom command math bold font with a hat sign
 \newcommand{\mbh}[1]{\hat{ \mathbf{#1} } }
 \newcommand{\smb}[1]{$ \mathbf{#1} $}
 \newcommand{\smbh}[1]{$ \hat { \mathbf{#1} } $}
+
+% Custom command to create paraenthesis that auto size anything you put in the 
+% argument of this command
+\newcommand\ap[1]{\left( #1 \right) }
+
 \newcommand\given[1][]{\:#1\vert\:}
 
-%%%% Define new ams math commands %%%%%%%%%%%%%%
-
-% These require the amsmath package to be used.
+% Define the arg min formatting
 \DeclareMathOperator*{\argminA}{arg\,min} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%% Load a seperate files where I define different glossary entries %%%%%%%%
 
@@ -136,6 +149,7 @@
 
 \begin{appendices}
 	\include{apLeastSquares}
+	%\include{apLeastAngleRegression}
 \end{appendices}
 
 
