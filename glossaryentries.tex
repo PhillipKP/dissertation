@@ -4,7 +4,7 @@
 
 \newacronym{svm}{SVM}{support vector machine}
 \newacronym[plural=FPAs,firstplural=focal-plane arrays (FPAs)]{fpa}{FPA}{focal-plane array}
-\newacronym{psf}{PSF}{point spread function}
+\newacronym{psf}{PSF}{point-spread function}
 \newacronym{adc}{ADC}{analog-to-digital converter}
 \newacronym{afssi-c}{AFSSI-C}{Adaptive Feature Specific Spectral Imaging-Classifier}
 \newacronym{pca}{PCA}{Principal Component Analysis}
@@ -35,7 +35,7 @@
 \newacronym{osa}{OSA}{Optical Society of America}
 \newacronym{lar}{LAR}{Least Angle Regression}
 \newacronym{afss}{AFSS}{Adaptive Feature Specific Spectrometer}
-%\newacronym{lasso}{LASSO}{Least Absolute Shrinkage and Selection Operator}
+
 
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -52,7 +52,7 @@
 
 \newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_N $}, symbol={$ \mathbf{ H }_N $}, sort=Hn, description={A Hadamard matrix of size $N \times N$}}
 
-\newglossaryentry{H}{type=symbols,name={$ \mathbf{ H } $}, symbol={$ \mathbf{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix.}}
+\newglossaryentry{H}{type=symbols,name={$ \mathbf{ H } $}, symbol={$ \mathbf{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix and sensing matrix.}}
 
 \newglossaryentry{noisevec}{type=symbols,name={$ \mathbf{ e } $}, symbol={$ \mathbf{ e } $}, sort=e, description={Additive noise vector}}
 
@@ -68,7 +68,7 @@
 
 \newglossaryentry{tau}{type=symbols,name={ $\tau$ }, symbol={ $\tau$ }, sort=tau, description={Notation for a regularization parameter in an objective function for any kind of optimization}}
 
-
+\newglossaryentry{sparseRepVec}{type=symbols,name={ $\mb{x}$ }, symbol={ $\mb{x}$ }, sort=x, description={ Notation for a sparse representation vector of the object signal}}
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{isomorphic sensing}
@@ -305,7 +305,7 @@ description={ The idea that }
 {
 name={Compressible},
 text={compressible},
-description={ The idea that }
+description={ Signals with strictly sparse representation vectors are unlikely. Fortunately, it is possible to have approximately sparse representation vectors, which are called compressible. In other words, the sorted magnitudes of the coefficients $|x_n|$ quickly decay.}
 }
 
 \newglossaryentry{representation basis}
@@ -349,9 +349,9 @@ name={lasso},
 text={lasso},
 description={The least absolute shrinkage and selection operator (lasso) is a regression analysis method that performs both variable selection and regularization. It is refers to an optimization problem, a regression technique, and an algorithm. The lasso problem is the
 %
-\begin{equation}
+\begin{equation*}
 	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_1
-\end{equation}
+\end{equation*}
  }
 }
 
@@ -361,9 +361,9 @@ name={ridge regression},
 text={ridge regression},
 description={Ridge regression is a regression technique that uses $\ell_2$ regularization to prevent overfitting of the data. Ridge regression seeks coefficient estimates that fit the data well by making the objective function, the $\ell_2$ norm between the data and the linear model small, however the shrinkage penalty has the effect of shrinking estimates towards zero. 
 %
-\begin{equation}
+\begin{equation*}
 	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_2
-\end{equation}
+\end{equation*}
  }
 }
 
