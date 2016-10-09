@@ -1,0 +1,639 @@
+\chapter{SCOUT Simulation Code}\label{app:scoutSimCode}
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={Main Simulation Script},
+]
+% GENERATING SYSTEM MEASUREMENT MATRIX 'H'
+
+clc; clearvars; close all
+rand_trials = 5
+% lens to camera image sensor defocus in mm
+defocus_value=35;
+% pitch (in mm)of mask1 (next to image sensor)
+p1=0.01; 
+% pitch (in mm) of mask2 (next to lens)
+p2=0.5;
+%focal length of lens
+f=35; 
+
+%% comments about image sensor pitch
+%  reading 288 x 288 part on image sensor and binning 
+%  (36x36) to obtain 8x8 pixels
+%  sensor pitch is 9 microns. For binnned 8x8, each pixel
+%  is 36*9=   324 microns
+
+% pitch of image sensor in mm
+p=0.324;
+
+for i = 1:rand_trials
+    
+    % d1 is distance between Mask 1 and image plane of lens
+    % here 2.04 mm is the spacing between camera sensor
+    % image plane and Mask 1
+    d1=defocus_value-2.04;
+    
+    % d2 is distance between Mask 2 and image plane of lens
+    % here 6.35 mm is the spacing between
+    d2=f-6.35;
+    
+    % calculating pitch and positions relative to detector
+    % for locating Mask1 away from focus
+    pos1 = (defocus_value -d1)/(f+defocus_value);
+    
+    % position of Mask 2
+    pos2=(d2+defocus_value)/(f+defocus_value); 
+    
+    %calculating pitch values of Masks on detector
+    pd1=(p1*defocus_value)/d1; % for mask1
+    pd2=(p2*defocus_value)/d2; % for mask2
+    pitch1=pd1/p;
+    pitch2=pd2/p;
+    
+    
+    pitch = [pitch1 pitch2];
+    pos=[pos1 pos2];
+    
+    % Mask leaakge based on experimental mask transmission 
+    % values
+    leakage1=0.12;%masks open part leakage of 12%
+    leakage=0.00;%masks black part no leakage
+    
+    % fill factor of mask1 and mask2 , 50%
+    through=[0.5 0.5]; 
+    
+    lens_defocus=defocus_value;
+    
+    %scaling mask patterns, using smaller values speeds up code
+    upsamp=0.25; 
+    
+    directory=pwd;
+    
+    date='feb16'; %date for file names
+    
+    name = ...
+        sprintf(['%s/pos_%.3g_%.3g_through_%.3g_%.3g_'...
+            'pitch_%.3g_%.3g.mat'],...
+        directory,pos(1),pos(2),through(1),through(2),...
+        pitch(1),pitch(2));
+    
+    % choose blur type on masks
+    psfblur='fourierpsf';
+    %psfblur='false' for no blur    
+    % for adding blur based on fourier filter    
+    %psfblur='fourierpsf' 
+    
+    varargin={'upsample',upsamp,'mask_pos',...
+        pos,'throughput',through,'maskpitch', ...
+        pitch,'defocus', lens_defocus,'psfblur',...
+        psfblur,'leakage',leakage,'leakage1',leakage1};
+    
+    N=32;%size of the scene (NxN)
+    K=8;%size of detector (KxK)
+    
+    % call function to generate system matrix, with point 
+    % by point calibration. Selecting display as 'false' 
+    % to prevent figure display while generating matrix
+    H(:,:,i) = struct_projection(N, 'display',false,...
+        'compression', N/K, varargin{:});
+    
+
+    save(['condnum_df_' num2str(defocus_value) ...
+        'normalization_on.mat'],'H','rand_trials')
+    
+end
+
+    % use the statement below for locating Mask1 before the focus (i.e. on the same side of focus as Mask 2)
+    %  pos1=(d1+defocus_value)/(f+defocus_value);
+    
+    pos2=(d2+defocus_value)/(f+defocus_value); % position of Mask 2
+    
+    %calculating pitch values of Masks on detector
+    pd1=(p1*defocus_value)/d1; % for mask1
+    pd2=(p2*defocus_value)/d2; % for mask2
+    pitch1=pd1/p;
+    pitch2=pd2/p;
+    
+    
+    pitch = [pitch1 pitch2];
+    pos=[pos1 pos2];
+    
+    %Mask leaakge based on experimental mask transmission values
+    leakage1=0.12;%masks open part leakage of 12%
+    leakage=0.00;%masks black part no leakage
+    
+    
+    through=[0.5 0.5]; % fill factor of mask1 and mask2 , 50%
+    lens_defocus=defocus_value;
+    upsamp=0.25; %scaling mask patterns, using smaller values speeds up code
+    directory=pwd;
+    date='feb16'; %date for file names
+    
+    name = sprintf('%s/pos_%.3g_%.3g_through_%.3g_%.3g_pitch_%.3g_%.3g.mat',directory,pos(1),pos(2),through(1),through(2),pitch(1),pitch(2));
+    
+    %%choose blur type on masks
+    psfblur='fourierpsf';
+    %psfblur='false' for no blur
+    %psfblur='fourierpsf' for adding blur based on fourier filter
+    
+    
+    varargin={'upsample',upsamp,'mask_pos',pos,'throughput',through,'maskpitch', pitch,'defocus', lens_defocus,'psfblur',psfblur,'leakage',leakage,'leakage1',leakage1};
+    
+    N=32;%size of the scene (NxN)
+    K=8;%size of detector (KxK)
+    
+    % call function to generate system matrix, with point by point calibration.
+    %selecting display as 'false' to prevent figure display while generating matrix
+    H(:,:,i) = struct_projection(N, 'display',false,...
+        'compression', N/K, varargin{:});
+    
+    % system_mat_name=sprintf('%s_defocus_%d.mat',date,lens_defocus);% file
+    % name to save system matrix 'H'
+    
+    %     system_mat_name = ['trial' num2str(i) '_default_matrix.mat']
+    save(['condnum_df_' num2str(defocus_value) 'normalization_on.mat'],'H','rand_trials')
+    
+end
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={struct\_projection function},
+]
+function H = struct_projection(N,varargin)
+
+defopt.mask_pos = [.1 .9];
+defopt.compression = 4;
+defopt.throughput = 0.5;
+defopt.defocus = 2;
+defopt.display = true;
+defopt.upsample = 4;
+
+% Sets pitch equal to reconstruction resolution
+defopt.maskpitch = 1; 
+defopt.psfblur='false';
+defopt.leakage1=0;%mask clear part
+defopt.leakage=0;%mask dark part
+
+opt = matlab_options(varargin, defopt);
+
+compression = opt.compression;
+throughput = opt.throughput;
+dd = opt.defocus;
+leakage = opt.leakage;
+leakage1 = opt.leakage1;
+
+upsample = opt.upsample;  % linear upsample factor
+
+display = opt.display;
+
+psfblur=opt.psfblur; % read blur type
+
+% all physical distances are in mm
+
+
+N=32;% scene size NxN
+
+% location pitch - desired image-space reconstruction 
+% resolution in mm
+p  = 0.324;  
+
+f = 35; % lens focal length in mm
+D=25.4; %lens diameter in mm
+
+maskcount = length(opt.mask_pos);
+
+%for locating Mask1 away from focus
+d1 = dd - opt.mask_pos(1)*(f+dd); 
+
+% use the statement below for locating Mask1 before the 
+% focus (i.e. on the same side of focus as Mask 2)
+
+%%% testing for defocus=1, mask1 behind mask2
+
+if maskcount>1
+  d2 = opt.mask_pos(2)*(f+dd) - dd; %%%edit
+else
+  d2 = 0;
+end
+if maskcount>2
+  d3 = dd+opt.mask_pos(3)*(f+dd); %%edit
+else
+  d3 = 0;
+end
+
+if maskcount>3
+  error('mask_pos is too long, must have length 1-3');
+end
+
+throughput = throughput(:);
+if length(throughput)==1 && maskcount>1
+  throughput=throughput^(1/maskcount)*ones(maskcount,1);
+end
+if length(throughput) <3
+  throughput = [throughput;ones(3-length(throughput))];
+end
+
+if length(opt.maskpitch) == 1 && maskcount > 1
+  maskpitch=opt.maskpitch*ones(maskcount,1);
+else
+  maskpitch = opt.maskpitch(:);
+end
+
+% Code assumes all masks present even if they aren't, 
+% so pad to length 3
+maskpitch = [maskpitch ; ones(3 - length(maskpitch),1)];
+
+% make mask pitch (pd) equal to reconstruction pitch (p)
+pd = maskpitch * p; % mask pitch in sensor plane
+
+%% perform geometrical calculations
+
+p1 = pd(1)*d1/dd; % physical mask pitch---- mm real mask
+p2 = pd(2)*d2/dd;
+p3 = pd(3)*d3/dd;
+
+% this is the pitch of the points in the aperture,
+% a larger defocus (dd) gives a smaller pitch
+pL = p*f/dd;  
+
+fprintf('mask 1: d1 = %.1f, p1 = %.3f\n', d1, p1);
+fprintf('mask 2: d2 = %.1f, p2 = %.3f\n', d2, p2);
+fprintf('mask 3: d3 = %.1f, p3 = %.3f\n', d3, p3);
+
+Sf = p * (N-1) / (1 + dd/f);  % full "image" width at focus (mm)
+Sd = Sf * (1 + dd/f); % image width at sensor (at z = dd)
+S1 = Sf * (1 + d1/f); % at mask 1
+S2 = Sf * (1 + d2/f); % at mask 2 
+
+S3 = Sf * (1 - d3/f); % at mask 3
+
+Bd = D * dd/f; % blur width at sensor
+B1 = D * d1/f;
+B2 = D * d2/f;
+B3 = D * d3/f;
+
+%% define mask structures
+m0.z = f; % aperture
+m0.x = [-D/2:pL:D/2]; 
+m0.y = m0.x;
+[X,Y] = meshgrid(m0.x, m0.y);
+
+%%## adding gaussian blur to model lens defocus
+
+% 'blursize' indicates the size of the blur filter which is
+% computed as per the defocus level above(bigger blur for a larger defocus).
+blursize=size(X);
+
+% the standard deviation of 12 is chosen to model lens 
+% defocus with Gaussian blur
+m0.v=fspecial('gaussian',blursize(1),12); 
+
+m1.z = d1; % first mask
+m1.x = [-(B1+S1)/2:p1:(B1+S1)/2];
+m1.y = m1.x;
+m1.v = double(rand(length(m1.x)) <= throughput(1));
+
+% including leakage of dark part
+leak = leakage*ones(length(m1.v)); 
+
+% including leakage of clear part
+leak1 = leakage1*ones(length(m1.v)); 
+m1.v = max(m1.v.*(1-leak1),leak);
+m2.z = d2; % second mask
+m2.x = [-(B2+S2)/2:p2:(B2+S2)/2];
+m2.y = m2.x;
+m2.v = double(rand(length(m2.x)) <= throughput(2));
+
+% including leakage of dark part
+leak = leakage*ones(length(m2.v));
+
+% including leakage of clear part
+leak1 = leakage1*ones(length(m2.v));
+m2.v = max(m2.v.*(1-leak1),leak);
+m3.z = d3; % third mask
+m3.x = [-(B3+S3)/2:p3:(B3+S3)/2];
+m3.y = m3.x;
+m3.v = double(rand(length(m3.x)) <= throughput(3));
+% including leakage of dark part
+leak = leakage*ones(length(m3.v));
+% including leakage of clear part
+leak1 = leakage1*ones(length(m3.v));
+m3.v = max(m3.v.*(1-leak1),leak);
+
+%% perform calculations
+H = [];Hcrop=[];
+% range and sampling for masks in sensor plane
+xx = [-Sd/2:pd/upsample:Sd/2]; 
+% range of point locations (mapped to image space)
+xlist = [-Sd/2:p:Sd/2]; 
+progress(1, length(xlist)^2, 1, 1);
+ind = 1;
+
+countval=length(xlist);
+
+for xcount=1:countval
+    for ycount=1:countval
+        x=xlist(xcount);
+        y=xlist(ycount);
+        progress(ind); ind = ind + 1;
+        [mout, ml] = overlay_masks({m0, m1, m2}, ...
+            [x,y], dd, xx, xx,B1,B2,Bd,psfblur,D);
+        full_image = mout.v;
+        scalefac = upsample * p / pd;
+        high_res = imresize(full_image, [N,N], 'bilinear');
+        % default compression of 4 for  32x32 scene to 
+        % 8x8 detector              
+        low_res = bin_image(high_res, compression); 
+        
+        if display
+            if gcf ~= 2; figure(2); end
+            subplot(1,2,1);
+            imagesc(high_res); axis image; colormap gray;
+            subplot(1,2,2);
+            imagesc(low_res); axis image; colormap gray;
+            drawnow;
+        end
+        
+        H = [H low_res(:)]; % build the system matrix
+       
+    end
+end
+if display
+  figure(3); 
+  imagesc(H); 
+  colormap jet; 
+  colorbar;
+end
+\end{lstlisting}
+
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={overlay\_masks function},
+]
+function [m_out, ml] = overlay_masks(mask_list, origin, ...
+    z, x, y,B1,B2,Bd,psfblur,D)
+% project a list of masks to given z plane and overlay them
+%   mask_list - list of mask structures
+%   origin - [x, y] coordinates of projection origin
+%   z      - z-plane to project to
+%   x, y   - x and y coordinate lists to interpolate onto
+
+if nargin < 4
+    x = ml{1}.x;
+    y = ml{1}.y;
+end
+
+% project the masks to common z plane
+if nargin > 1
+    for ind = 1:length(mask_list)
+        ml{ind} = project_mask(mask_list{ind}, origin, z);
+    end
+else
+    ml = mask_list;
+end
+
+% build the combined mask structure
+m_out = ml{1};
+m_out.x = x;
+m_out.y = y;
+[X,Y] = meshgrid(x,y); % gridded coordinates for output mask
+m_out.v = ones(size(X));
+
+for ind = 1:length(ml)
+    [Xm, Ym] = meshgrid(ml{ind}.x, ml{ind}.y); % native projected coordinates
+    if 0
+        fprintf('ind = %i\n', ind);
+        fprintf('size(Xm) = [%i, %i]\n', size(Xm,1), ...
+            size(Xm,2));
+        fprintf('size(Ym) = [%i, %i]\n', size(Ym,1), ...
+            size(Ym,2));
+        fprintf('size(v)  = [%i, %i]\n', ...
+            size(ml{ind}.v,1), size(ml{ind}.v,2));
+        fprintf('size(X)  = [%i, %i]\n', size(X,1), ...
+            size(X,2));
+        fprintf('size(Y)  = [%i, %i]\n', size(X,1), ...
+            size(X,2));
+    end
+    % interpolate from the native projected coordinates
+    % onto the common coordinates
+    
+    switch (psfblur)
+        
+        case 'fourierpsf' % adding blur on masks
+            switch (ind)
+                case 1
+                    m_out.v = m_out.v .* interp2(Xm, Ym, ...
+                        ml{ind}.v, X, Y, '*linear', 0);
+                    
+                    
+                case 2 %blur on mask 1
+                    [sz1,sz2]=size((interp2(Xm, Ym, ...
+                        ml{ind}.v, X, Y, '*linear', 0)));
+                    
+                    %create filter in fourier domain
+                    blur_radius1=(sz1*((D-B1)/D))/2; 
+                    % compute blur radius at chosen defocus 
+                    % level
+                    [rr cc] = meshgrid(1:sz1);
+                    blurpsf1 = fftshift(sqrt((rr-round(sz1/2)).^2+(cc-round(sz1/2)).^2)<=blur_radius1);
+                    blur_filter1 = abs((ifft2(blurpsf1)));
+                    %apply filter
+                    
+                    filtered_mask =  ...
+						real(ifft2(blurpsf1.*fft2(interp2(Xm, Ym, ml{ind}.v, X, Y, '*linear', 0))));
+                    
+                    %normalized the filtered mask to it can't amplify
+                    filtered_mask = filtered_mask / max(filtered_mask(:));
+                    
+                    m_out.v = m_out.v .* filtered_mask;
+                    m_out.v(m_out.v<0)=0;
+                    
+                case 3 %blur on mask 2
+                    
+                    [sz1,sz2]=size((interp2(Xm, Ym, ml{ind}.v, X, Y, '*linear', 0)));
+                    
+                    %create filter in fourier domain
+                    blur_radius2=(sz1*((D-B2)/D))/2; % compute blur radius at chosen defocus level
+                    [rr cc] = meshgrid(1:sz1);
+                    blurpsf2 = fftshift(sqrt((rr-round(sz1/2)).^2+(cc-round(sz1/2)).^2)<=blur_radius2);
+                    %apply filter
+                    blur_filter2 = abs(ifft2(blurpsf2));
+                    
+                    filtered_mask = ...
+						real(ifft2(blurpsf2.*fft2(interp2(Xm, Ym, ml{ind}.v, X, Y, '*linear', 0))));
+                    
+                    filtered_mask = filtered_mask / max(filtered_mask(:));
+                    m_out.v = m_out.v .* filtered_mask;
+                    m_out.v(m_out.v<0)=0;
+            end
+            
+        case 'false' %no blur
+            m_out.v = m_out.v .* interp2(Xm, Ym, ml{ind}.v, X, Y, '*linear', 0);
+            
+    end
+    
+end
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={project\_mask function},
+]
+
+function m_out = project_mask(m_in, origin, new_z)
+% project the input mask to a new z plane.  The projection is performed
+% via rays emanating from the provided x-y origin in the z=0 plane
+
+% mask attributes: z, v, x, y (optional)
+% if y is provided, v should be 2d, otherwise 1d
+
+m_out.z = new_z;
+m_out.v = m_in.v;
+x0 = origin(1);
+m_out.x = (m_in.x - x0) * (m_out.z/m_in.z) + x0;
+if length(origin) > 1
+    y0 = origin(2);
+    m_out.y = (m_in.y - y0) * (m_out.z/m_in.z) + y0;
+end
+
+%calling function to locate the center of the aperture at the point source
+%co-ordinates
+
+ % call function to center PSF 
+[m_out.x m_out.y]=centering_atlocation(origin,m_out.x,m_out.y); 
+
+end
+
+\end{lstlisting}
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={centering\_atlocation function},
+]
+function [out1, out2]=centering_atlocation(origin,in1,in2)
+
+%function to locate the center of the aperture at the point source co-ordinates
+
+m_out.x=in1;
+m_out.y=in2;
+
+%####calculations for x-cordinate####
+len_mx=length(m_out.x);
+
+test_even_odd=mod(len_mx,2);
+if test_even_odd==0
+    %even length
+    mid_pt=(len_mx/2);
+elseif test_even_odd==1
+    %odd length
+    mid_pt=((len_mx+1)/2);
+end
+% calculating mid point
+midval=m_out.x(mid_pt);
+m_out.x=(m_out.x - midval +  origin(1));%center the data around origin
+
+
+%####calculations for y-cordinate####
+len_my=length(m_out.y);
+test_even_odd=mod(len_my,2);
+if test_even_odd==0
+    %even length
+    mid_pty=(len_my/2);
+else
+    %odd length
+    mid_pty=((len_my+1)/2);
+end
+midvaly=m_out.y(mid_pty);
+m_out.y=(m_out.y - midvaly +  origin(2));%center the data around origin
+
+out1=m_out.x;
+out2=m_out.y;
+%@@@@@@@@@@@@
+   
+
+\end{lstlisting}
+
+
+\begin{lstlisting}[
+  style=Matlab-editor,
+  basicstyle=\tiny,
+  escapechar=`,
+  caption={bin\_image function},
+]
+function imout = bin_image(im, n)
+% bin images
+% im - image (or set of images) to be binned
+% n  - number of elements (linearly) to be binned
+%
+% n can be a vector of bin sizes in each dimension.  If n is a scalar,
+% it is interpreted as 
+%    [n, n]       for 2D images, 
+%    [n, n, 1]    for 3D images,
+%    [n, n, 1, 1] for 4D images, etc.
+%
+% examples:
+%  size(im)         n        -->  size(imout)
+%  [50, 50]         5        -->  [10, 10]
+%  [50, 50, 3]      5        -->  [10, 10, 3]
+%  [50, 50, 100]    [5,5,20] -->  [10, 10, 5]
+%
+% note: if the dimensions of im are not multiples of the elements of n,
+% then the last few values of im will not be used.  That is,
+%   size(im) = [51, 51]   and  n = 5   -->  size(imout) = [10, 10]
+% and the last row and column of im [im(:,51) and im(51,:)] are unused.
+
+
+
+% expand n into vector form if necessary
+if length(n) == 1
+    ntmp = n;
+    n = ones(1, length(size(im)));
+    n(1) = ntmp;
+    n(2) = ntmp;
+end
+
+s = floor(size(im)./n); % target size
+S.type = '()';  % used in subsref and subsasgn
+subscell = {};  %
+for d = 1:length(s)
+    subscell{d} = ':';
+end
+
+for d = 1:length(s)  % loop over each dimension
+    if n(d) == 1; % no binning along this dimension - move on
+        continue
+    end
+    S.subs = subscell;
+    ts = size(im);
+    ts(d) = s(d);
+    imout = zeros(ts);
+    for i = 1:s(d)
+        start = (i-1)*n(d)+1;
+        stop  = i*n(d);
+        S.subs{d} = [start:stop];
+        M = subsref(im, S);
+        S.subs{d} = i;
+        imout = subsasgn(imout, S, sum(M, d));
+    end
+    if d < length(s) % only need to reassign if we're not done yet
+        im = imout;
+    end
+end
+
+\end{lstlisting}

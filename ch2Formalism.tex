@@ -279,7 +279,7 @@ where the notation $\{ g \} _{N_m}$ represents the set of all data from measurem
 
 In summary, Bayesian statistics is a useful way to update one's belief in a hypothesis or estimate a set of parameters. Bayes' theorem can be used to merge new measurement data and the probability of a hypothesis before the data was known. This is very similar the approach taken by the \gls{afss} and the \gls{afssi-c} \cite{dinakarababu2011adaptive, dunlop2016experimental}. 
 
-\section{Compressive Sensing}
+\section{Compressive Sensing}\label{sec:compressiveSesing}
 
 The fundamental approach of \gls{compressive sensing} is that rather than sampling at a high rate and then compressing the sampled data, one can dramatically reduce the number of samples if each sample is in a compressed form. In  \Cref{chap:Introduction}, I gave some intuitive understanding of how \gls{compressive sensing} works, but there are certain mathematical concepts that the reader should understand in order to have a full appreciation of the practical challenges in computational sensing. So, I will now discuss some of the formalism of compressive sensing and some techniques to compressively sampling signals. In order to understand why compressive sensing is so powerful I will first discuss the conventional sampling strategy.
 
@@ -333,7 +333,7 @@ The concept of \gls{sparsity} is important in compressive sensing. Sparsity dete
 
 
 
-In practice, the signal is sampled in a different basis than the representation basis. For example, while many natural signals have a sparse or compressible representation in various wavelet bases or Fourier bases, sampling using the representation basis is not practical in many cases. Often a sensing basis \gls{H} is used to perform the sampling. In traditional Nyquist-Shannon sampling, the sensing basis is a collection of delta functions. In compressive imaging experiment, the sensing basis is the binary random coded aperture mask \cite{duarte2008single}. In an \gls{lcos} based compressive sensing spectrometer, the sensing basis is a finite set of spectral filters \cite{oiknine2016along, yuan2015compressive}. In short, the representation basis allows a signal to be represented as a sparse vector, while the sensing basis is composed of the functionals that one samples with. The equation which combines these concepts to model a compressive measurement is
+In practice, the signal is sampled in a different basis than the representation basis. For example, while many natural signals have a sparse or compressible representation in various wavelet bases or Fourier bases, sampling using the representation basis is not practical in many cases. Often a sensing basis \gls{H} is used to perform the sampling. In traditional Nyquist-Shannon sampling, the sensing basis is a collection of delta functions. In \gls{compressive imaging} experiments, the sensing basis is the binary random coded aperture mask \cite{duarte2008single}. In an \gls{lcos} based compressive sensing spectrometer, the sensing basis is a finite set of spectral filters \cite{oiknine2016along, yuan2015compressive}. In short, the representation basis allows a signal to be represented as a sparse vector, while the sensing basis is composed of the functionals that one samples with. The equation which combines these concepts to model a compressive measurement is
 %
 \begin{equation}
 	\mb{g} = \mb{H} \mb{\Psi} \mb{x} = \mb{H} \mb{f}
@@ -430,7 +430,7 @@ A more practical version of \Cref{eq:l1min} is written as
 	\label{eq:l1regls}
 \end{equation}
 %
-where $\tau$ is a non-negative number. \gls{tau} is called the regularization parameter and serves to change the sparsity level of the solution and can be used to account for noise, by setting small noise contributions to zero, which increases the robustness of the optimization. In this form, the problem is called $\ell_1$ regularized least squares (LS). $\ell_1$ regularization also appears in the context of basis pursuit denoising \cite{chen2001atomic}. 
+where $\tau$ is a non-negative number. \gls{tau} is called the regularization parameter and serves to change the sparsity level of the solution and can be used to account for noise, by setting small noise contributions to zero, which increases the robustness of the optimization.\footnote{Most papers in compressive sensing use $\lambda$ to denote the regularization parameter. I choose to use $\tau$ to prevent confusing it with wavelength since I will be discussing spectral compressive sensing later on.} In this form, the problem is called $\ell_1$ regularized least squares (LS). $\ell_1$ regularization also appears in the context of basis pursuit denoising \cite{chen2001atomic}. 
 
 In statistics, $\ell_1$ regularized \gls{ls} is often referred to as the \gls{lasso} regression method or the \gls{lasso} problem. The original paper for \gls{lasso} describes both the problem and the \gls{lasso} algorithm. However, there are multiple algorithms for solving the $\ell_1$ regularized \gls{ls} problem, such as \gls{lar} \cite{efron2004least}, truncated Newton interior point methods \cite{kim2007interior}, and Conjugate Gradients algorithm \cite{candes2005l1}. 
 

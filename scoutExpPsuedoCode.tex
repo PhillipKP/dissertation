@@ -1,0 +1,112 @@
+\chapter{The Psuedo-Code For SCOUT Experiment}\label{app:scoutPsuedoCode}
+
+This appendix contains the psuedo-code for running the SCOUT experiment which is described in \Cref{chap:Scout}.
+
+\begin{algorithm}
+	\caption{Dark Frame Measurement algorithm}
+	\begin{algorithmic}[1]
+		\Function {getDarkFrame}
+		
+		\State Open Connection to Camera
+		\State Set camera temperature to $0$ degrees Celsius
+		\State Start a stopwatch timer
+		\State $tv := 60$ seconds
+		\State $c := 0$
+		\For{k = 1}{$numExp$} \Comment{Loop takes $numExp$ camera exposures}
+			\Begin
+			\State $te := $ Read the stopwatch timer (units of seconds).
+				\If{ te > c * tv }
+				\Begin
+					\State Display an all white screen on monitor
+					\State $c := c + 1$
+				\End
+			\State Sets the entire plamsa to $0$
+			\State $df(k) :=$ Camera Readout
+			\End
+		\State Close Connection to Camera
+		\State average dark frame measurements 
+		\State Return averaged dark frame measurements	
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{SCOUT Calibration algorithm}
+	\begin{algorithmic}[1]
+		\Function {getHcal}
+		\State $df := $ getDarkFrame  \Comment{Runs the Dark Frame Measurement Function}
+		\State Open Connection to Camera
+		\State Set camera temperature to $0$ degrees Celsius
+		\State Start a stopwatch timer
+		\State $tv := 60$ seconds
+		\State $c := 0$
+		\State $locList := $ randomize list of locations $n$ to $N$ 
+		\For{n = 1}{$N$}
+			\Begin
+			\State $te := $ Read the stopwatch timer (units of seconds).
+				\If{ te > c * tv }
+				\Begin
+					\State Display an all white screen on monitor
+					\State $c := c + 1$
+				\End
+			\State Sets the entire plamsa to $0$
+			\State Turn on location $locList(n)$
+			\State $p :=$ Camera Readout
+			\State Sets the entire plamsa to $0$
+			\State $p := p - df$ \Comment{Subtract dark frame from the readout of the nth location}
+			\State Convert image to vector
+			\State Store in the nth column of $H$
+			\End
+		\State Close Connection to Camera
+		\State Save H	
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\begin{algorithm}
+	\caption{Take Measurements for SCOUT Zero Background}
+	\begin{algorithmic}[1]
+		\Function {scoutMeasZeroBg}
+		\State Open Connection to Camera
+		\State Set camera temperature to $0$ degrees Celsius
+		\State Start a stopwatch timer
+		\State $tv := 60$ seconds
+		\State $c := 0$
+		\For{k = 1}{$numFrames$}
+			\Begin
+			\State $te := $ Read the stopwatch timer (units of seconds).
+				\If{ te > c * tv }
+				\Begin
+					\State Display an all white screen on monitor
+					\State $c := c + 1$
+				\End
+			\State Sets the entire plamsa to $0$
+			\State $movLocList(k) := $ generate random list of mover locations over all possible $N$ locations
+			\State Create image $f(k)$ where all zero except the locations from $movLocList(k)$. 
+			\State Display image $f(k)$ \Comment{Display the ground truth frame}
+			\State $r :=$ Camera Readout
+			\State $g(k) := $ Convert camera readout $r$ to vector 
+			\State Sets the entire plamsa to $0$
+			\End
+		\State Close Connection to Camera
+		\State Save all measurements and ground truth frames $g$, $f$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}
+	\caption{Reconstruct SCOUT Experiment Data}
+	\begin{algorithmic}[1]
+		\Function {reconScoutExp}
+		\State Load all measurements $g$
+		\State Load $H$ \Comment{From the calibration function getHcal}
+		
+		\For{k = 2}{$numFrames$}
+			\Begin
+			\State $\Delta g(k - 1) := g(k) - g(k-1)$ \Comment{Subtract previous measurement from current one}
+			\State $\tau := (1 \times 10^{-9}) \left( 2 H^T \Delta g(k-1) \right)$
+			\State $ reltol := 1 \times 10 ^ {-9} $
+			\State $\Delta \hat{f}(k-1) := l1\_ls(H, \Delta g, \tau, reltol, quiet)$ \Comment{Reconstruct the difference frame using the $l1_ls$ MATLAB code. }
+			\End
+		\State Return all reconstructed frame differences $\Delta \hat{f}$
+\end{algorithmic}
+\end{algorithm}

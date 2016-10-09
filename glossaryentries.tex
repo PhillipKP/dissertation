@@ -35,6 +35,7 @@
 \newacronym{osa}{OSA}{Optical Society of America}
 \newacronym{lar}{LAR}{Least Angle Regression}
 \newacronym{afss}{AFSS}{Adaptive Feature Specific Spectrometer}
+\newacronym{cacti}{CACTI}{Coded Aperture Compressive Temporal Imaging}
 
 
 
@@ -69,25 +70,30 @@
 \newglossaryentry{tau}{type=symbols,name={ $\tau$ }, symbol={ $\tau$ }, sort=tau, description={Notation for a regularization parameter in an objective function for any kind of optimization}}
 
 \newglossaryentry{sparseRepVec}{type=symbols,name={ $\mb{x}$ }, symbol={ $\mb{x}$ }, sort=x, description={ Notation for a sparse representation vector of the object signal}}
+
+\newglossaryentry{sparseSym}{type=symbols,name={ $K$ }, symbol={ $K$ }, sort=K, description={Notation for sparsity which is defined as the number of non-zero entries in a vector. }}
+
+
+
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{isomorphic sensing}
 {
-name={Isomorphic sensing},
+name={isomorphic sensing},
 text={isomorphic sensing},
 description={An isomorphic sensor is any sensor that attempts to produce measurement data that resembles the signal-of-interest. An isomorphic measurement is a measurement that resembles the signal-of-interest. An isomorphic measurement can be described as a one-to-one mapping from the signal-of-interest to the measurement, and is represented in matrix notation with an identity matrix. Isomorphic sensing is synonomous with traditional sensing.}
 }
 
 \newglossaryentry{isomorphic}
 {
-name={Isomorphic},
+name={isomorphic},
 text={isomorphic},
 description={\emph{See} \gls{isomorphic sensing}}
 }
 
 \newglossaryentry{isomorphic sensor}
 {
-name={Isomorphic sensor},
+name={isomorphic sensor},
 text={isomorphic sensor},
 plural={isomorphic sensors},
 description={\emph{See} \gls{isomorphic sensing}}
@@ -95,7 +101,7 @@ description={\emph{See} \gls{isomorphic sensing}}
 
 \newglossaryentry{traditional sensing}
 {
-name={Traditional sensing},
+name={traditional sensing},
 text={traditional sensing},
 description={\emph{See} \gls{isomorphic sensing}}
 }
@@ -108,28 +114,28 @@ description={A multiplexing sensor is any sensor that attempts to combine the ph
 
 \newglossaryentry{multiplexing}
 {
-name={Multiplexing},
+name={multiplexing},
 text={multiplexing},
 description={ \emph{See} \gls{multiplex sensing}}
 }
 
 \newglossaryentry{indirect-imaging}
 {
-name={Indirect-imaging},
+name={indirect-imaging},
 text={indirect-imaging},
 description={An imaging sensor that attempts to reconstruct an image of an object using non-isomorphic measurements. A computational step is required to reconstruct the object signal-of-interest. X-Ray \gls{ct} and \gls{sar} are examples types of indirect-imaging.  }
 }
 
 \newglossaryentry{task-specific sensing}
 {
-name={Task-specific sensing},
+name={task-specific sensing},
 text={task-specific sensing},
 description={A sensor that does not attempt to reconstruct the signal-of-interest to perform a signal processing task such as detection, estimation, and classification. The \gls{afssi-c} is an example of a task-specific sensor. }
 }
 
 \newglossaryentry{compressive sensing}
 {
-name={Compressive sensing},
+name={compressive sensing},
 text={compressive sensing},
 description={A sensing technique that attempts to directly a compressive or sparse representation of the signal-of-interest during the measurement. Compressive sensors attempt to uses significantly less measurements than the dimensionality of the signal-of-interest. Compressive sensing relies on non-linear optimization algorithms to perform reconstruction or task-specific sensing from highly underdetermined inverse problems. These algorithms often rely on sparsity to avoid overfitting.}
 }
@@ -145,7 +151,7 @@ description={A set, vector, or matrix which contains an overwhelming majority of
 
 \newglossaryentry{compressive sensors}
 {
-name={Compressive sensors},
+name={compressive sensors},
 plural={compressive sensors},
 %text={compressive sensors},
 description={ \emph{See} \gls{compressive sensing}}
@@ -153,7 +159,7 @@ description={ \emph{See} \gls{compressive sensing}}
 
 \newglossaryentry{compressive sampling}
 {
-name={Compressive sampling},
+name={compressive sampling},
 plural={compressive sampling},
 text={compressive sampling},
 description={ \emph{See} \gls{compressive sensing}}
@@ -161,23 +167,30 @@ description={ \emph{See} \gls{compressive sensing}}
 
 \newglossaryentry{computational sensing}
 {
-name={Computational sensing},
+name={computational sensing},
 text={computational sensing},
 description={Any sensing technique in which the sensor uses \gls{indirect-imaging}, \gls{multiplex sensing}, \gls{compressive sensing}, or \gls{task-specific sensing}.}
 }
 
 \newglossaryentry{computational sensor}
 {
-name={Computational sensor},
+name={computational sensor},
 text={computational sensor},
 plural={computational sensors},
 description={ \emph{See} \gls{computational sensing}}
 }
 
 
+\newglossaryentry{compressive imaging}
+{
+name={compressive imaging},
+text={compressive imaging},
+description={\gls{compressive sensing} applied to imaging. Typically the goal is to reconstruct the entire object scene. However some compressive imaging sensors are have a task-specific sensing approach, such as the \gls{scout}.}
+}
+
 \newglossaryentry{measurement}
 {
-name={Measurement},
+name={measurement},
 text={measurement},
 description={A process that converts a physical phenomena to single datum or a set of data. In the context of this dissertation it used synonomously with the detector readout.}
 }
@@ -192,21 +205,21 @@ description={An optical instrument that transmits a selectable narrow wavelength
 
 \newglossaryentry{pixel pitch}
 {
-name={Pixel pitch},
+name={pixel pitch},
 text={pixel pitch},
 description={The center to center distance between pixels on a focal-plane array such as a CCD or CMOS image sensor.}
 }
 
 \newglossaryentry{spectral resolution}
 {
-name={Spectral resolution},
+name={spectral resolution},
 text={spectral resolution},
 description={The smallest the smallest difference in wavelength the instrument or sensor can discern.}
 }
 
 \newglossaryentry{data processing inequality}
 {
-name={Data processing inequality},
+name={data processing inequality},
 text={data processing inequality},
 description={An theorem from information theory that proves the information of a signal cannot be increased via a local physical operation.}
 }
@@ -220,42 +233,42 @@ description={In the context of computational sensing, coding is the process of m
 
 \newglossaryentry{code}
 {
-name={Code},
+name={code},
 text={code},
 description={ \emph{See} \gls{coding}}
 }
 
 \newglossaryentry{forward model}
 {
-name={Forward model},
+name={forward model},
 text={forward model},
 description={A numerical model, typically an equation, that explains the mapping of the analog signal-of-interest to the measurement data.}
 }
 
 \newglossaryentry{inverse problem}
 {
-name={Inverse problem},
+name={inverse problem},
 text={inverse problem},
 description={The problem of taking the measurement data and calculating a reconstruction of the signal-of-interst or task-specific parameters. In computational sensing, computer algorithms are used to solve inverse problems.}
 }
 
 \newglossaryentry{sparse}
 {
-name={Sparse},
+name={sparse},
 text={sparse},
 description={ \emph{See} \gls{sparsity}}
 }
 
 \newglossaryentry{sample}
 {
-name={Sample},
+name={sample},
 text={sample},
 description={ The process of mapping a continuous signal to a discrete signal.  }
 }
 
 \newglossaryentry{sampling}
 {
-name={Sampling},
+name={sampling},
 text={sampling},
 description={ \emph{See} \gls{sample}  }
 }
@@ -264,7 +277,7 @@ description={ \emph{See} \gls{sample}  }
 
 \newglossaryentry{multiplex advantage}
 {
-name={Multiplex advantage},
+name={multiplex advantage},
 text={multiplex advantage},
 description={The improvement in \gls{snr} that is due to multiplexed measurements rather than isomorphic measurements. This is often referred to as the Fellgett advantage since it was first discovered by Peter Fellgett. \emph{See} \gls{multiplex sensing}} 
 }
@@ -278,14 +291,14 @@ description={\emph{See} \gls{multiplex advantage}}
 
 \newglossaryentry{bandlimited signal}
 {
-name={Bandlimited signal},
+name={bandlimited signal},
 text={bandlimited signal},
 description={A bandlimited signal is any signal $ g(x) $ that whose Fourier transform $ G(f_x) $ is zero and remains zero past a certain frequency $ \lvert f_x \rvert \geq B$.} 
 }
 
 \newglossaryentry{basis pursuit}
 {
-name={Basis pursuit},
+name={basis pursuit},
 text={basis pursuit},
 description={Algorithms which attempt to solve a compressive sensing problem by solving the convex optimization problem of 
 \begin{equation}
@@ -296,42 +309,42 @@ description={Algorithms which attempt to solve a compressive sensing problem by 
 
 \newglossaryentry{incoherence}
 {
-name={Incoherence},
+name={incoherence},
 text={incoherence},
 description={ The idea that }
 }
 
 \newglossaryentry{compressible}
 {
-name={Compressible},
+name={compressible},
 text={compressible},
 description={ Signals with strictly sparse representation vectors are unlikely. Fortunately, it is possible to have approximately sparse representation vectors, which are called compressible. In other words, the sorted magnitudes of the coefficients $|x_n|$ quickly decay.}
 }
 
 \newglossaryentry{representation basis}
 {
-name={Representation basis},
+name={representation basis},
 text={representation basis},
 description={ The idea that representation basis}
 }
 
 \newglossaryentry{posterior}
 {
-name={Posterior},
+name={posterior},
 text={posterior},
 description={ The posterior probability is the conditional probability of a hypothesis $h$ or parameter $\theta$ given some data $g$. $ P \left( \theta \given[\big] g \right) $}
 }
 
 \newglossaryentry{prior}
 {
-name={Prior},
+name={prior},
 text={prior},
 description={ The priori probability is the probability of a hypothesis $h$ or parameter $\theta$ without any knowledge of the data data $g$. $ P \left( \theta \right) $}
 }
 
 \newglossaryentry{likelihood}
 {
-name={Likelihood},
+name={likelihood},
 text={likelihood},
 description={ The likelihood is the probability of the data $g$ assuming that a hypothesis $h$ or parameter $\theta$ is true. $P \left( g \given[\big] \theta \right)$}
 }
