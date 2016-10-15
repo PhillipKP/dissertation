@@ -36,7 +36,8 @@
 \newacronym{lar}{LAR}{Least Angle Regression}
 \newacronym{afss}{AFSS}{Adaptive Feature Specific Spectrometer}
 \newacronym{cacti}{CACTI}{Coded Aperture Compressive Temporal Imaging}
-
+\newacronym{aviris}{AVIRIS}{Airborne Visible / Infrared Imaging Spectrometer}
+\newacronym{ctis}{CTIS}{Computed tomography imaging spectrometer}
 
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,6 +74,7 @@
 
 \newglossaryentry{sparseSym}{type=symbols,name={ $K$ }, symbol={ $K$ }, sort=K, description={Notation for sparsity which is defined as the number of non-zero entries in a vector. }}
 
+\newglossaryentry{spectralDataCube}{type=symbols,name={ $\bf{\mathcal{F}}$ }, symbol={ $\bf{\mathcal{F}}$ }, sort=F, description={Notation for the spectral datacube. }}
 
 
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -287,6 +289,13 @@ description={The improvement in \gls{snr} that is due to multiplexed measurement
 name={Fellgett advantage},
 text={Fellgett advantage},
 description={\emph{See} \gls{multiplex advantage}} 
+}
+
+\newglossaryentry{Jacquinot advantage}
+{
+name={Jacquinot advantage},
+text={Jacquinot advantage},
+description={This results from the fact that in a dispersive instrument, the traditional spectrometer has entrance and exit slits which restrict the amount of light that passes through it. By removing the slits a spectrometer produces a higher signal-to-noise ratio.} 
 }
 
 \newglossaryentry{bandlimited signal}
