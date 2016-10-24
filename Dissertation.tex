@@ -28,6 +28,14 @@
 \usepackage{cleveref}
 \usepackage[utf8]{inputenc}
 \usepackage{appendix}
+\usepackage{mleftright}
+
+%% Allows for non-italic unit short hands
+\usepackage{textcomp} 
+\usepackage{palatino}
+%%
+
+
 \usepackage{rotating} % Allows us to rotate figures
 \usepackage{calc}
 % This package allows us to make a list of acronyms, the option nomain is used
@@ -53,6 +61,9 @@
 
 % This package allows me to use different font for inline code
 \usepackage{courier}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % This is the subdirectory where all the figures are stored
 \graphicspath{{Figures/}}
@@ -82,9 +93,16 @@
 
 % Custom command to create paraenthesis that auto size anything you put in the 
 % argument of this command
-\newcommand\ap[1]{\left( #1 \right) }
+\newcommand\ap[1]{\mleft( #1 \mright) }
 
 \newcommand\given[1][]{\:#1\vert\:}
+
+% Custom command to make a ratio of probabilities
+\newcommand{\pr}[2]{ \frac{ P\mleft( #1 \mright) }{ P\mleft( #2 \mright) } }
+
+% Custom command to make a probabilities
+\newcommand{\prob}[1]{ P\mleft( #1 \mright) }
+
 
 % Define the arg min formatting
 \DeclareMathOperator*{\argminA}{arg\,min} 
@@ -162,6 +180,8 @@
 	\include{apScoutExperimentalResults}
 	\include{scoutExpPsuedoCode}
 	\include{scoutSimCode}
+	\include{apLogLikelihood}
+	\include{apAfssicExperimentalResults}
 \end{appendices}
 
 

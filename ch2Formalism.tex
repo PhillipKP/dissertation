@@ -263,10 +263,11 @@ Using Bayes' theorem I can rewrite Equation \ref{eq:map} as
 	\mbh{h}_{map} = \argminA_{k} \: \frac{ p\left( g  \given[\big] \mb{h}_k \right) p\left( \mb{h}_k \right) } { p\left(  g \right) }
 \end{equation} 
 Maximizing the posterior is now equal to maximizing the likelihood and prior. In certain cases, one needs to decide between two sets of parameters or hypotheses. One can do an analogous technique of comparing the posteriors by using a ratio
-
+%
 \begin{equation}
 	\frac{ p( \mb{h}_i | g ) }{ p( \mb{h}_j | g ) } = \frac{ p(g|\mb{h}_i) }{ p(g|\mb{h}_j)} \frac{p(\mb{h}_i)}{p(\mb{h}_j)}
 \end{equation}
+%
 If the ratio is larger than some threshold value then one choses parameter $h_i$ and if the ratio is less than the threshold then one choses $h_j$. Similar to the earlier example of updating the posterior based on new data, one can update the \gls{map} decision based on new data. Define the likelihood ratio of the $m^{th}$ measurement as 
 \begin{equation}
 	\Lambda_m = \frac{ p(g_m|\mb{h}_i) }{ p(g_m|\mb{h}_j)}

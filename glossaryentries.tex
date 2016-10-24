@@ -8,6 +8,7 @@
 \newacronym{adc}{ADC}{analog-to-digital converter}
 \newacronym{afssi-c}{AFSSI-C}{Adaptive Feature Specific Spectral Imaging-Classifier}
 \newacronym{pca}{PCA}{Principal Component Analysis}
+\newacronym{ppca}{pPCA}{probabilistically weighted Principal Component Analysis}
 \newacronym{LENS}{LENS}{Laboratory for Engineering Non-Traditional Sensors}
 \newacronym{scout}{SCOUT}{Static Computational Optical Undersampled Tracker}
 \newacronym{disp}{DISP}{Duke Imaging and Spectroscopy Program}
@@ -36,15 +37,24 @@
 \newacronym{lar}{LAR}{Least Angle Regression}
 \newacronym{afss}{AFSS}{Adaptive Feature Specific Spectrometer}
 \newacronym{cacti}{CACTI}{Coded Aperture Compressive Temporal Imaging}
-\newacronym{aviris}{AVIRIS}{Airborne Visible / Infrared Imaging Spectrometer}
-\newacronym{ctis}{CTIS}{Computed tomography imaging spectrometer}
-
+\newacronym{aviris}{AVIRIS}{Airborne Visible/Infrared Imaging Spectrometer}
+\newacronym{ctis}{CTIS}{Computed Tomography Imaging Spectrometer}
+\newacronym{roi}{ROI}{Region of Interest}
+\newacronym{sp}{SP}{system pixel}
+\newacronym{tsnr}{TSNR}{Task Signal-To-Noise Ratio}
+\newacronym{awgn}{AWGN}{Additive white Gaussian noise}
+\newacronym{fov}{FOV}{Field-Of-View}
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newglossaryentry{specres}{type=symbols, name={$ \delta_{\lambda} $}, symbol={$ \delta_{\lambda} $} ,sort=delta, description={Spectral resolution}}
 
+\newglossaryentry{specchan}{type=symbols, name={$ c $}, symbol={$ c $} ,sort=c, description={Spectral channel index}}
+
+
 \newglossaryentry{numspecchan}{type=symbols,name={$ N_{\lambda} $}, symbol={$ N_{\lambda} $},sort=Nlambda, description={Number of spectral channels}}
+
+\newglossaryentry{numspeccand}{type=symbols,name={$ N_{R} $}, symbol={$ N_{R} $},sort=Nr, description={Number of spectra in the spectral library}}
 
 \newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={Measurement vector}}
 
@@ -74,7 +84,7 @@
 
 \newglossaryentry{sparseSym}{type=symbols,name={ $K$ }, symbol={ $K$ }, sort=K, description={Notation for sparsity which is defined as the number of non-zero entries in a vector. }}
 
-\newglossaryentry{spectralDataCube}{type=symbols,name={ $\bf{\mathcal{F}}$ }, symbol={ $\bf{\mathcal{F}}$ }, sort=F, description={Notation for the spectral datacube. }}
+\newglossaryentry{spectralDataCube}{type=symbols,name={ $D$ }, symbol={ $D$ }, sort=D, description={Notation for the spectral datacube. }}
 
 
 %%%%%%%%%%%%%%%%%% Define new terms in the glossary %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -389,3 +399,24 @@ description={Ridge regression is a regression technique that uses $\ell_2$ regul
  }
 }
 
+\newglossaryentry{whiskbroom}
+{
+name={Whiskbroom},
+text={whiskbroom},
+description={Whiskbroom scanning is an isomorphic measurement technique for acquiring a spectral datacube. In the whiskbroom technique, the entire spectrum at each spatial location is acquired one at a time.}
+}
+
+\newglossaryentry{pushbroom}
+{
+name={Pushbroom},
+text={pushbroom},
+description={Pushbroom scanning is an isomorphic measurement technique for acquiring a spectral datacube. In the pushbroom technique, the entire spectrum for an entire spatial row or column is acquired one at a time.}
+}
+
+
+\newglossaryentry{tunable filter}
+{
+name={Tunable filter},
+text={tunable filter},
+description={Pushbroom scanning is an isomorphic measurement technique for acquiring a spectral datacube. In the pushbroom technique, the entire spectrum for an entire spatial row or column is acquired one at a time.}
+}
