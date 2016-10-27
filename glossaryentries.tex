@@ -44,6 +44,8 @@
 \newacronym{tsnr}{TSNR}{Task Signal-To-Noise Ratio}
 \newacronym{awgn}{AWGN}{Additive white Gaussian noise}
 \newacronym{fov}{FOV}{Field-Of-View}
+\newacronym{lmm}{LMM}{Linear Mixing Model}
+
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -264,6 +266,15 @@ text={inverse problem},
 description={The problem of taking the measurement data and calculating a reconstruction of the signal-of-interst or task-specific parameters. In computational sensing, computer algorithms are used to solve inverse problems.}
 }
 
+\newglossaryentry{inversion}
+{
+name={inversion},
+text={inversion},
+description={The of solving an \gls{inverse problem}}.
+}
+
+
+
 \newglossaryentry{sparse}
 {
 name={sparse},
@@ -420,3 +431,40 @@ name={Tunable filter},
 text={tunable filter},
 description={Pushbroom scanning is an isomorphic measurement technique for acquiring a spectral datacube. In the pushbroom technique, the entire spectrum for an entire spatial row or column is acquired one at a time.}
 }
+
+\newglossaryentry{mixed spectrum}
+{
+name={Mixed spectrum},
+text={mixed spectrum},
+description={A mixed spectrum is a measured spectrum that contains spectra from more than one spectrum.}
+}
+
+\newglossaryentry{dimension reduction}
+{
+name={dimension reduction},
+text={dimension reduction},
+description={The process of reducing the dimensionality of the data in the scene. This step is optional and is only invoked by some algorithms to reduce the computional load of subsequent steps. }
+}
+
+\newglossaryentry{endmember determination}
+{
+name={endmember determination},
+text={endmember determination},
+description={The process of reducing the which endmembers are present in a mixed spectrum. }
+}
+
+\newglossaryentry{fractional abundance}
+{
+name={fractional abundance},
+text={fractional abundance},
+description={The relative amount of a spectral endmember in a mixed spectrum}
+}
+
+\newglossaryentry{endmember}
+{
+name={endmember},
+text={endmember},
+plural={endmembers},
+description={The constituent spectra in a mixed spectrum is called the endmember}
+}
+
