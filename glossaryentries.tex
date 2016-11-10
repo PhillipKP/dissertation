@@ -28,7 +28,7 @@
 \newacronym{dmd}{DMD}{Digital Micro-Mirror Display}
 \newacronym{cosi}{COSI}{Computational Optical Sensing and Imaging}
 \newacronym{mse}{MSE}{Mean Squared Error}
-\newacronym{rmse}{RMSE}{Root corollaryMean Squared Error}
+\newacronym{rmse}{RMSE}{Root Mean Squared Error}
 \newacronym{fts}{FTS}{Fourier Transform Spectrometer}
 \newacronym{map}{MAP}{Maximum A Posteriori}
 \newacronym{rip}{RIP}{restricted isometry property}
@@ -43,9 +43,14 @@
 \newacronym{sp}{SP}{system pixel}
 \newacronym{tsnr}{TSNR}{Task Signal-To-Noise Ratio}
 \newacronym{awgn}{AWGN}{Additive white Gaussian noise}
-\newacronym{fov}{FOV}{Field-Of-View}
+\newacronym{fov}{FOV}{field-of-view}
 \newacronym{lmm}{LMM}{Linear Mixing Model}
-
+\newacronym{mnf}{MNF}{Maximum Noise Fraction}
+\newacronym{mle}{MLE}{Maximum Likelihood Estimation}
+\newacronym{tv}{TV}{Total Variation}
+\newacronym{tec}{TEC}{thermoelectric cooler}
+\newacronym{lcsi}{LCSI}{LCOS Computational Spectral Imager}
+\newacronym{swpca}{SWPCA}{Switch Weighted Principal Component Analysis}
 
 %%%%%%%%%%%%%%%%%%% Define symbols here %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -58,17 +63,17 @@
 
 \newglossaryentry{numspeccand}{type=symbols,name={$ N_{R} $}, symbol={$ N_{R} $},sort=Nr, description={Number of spectra in the spectral library}}
 
-\newglossaryentry{measvec}{type=symbols,name={$ \mathbf{g} $}, symbol={$ \mathbf{g} $},sort=g, description={Measurement vector}}
+\newglossaryentry{measvec}{type=symbols,name={$ \mb{g} $}, symbol={$ \mb{g} $},sort=g, description={Measurement vector}}
 
-\newglossaryentry{objvec}{type=symbols,name={$ \mathbf{f} $}, symbol={$ \mathbf{f} $},sort=f, description={Object signal-of-interest}}
+\newglossaryentry{objvec}{type=symbols,name={$ \mb{f} $}, symbol={$ \mb{f} $},sort=f, description={Object signal-of-interest}}
 
-\newglossaryentry{estobjvec}{type=symbols,name={$ \mathbf{ \hat{ f }} $}, symbol={$ \mathbf{ \hat{ f }} $},sort=fhat, description={Estimated object}}
+\newglossaryentry{estobjvec}{type=symbols,name={$ \mb{ \hat{ f }} $}, symbol={$ \mb{ \hat{ f }} $},sort=fhat, description={Estimated object}}
 
-\newglossaryentry{hadamardn}{type=symbols,name={$ \mathbf{ H }_N $}, symbol={$ \mathbf{ H }_N $}, sort=Hn, description={A Hadamard matrix of size $N \times N$}}
+\newglossaryentry{hadamardn}{type=symbols,name={$ \mb{ H }_N $}, symbol={$ \mb{ H }_N $}, sort=Hn, description={A Hadamard matrix of size $N \times N$}}
 
-\newglossaryentry{H}{type=symbols,name={$ \mathbf{ H } $}, symbol={$ \mathbf{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix and sensing matrix.}}
+\newglossaryentry{H}{type=symbols,name={$ \mb{ H } $}, symbol={$ \mb{ H } $}, sort=H, description={The system matrix which captures all of the physical phenomena in a measurement. Also called the measurement matrix and sensing matrix.}}
 
-\newglossaryentry{noisevec}{type=symbols,name={$ \mathbf{ e } $}, symbol={$ \mathbf{ e } $}, sort=e, description={Additive noise vector}}
+\newglossaryentry{noisevec}{type=symbols,name={$ \mb{ e } $}, symbol={$ \bm{ e } $}, sort=e, description={Additive noise vector}}
 
 \newglossaryentry{nummeas}{type=symbols,name={$ N_{m} $}, symbol={$ N_{m} $}, sort=Nm, description={Total number of measurements}}
 
@@ -439,10 +444,10 @@ text={mixed spectrum},
 description={A mixed spectrum is a measured spectrum that contains spectra from more than one spectrum.}
 }
 
-\newglossaryentry{dimension reduction}
+\newglossaryentry{dimensionality reduction}
 {
-name={dimension reduction},
-text={dimension reduction},
+name={dimensionality reduction},
+text={dimensionality reduction},
 description={The process of reducing the dimensionality of the data in the scene. This step is optional and is only invoked by some algorithms to reduce the computional load of subsequent steps. }
 }
 
@@ -467,4 +472,12 @@ text={endmember},
 plural={endmembers},
 description={The constituent spectra in a mixed spectrum is called the endmember}
 }
+
+\newglossaryentry{spectral unmixing}
+{
+name={spectral unmixing},
+text={spectral unmixing},
+description={The procedure by which the measured spectrum of a mixed pixel is decomposed into a collection of constituent spectra, or \glspl{endmember}, and a set of corresponding \glspl{fractional abundance}.}
+}
+
 

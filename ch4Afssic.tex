@@ -6,14 +6,15 @@
 Spectral imaging allows for improved discrimination of objects in a scene by measuring both spatial and spectral data \cite{chang2003hyperspectral, ibrahim2010spectral, shaw2003spectral}. By combining the spectrometer with the camera, the spectral imager produces a spectral datacube, which consists of two spatial dimensions and a spectral dimension \cite{garini2006spectral,eismann2012hyperspectral}, see \Cref{fig:isoCubes}(a).  In this chapter, I will introduce the \acrfull{afssi-c}, a computational spectral imaging system which directly classifies the spectrum at each spatial location in a scene.
 
 One of the major limitations of \gls{isomorphic} sensing techniques in spectral imaging is due to the fact that one must acquire a three-dimensional spectral datacube using a two-dimensional \acrfull{fpa} \cite{garini2006spectral}. Traditional isomorphic systems rely on a point-by-point acquisition technique to acquire the entire spectral datacube. A \gls{whiskbroom} technique simultaneously measures the entire spectrum from a single spatial location. This is repeated for each location until the spectral datacube is completely acquired, see \Cref{fig:isoCubes}(b) \cite{wolfe1997introduction}. A \gls{pushbroom} technique measures the spectrum of an entire spatial row or column at a time, see \Cref{fig:isoCubes}(c). This is repeated until all the rows (or columns) in the spectral datacube is acquired \cite{yang2003ccd, wolfe1997introduction}. A \gls{tunable filter} technique, such as the Fabry-Perot interferometric filter \cite{fabry1897franges, perot1899application, fabry1901new}, simultaneously measures a single spectral channel  over the entire \gls{fov}, scanning through the spectral dimension, see \Cref{fig:isoCubes}(d) \cite{gat2000imaging}. 
-
+%
+%
 \begin{figure}[htb]
 	\includegraphics[scale=1.0]{isoCubes}
 	\captionof{figure}[Discrete representation of the spectral datacube and various scanning measurement techniques]{(a) A discrete spectral datacube with $R_x = 3, R_y = 3, N_{\lambda} = 3$. (b) The whiskbroom technique measures the entire spectrum one spatial location at a time. (c) The pushbroom technique measures the entire spectrum on an entire spatial row or column at a time. (d) The tunable filter technique measurements an entire monochromatic image one spectral channel at a time.}
 	\label{fig:isoCubes}
 \end{figure}
-
-
+%
+%
 The problem with the traditional ismorphic technique is that a typical spectral datacube has a significant amount of measurement samples. The \acrfull{aviris} system, acquires $R_x \times R_y = 677$ spatial locations (pixels) and $N_{\lambda} = 224$ spectral channels \cite{green1998imaging}, producing a spectral datacube with $N \approx 10^9$ measurement samples in $10$ minutes. 
 
 Just like with the traditional spectrometer and camera, researchers have turned \gls{computational sensing} for spectral imaging. These architectures use the \gls{Fellgett advantage} (multiplexing) and \gls{Jacquinot advantage} (open aperture) to improve the \acrfull{snr} and reduce acquisition time and use a computational step to solve an inverse problem to reconstruct the spectral datacube \gls{spectralDataCube} from non-isomorphic measurements. Some spectral imaging architectures also leverage \gls{compressive sensing}. 
@@ -49,7 +50,7 @@ Previously my colleuges developed a computational spectrometer called the \acrfu
 
 The \acrfull{afssi-c} extends the concept first demonstrated by the \gls{afss} to spectral imaging. The \gls{afssi-c} directly classifies the spectrum at each spatial location without the need to reconstruct the spectral datacube. By adopting a task-specific sensing approach, the \gls{afssi-c} greatly improves classification accuracy while simultaneously reduces the amount of bandwidth and storage for data. Furthermore, the architecture of the \gls{afssi-c} leverages both the Fellgett and adaptive measurement scheme like the \gls{afss}, while also adding the Jacquinot advantag to outperform all traditional and currently known computational spectral imaging instruments in terms of number of measurements to correct classifcation.
 
-\section{Architecture}
+\section{Architecture}\label{sec:afssicArchitecture}
 
 I want to quickly review the architecture of the \acrfull{afss} before discussing the architecture of the \gls{afssi-c}. The \gls{afss}, shown in \Cref{fig:afssArch}, is the earliest known computational spectrometer to use adaptive spectral filters to classify spectra \cite{dinakarababu2011adaptive}. Unlike the traditional slit spectrometer, the \gls{afss} images the dispersed slit onto a \gls{dmd}. The mirrors of the \gls{dmd} can then be adjusted to selectively reflect certain wavelengths towards the condensor lens, which then focuses light onto a single detector element \cite{dinakarababu2011adaptive}. By reflecting or ``turning on'' multiple \gls{dmd} mirrors and only using a single detector element, we achieved the \gls{Fellgett advantage}. By using measurement data to actively design spectral filters, the \gls{afss} outperforms non-adaptive schemes by eliminating spectra that improbable and turns it attention towards trying to classify the remaining high probability spectra. 
 
@@ -80,7 +81,7 @@ The design of the \gls{afssi-c} is essentially two 4\textit{f} open-aperture mon
 
 We choose to use a dual-disperser architecture rather than the single-disperser architecture such as the one in the \gls{cassi} since the mirror patterns on the \gls{dmd} acts as spectral filters for each spatial location. In the dual-disperser design, the spectral coding of each spatial location is more straightforward and elegant approach for parallel direct classification: the architectures allows us to write the image of each \gls{fpa} pixel as an innner product of the spectrum at the corresponding location at the source with the spectral filter created by the \gls{dmd}, allowing for parallel operation of the Bayesian inference approach. A single-disperser design would entangle both the spectral and spatial dimension of the spectral datacube, and would require solving a single larger joint inference problem.
 
-\subsection{Forward Model}
+\subsection{Forward Model}\label{ssec:afssicForwardModel}
 
 Imagine a continuous spectral datacube which we call the source spectral density of $D_0 \left(x, y;\lambda \right)$ at the input aperture. To simplify the forward model analysis, assume unit magnification and ignore diffraction, aberrations, and vignetting. The spectral density just before reflection from the \gls{dmd} is written as:
 %
@@ -112,7 +113,7 @@ Propagating through the second arm has the effect of reversing the shear imposed
 \end{split}
 \end{equation}
 %
-Notice that the dispersion $\alpha$ has the opposite sign. This equation is represented in discrete form in \Cref{fig:sysCubes}(d). Thus, propating through the entire optical system represents multiplying the input spectral density with a spectral desnity filter function $H \ap{x,y;\lambda}$. 
+Notice that the dispersion $\alpha$ has the opposite sign. This equation is represented in discrete form in \Cref{fig:sysCubes}(d). Thus, propagating through the entire optical system represents multiplying the input spectral density with a spectral density filter function $H \ap{x,y;\lambda}$. 
 
 Since the \gls{fpa} image is grayscale, ignoring quantization effects, the image can be written as an integral over the wavelengths
 %
@@ -120,7 +121,7 @@ Since the \gls{fpa} image is grayscale, ignoring quantization effects, the image
 	I\ap{x,y} = \int H \ap{x,y;\lambda}  D_0 \ap{x,y;\lambda} d\lambda
 \end{equation}
 %
-By taking into account the spatially pixeled detector array with pixel size $\Delta$, then the discrete \gls{fpa} image is
+By taking into account the spatially pixelated detector array with pixel size $\Delta$, then the discrete \gls{fpa} image is
 %
 \begin{equation}
 	\Gamma_{nl} = \iiint \mbox{rect} \ap{ \frac{x}{\Delta} - n, \frac{y}{\Delta} - l } H \ap{x,y;\lambda} D_0 \ap{x,y;\lambda} dx^\prime dy^\prime d\lambda
@@ -174,11 +175,12 @@ In the next example, I consider the case where a monochromatic source is not at 
 This shows that a shift by one spectral channel results in a shift of one pixel in of the \gls{dmd} pattern.
 
 Using the intuition from the last two examples, I will now extend this to a non-monochromatic case. Consider spectral channel index \gls{specchan} out of \gls{numspecchan} total spectral channels.
+
 We can also define a discretized source spectral datacube $D_{nlc}$, and then the detector signal $\Gamma_{nl}$ as a result of mirror pattern $T$ acting on the pixelated source is
 %
 %
 \begin{equation}
-	\Gamma_{nl} = \sum^{N_{\lambda}-1}_{c = 0} T_{n \left( l + c \right)} S_{nlc},
+	\Gamma_{nl} = \sum^{N_{\lambda}-1}_{c = 0} T_{n \left( l + c \right)} D_{nlc},
 \end{equation}
 %
 %
@@ -186,13 +188,13 @@ which shows the measurement at each pixel being the inner product of the source 
 %
 %
 \begin{equation}
-\Gamma_{n\left(l-1\right)} = \sum^{N_{\lambda}-1}_{c = 0} T_{n\left( l + 1 + c \right)} S_{n\left(l+1\right)c}.
+\Gamma_{n\left(l-1\right)} = \sum^{N_{\lambda}-1}_{c = 0} T_{n\left( l + 1 + c \right)} D_{n\left(l+1\right)c}.
 \end{equation}
 %
 %
 The spatial location $\left(n,l \right)$ sees the effect of the pattern in mirror locations $T_{nl}$ to $T_{n\left(l+N_{\lambda}-1\right)}$, while the neighboring spatial location at $n, \left( l + 1\right)$ is encoded by the mirror pattern from $T_{n\left(l+1\right)}$ to $T_{n\left(l + N_{\lambda} \right)}$. Notice that given two neighboring spatial pixels in the input aperture, $l$ and $l+1$, mirror pixels $T_{n\left( l + 1 \right)}$ to $T_{n\left(l + N_{\lambda} - 1 \right)}$ are common to both locations. 
 
-Now the design constraint of the \gls{afssi-c} architecture is clear, while a naively parallel set of \gls{afss} would have been costly in terms of \gls{swap-c}, using a common entrance pupil prevents indepdent spectral filters for each spatial location. The spectral filters imposed by the \gls{dmd} pattern maybe unique for every spatial location, but \textit{cannot} be implemented independently, requiring the features to be designed \textit{jointly} for spatial locations along a row (the $l$ direction).
+Now the design constraint of the \gls{afssi-c} architecture is clear, while a naively parallel set of \gls{afss} would have been costly in terms of \gls{swap-c}, using a common entrance pupil prevents independent spectral filters for each spatial location. The spectral filters imposed by the \gls{dmd} pattern maybe unique for every spatial location, but \textit{cannot} be implemented independently, requiring the features to be designed \textit{jointly} for spatial locations along a row (the $l$ direction).
 
 
 
@@ -201,7 +203,7 @@ Now the design constraint of the \gls{afssi-c} architecture is clear, while a na
 As mentioned earlier, the \gls{afssi-c} uses adaptive features to directly classify the spectrum at each spatial location. At each measurement step $m$, the classification algorithm computes the probability of each hypothesis spectra in a spectral library. Building on the discussion of \acrfull{pca} and Bayesian statistics in \Cref{chap:Formalism}, I will discuss how the classification algorithm of the \gls{afssi-c} works. 
 
 
-Since the \gls{afssi-c} feature vectors are not indpendent for each spatial location, it is more intuitive to discuss the algorithm when only a single spatial location exist in the spectral datacube. The reader can then expand the intuition to the entire scene. For a single pixel architecture, one can write the discrete forward model as
+Since the \gls{afssi-c} feature vectors are not independent for each spatial location, it is more intuitive to discuss the algorithm when only a single spatial location exist in the spectral datacube. The reader can then expand the intuition to the entire scene. For a single pixel architecture, one can write the discrete forward model as
 %
 \begin{equation}
 g_m = \mb{t}_{m}^{T} \mb{f}
@@ -273,7 +275,7 @@ In practice we do not directly compute the posterior probabilities for each hypo
 where $\{g\}_{m}$ is the set of all measurements, including the current measurement number index $m$.
 
 
-Note that if we assume that the likehood probabilities are indepdent, then we can write the joint probability as a product of the likelihood of the current measurement with the likelihoods of all past measurements
+Note that if we assume that the likelihood probabilities are independent, then we can write the joint probability as a product of the likelihood of the current measurement with the likelihoods of all past measurements
 %
 \begin{align}
 	\prob{\{g\}_m|h_i} &= \prob{g_m|h_i} \prob{\{g\}_{m-1}|h_i} \notag \\
@@ -299,13 +301,13 @@ then \Cref{eq:initRatio2} simplifies into
 	  \label{eq:initRatio3}
 \end{equation}
 %
-This equation provides a convient way to update the ratio of posterior probabilities after each measurement.
+This equation provides a convenient way to update the ratio of posterior probabilities after each measurement.
 
-The question now turns to how does one actually compute the likelihoods. For this step we assumed that the likelihood takes on a Gaussian noise model with standard deviation of the noise $\sigma_{\text{AWGN}}$. Thus we say the probability of the measurement $g_m$ given that hypothesis $h_i$ is true is 
+The question now turns to how does one actually compute the likelihoods. For this step we assumed that the likelihood takes on a Gaussian noise model with standard deviation of the noise $\sigma$. Thus we say the probability of the measurement $g_m$ given that hypothesis $h_i$ is true is 
 %
 \begin{equation}
-	\prob{g_m | h_i } = \frac{1}{\sqrt{2\pi\sigma_{\text{AGWN}}^2 }} 
-	\exp \left[ - \frac{ \ap{g_m - \mb{t}_m \cdot \mb{s}_i } }{2 \sigma_{\text{AGWN} }^2} \right]
+	\prob{g_m | h_i } = \frac{1}{\sqrt{2 \pi \sigma^2 }} 
+	\exp \left[ - \frac{ \ap{g_m - \mb{t}_m \cdot \mb{s}_i } }{2 \sigma^2} \right]
 	\label{eq:noiseModel1}
 \end{equation}
 %
@@ -315,7 +317,7 @@ After each measurement we compute \Cref{eq:initRatio3} for all pairs of spectra 
 
 \subsection{Extension to Spectral Imaging}
 
-In the case of spectral classification for only a single spatial location, like the \gls{afss}, the number of \gls{dmd} mirrors is equal to the number of spherical channels. 
+In the case of spectral classification for only a single spatial location, like the \gls{afss}, the number of \gls{dmd} mirrors is equal to the number of spectral channels. 
 %
 \begin{equation}
 	N_d = N_{\lambda} 
@@ -323,7 +325,7 @@ In the case of spectral classification for only a single spatial location, like 
 %
 As we saw before the dimensionality of the feature vectors produced by taking the eigenvectors of the covariance matrix is equal to the number of spectral channels. 
 
-In the \gls{afssi-c} architecture, light from spatial pixel $l$ is dispersed onto DMD pixels $l$ to $l + N_{\lambda} - 1$. While light from the next spatial pixel $l + 1$, is dispersed onto DMD pixels $l + 1$ to $ \ap{l + N_{\lambda}} $. Therefore adjacent spatial pixels have $N_{\lambda} - 1$ DMD pixels in common. Light is not dispersed between rows. This means that one can treat the design of the features between different rows seperately. However, within a particular row, this dispersion constrains our ability to indepdently design features to classify the spectral for each spatial location on the row. This is one of the major design constraints in the \gls{afssi-c}. 
+In the \gls{afssi-c} architecture, light from spatial pixel $l$ is dispersed onto DMD pixels $l$ to $l + N_{\lambda} - 1$. While light from the next spatial pixel $l + 1$, is dispersed onto DMD pixels $l + 1$ to $ \ap{l + N_{\lambda}} $. Therefore adjacent spatial pixels have $N_{\lambda} - 1$ DMD pixels in common. Light is not dispersed between rows. This means that one can treat the design of the features between different rows separately. However, within a particular row, this dispersion constrains our ability to independently design features to classify the spectral for each spatial location on the row. This is one of the major design constraints in the \gls{afssi-c}. 
 
 It turns out, one can still use pPCA by constructing a very large data matrix $\tilde{\mathbf{X}}$. The individual probabilistically weighted spectral library matrices $\mb{X}_l$ for each spatial pixel $l$ is placed inside $\tilde{\mathbf{X}}$. The adjacent spatial location will have $\mb{X}_{l+1}$ placed next to it but one row down. The first row is padded with zeros. 
 
@@ -397,7 +399,7 @@ For our experiment, the noise is approximately \gls{awgn} distributed with stand
 % Plot of the UofA Symbol
 \begin{figure}[htb]
 	\centering
-	\includegraphics[scale=0.90]{afssicUofAsource}\\
+	\includegraphics[scale=0.80]{afssicUofAsource}\\
 	\captionof{figure}[Four class spectral source used for the \gls{afssi-c} experiment]{Four class spectral source used for the AFSSI-C experiment.}
 	\label{fig:afssicUofAsource}
 \end{figure}
@@ -409,8 +411,8 @@ I will now discuss the hardware used in the \gls{afssi-c} experiment, shown in \
 % joint-pPCA figure
 \begin{figure}[htb]
 	\centering
-	\includegraphics[height=3.7in]{afssicPhoto1.JPG}\\
-	\captionof{figure}[Photograph of AFSSI-C.]{Photo of \gls{afssi-c}}
+	\includegraphics[height=3.1in]{afssicPhoto1.JPG}\\
+	\captionof{figure}[Photograph of AFSSI-C.]{Photo of \gls{afssi-c}. }
 	\label{fig:afssicPhoto1}
 \end{figure}
 
@@ -444,7 +446,7 @@ One reoccurring topic in this dissertation is calibration. In computational sens
 
 One of the major opto-mechanical issues in the \gls{afssi-c} is caused by the geometry of the \gls{dmd} with respect to the second arm. The \gls{dmd} plane is normal to the optical axis of the first arm, but it is at an angle (equal to twice the tilt of the mirrors on the diagonal) to the second arm. One can think of the \gls{dmd} plane as the object plane for the second arm of the system. Since the \gls{dmd} is tilted, this creates an Scheimpflug distortion: a tilted object plane images to tilted image plane \cite{smith1966modern}. 
 
-Because of Scheimpflug distortion, the image of the monitor physical pixels are not aligned to the rectangular grid of pixels on the \gls{fpa}, see \Cref{fig:rawDetReadoutOfUofALogo}. Even worse there is not a one-to-one relationship of \gls{fpa} pixels to object scene pixels since the magnification is not constant over the \gls{fov}.  In order to produce optimal performance we need to know the mapping of monitor to \gls{fpa} pixel locations. The goal of spatial calibration is to make a set of measurements in which we can infer a parameterized relationship from \gls{fpa} physical pixel coordinates to monitor physical pixel coordinates. 
+Because of Scheimpflug distortion, the image of the monitor physical pixels are not aligned to the rectangular grid of pixels on the \gls{fpa}, see \Cref{fig:rawDetReadoutOfUofALogo}. Even worse there is not a one-to-one relationship of \gls{fpa} pixels to object scene pixels since the magnification is not constant over the \gls{fov}.  In order to produce optimal performance we need to know the mapping of monitor to \gls{fpa} pixel locations. The goal of spatial calibration is to make a set of measurements in which we can infer a parameterized affine transform from \gls{fpa} physical pixel coordinates to monitor physical pixel coordinates. 
 
 
 \begin{figure}[htb]
@@ -471,9 +473,9 @@ First the monitor displays a grid of white dots, \Cref{fig:gridOfWhiteDotsForSpa
 	\label{fig:gridOfWhiteDotsForSpatialCalibration1}
 \end{figure}
 
-A raw camera image is captured and stored, see \Cref{fig:detReadOutOfDots}. To account for hot pixels and systematic error in the system the camera image of the all black monitor is subtracted from the camera image of the array of white dots which gives us the dark subtracted image of white dots. The dark subtracted detector image is then thresholded to prevent noisey pixels from being counted as one of the images of the white dots from the monitor. All values above the threshold is set to 1 while all values below the threshold is set to 0.
+A raw camera image is captured and stored, see \Cref{fig:detReadOutOfDots}. To account for hot pixels and systematic error in the system the camera image of the all black monitor is subtracted from the camera image of the array of white dots which gives us the dark subtracted image of white dots. The dark subtracted detector image is then thresholded to prevent noisy pixels from being counted as one of the images of the white dots from the monitor. All values above the threshold is set to 1 while all values below the threshold is set to 0.
 
-Using a built-in MATLAB \texttt{regionprops} function with the optional \texttt{centroid} argument, we can infer the center pixel, centriod, for each of the white dot images in the thresholded image. This function generates a list of pixel coordinates from the thresholded image. Each pixel coordinate is associated with the center of each white dot in the image. Often times however, we get a list of coordinates is that more or less than the number of white dots displayed onto the monitor. At this point, we may need to change the threshold value to return the same number of coordinate pairs as dots displayed on the monitor. For example if we have an 8 $\times$ 8 grid of dots we expect a list of 64 detector pixel coordinate pairs. As a sanity check, we can create an image of the where the inferred centriods are and overlay it on thresholded image of the grid of white dots. The image of the centriods should be approximately on top of the image of each white dot, see \Cref{fig:centriodsOverlayedOnTheThresholdedImage}.
+Using a built-in MATLAB \texttt{regionprops} function with the optional \texttt{centroid} argument, we can infer the center pixel, centriod, for each of the white dot images in the thresholded image. This function generates a list of pixel coordinates from the thresholded image. Each pixel coordinate is associated with the center of each white dot in the image. Often we get a list of coordinates with a length that does not match the number of white dots displayed onto the monitor. At this point, we may need to change the threshold value to return the same number of coordinate pairs as dots displayed on the monitor. For example if we have an 8 $\times$ 8 grid of dots we expect a list of 64 detector pixel coordinate pairs. As a sanity check, we can create an image of the where the inferred centriods are and overlay it on thresholded image of the grid of white dots. The image of the centriods should be approximately on top of the image of each white dot, see \Cref{fig:centriodsOverlayedOnTheThresholdedImage}.
 
 \begin{figure}[h]
 \includegraphics[scale=0.7]{detReadOutOfDots}
@@ -489,7 +491,7 @@ Using a built-in MATLAB \texttt{regionprops} function with the optional \texttt{
 \label{fig:centriodsOverlayedOnTheThresholdedImage}
 \end{figure}
 
-Each dot is added to the monitor scene one at a time to prevent accidently associating the wrong dot on the image. Doing this each time the \gls{afssi-c} is calibrated is time consuming, since we need at least as many \gls{fpa} exposures as there are dots in the object scene. In practice, we use MATLAB to look up the locations from the last spatial calibration and if we believe the instrument has not been misaligned since then, we look in a neighborhood of pixels around the last dot locations and compute the centroids of the dots, see \Cref{fig:theFinalSquareLocatesTheFinalDot}.
+Each dot is added to the monitor scene one at a time to prevent accidentally associating the wrong dot on the image. Doing this each time the \gls{afssi-c} is calibrated is time consuming, since we need at least as many \gls{fpa} exposures as there are dots in the object scene. In practice, we use MATLAB to look up the locations from the last spatial calibration and if we believe the instrument has not been misaligned since then, we look in a neighborhood of pixels around the last dot locations and compute the centroids of the dots, see \Cref{fig:theFinalSquareLocatesTheFinalDot}.
 
 
 \begin{figure}[h]
@@ -521,13 +523,13 @@ Also remember that the dispersion is only in the horizontal direction, along the
 %
 Therefore, we had 101 \gls{dmd} \gls{sp} columns. So the first 38 camera images corresponds to the 38 spectral channels in the first spatial \gls{sp} column. Then images 2 to 39 correspond to the first 38 spectral channels in the second spatial \gls{sp} column. 
 
-Another way to reduce the spectral calibration time is by realizing that we can turn on two \gls{dmd} \gls{sp} columns at a time. This is because we only have 38 spectral channels and 101 DMD \gls{sp} columns. So in our calibraiton procedure we turn on two \gls{dmd} \gls{sp} columns at a time each 50 \gls{sp} columns apart. Then for each spectrum in spectral library we only need 51 exposures. If we assume a 5 second expsoure this only takes about 20 minutes. In practice we use a much longer exposure time to increase the \gls{snr} of each \gls{fpa} exposure. The total time for a four class spectral library is approximately 4 hours.
+Another way to reduce the spectral calibration time is by realizing that we can turn on two \gls{dmd} \gls{sp} columns at a time. This is because we only have 38 spectral channels and 101 DMD \gls{sp} columns. So in our calibration procedure we turn on two \gls{dmd} \gls{sp} columns at a time each 50 \gls{sp} columns apart. Then for each spectrum in spectral library we only need 51 exposures. If we assume a 5 second exposure this only takes about 20 minutes. In practice we use a much longer exposure time to increase the \gls{snr} of each \gls{fpa} exposure. The total time for a four class spectral library is approximately 4 hours.
 
 
 \begin{figure}[h]
 	\includegraphics[scale=0.7]{fastSpectralCalibration}
 	\centering
-	\captionof{figure}[Depiction of spectral calibration]{In order to speed up the spectral calibration we turn the entire monitor ROI to the same spectrum and sweep two DMD columns at a time.}
+	\captionof{figure}[Depiction of spectral calibration]{In order to speed up the spectral calibration we turn the entire monitor ROI to the same spectrum and sweep two DMD columns at a time. }
 	\label{fig:fastSpectralCalibration}
 \end{figure}
 
@@ -535,7 +537,7 @@ Another way to reduce the spectral calibration time is by realizing that we can 
 	\begin{figure}[H]
 	\includegraphics[scale=1.0]{grabRawDetectorImagesForResponseCubes}
 	\centering
-	\captionof{figure}[Depiction of spectral calibration]{In order to speed up the spectral calibration we turn the entire monitor ROI to the same spectrum and sweet two DMD columns at a time.}
+	\captionof{figure}[Depiction of spectral calibration]{In order to speed up the spectral calibration we turn the entire monitor ROI to the same spectrum and sweep two DMD columns at a time.}
 	\label{fig:grabRawDetectorImagesForResponseCubes}
 \end{figure}
 
@@ -590,7 +592,7 @@ The agreement between simulation and experimental results allows us to compare t
 \begin{figure}[htb]
   \centering
   % Requires \usepackage{graphicx}
-  \includegraphics[scale=0.85]{afssicVsOtherSpectromers}\\
+  \includegraphics[scale=0.80]{afssicVsOtherSpectromers}\\
   \caption{Simulation comparing the classification performance for different measurements at TSNR = 0 for different systems: the \gls{afssi-c} with designed features (joint pPCA), the \gls{afssi-c} with random features, the traditional pushbroom imager, the traditional tunable filter imager, and the traditional whiskbroom imager. The input is a $64 \times 64 \times 38$ spectral datacube with a 4-class library.} \label{fig:afssicVsOtherSpectromers}
 \end{figure}
 %

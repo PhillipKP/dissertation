@@ -1,42 +1,57 @@
 \chapter{Formalism}\label{chap:Formalism}
 
-I will use this chapter to cover several important mathematical concepts which are required for the reader to understand the advantages and disadvantages of computational sensing. I will first discuss the advantages that Hadamard and S-Matrix multiplexing provide compared to the isomorphic sensor to create a context for the discussion of the Fellgett advantage. Then I will discuss \acrfull{pca}, a technique for finding useful discriminating features from seemingly complicated data. I will also cover the fundamentals of Bayesian statistics and how is can be used to update one's belief in a hypothesis given new data. Then will I cover important topics in compressive sensing: sparsity, incoherence, and the \acrfull{rip} and discuss an optimization problem that allows one to reconstruct sparse signals from compressively sampled data. 
+I will use this chapter to cover several important mathematical concepts which are required for the reader to understand the advantages and disadvantages of computational sensing. I will first discuss the advantages that Hadamard and S-Matrix multiplexing provide compared to the isomorphic sensor to create a context for the discussion of the Fellgett advantage. Then I will discuss \acrfull{pca}, a dimensionality reduction technique. I will also cover the fundamentals of Bayesian statistics and how it can be used to update one's belief in a hypothesis given new data. Then will I cover important topics in compressive sensing: sparsity, incoherence, and the \acrfull{rip} and discuss an optimization problem that allows one to reconstruct sparse signals from compressively sampled data. 
 
-To simplify the math and notation, I shall try to work with discrete representations of signals when possible. Any discrete linear process can be written as a matrix multiplication
+To simplify the math and notation, I shall try to work with discrete representations of signals when possible. Any discrete linear measurement process can be written as a matrix multiplication
 %
 \begin{equation}
-	\mb{g} = \mb{H}\mb{f} + \mb{e}	
+	\mb{g} = \mb{H} \mb{f} + \mb{e}	
 \label{eq:gHf}
 \end{equation}
 %
 where \gls{measvec} is a vector of measurement data and \gls{objvec} is a discrete representation of the object signal-of-interest and $\mb{H}$ is the matrix which describes the measurement process and \gls{noisevec} is additive noise. For brevity I will refer to \gls{objvec} as the object and $\mb{H}$ as either the sensing matrix or the measurement matrix. \Cref{eq:gHf} represents the forward model in a wide variety of computational sensors. The object \gls{objvec} is a vector in $N$ dimensional vector space and the measurement \gls{measvec} is a vector in $N_m$ dimensional vector space. In general $N_m \neq N$. 
 
-\Cref{eq:gHf} is an extremely useful way to represent optical phenomena, since it allows one to take advantage of many attractive numerical techniques which are dedicated to linear systems. For the most part, classical optics---the ray and wave nature of light---can be approximated a linear. 
-The solutions to the paraxial wave equation are linear in free space and in most glasses. Similarly, paraxial optics can be model using a sequence of matrix multiplications. While just an approximation, tracing the paraxial Chief and Marginal ray is enough to calculate the third-order Seidel aberrations. 
+\Cref{eq:gHf} is an extremely useful way to represent optical phenomena, since it allows one to take advantage of many attractive numerical techniques which are dedicated to linear systems. The ray and wave description of light can described using the mathematics of linear systems. The solutions to the paraxial wave equation are linear in free space and in most dielectrics. Similarly, paraxial optics can be model using a sequence of matrix multiplications. While just an approximation, tracing the paraxial chief and marginal ray is enough to calculate the third-order Seidel aberrations. 
 
 
 
 \section{Isomorphic Sensing}
+
 
 In an isomorphic measurement, where the goal is a one-to-one mapping of object points to measurement points, the measurement matrix is represented with the identity matrix
 \begin{equation}
 	\mb{H}=\mb{I}	
 \end{equation}
 
+
 One can get an idea of how much error exists in an isomorphic measurement by invoking the weighing example \cite{harwit2012hadamard}. Say there are $4$ objects with true unknown weights $f_{1}, f_{2}, f_{3}, f_{4}$. The measured weights are $g_{1}, g_{2}, g_{3}, g_{4}$ with additive noise  $ e_1, e_2, e_3, e_4 $. 
+%
+%
 \begin{equation}
 	\left[ \begin{matrix} g_1\\ g_2\\ g_3\\ g_4\end{matrix} \right] = \left[ \begin{matrix} 1& 0& 0& 0\\ 0& 1& 0& 0\\ 0& 0& 1& 0\\ 0& 0& 0& 1\end{matrix} \right] \left[ \begin{matrix} f_1\\ f_2\\ f_3\\ f_4\end{matrix} \right] + \left[ \begin{matrix} e_1\\ e_2\\ e_3\\ e_4\end{matrix} \right] 
 	\label{eq:gHfpluse}
 \end{equation}
-Since this is \gls{isomorphic sensing}, the estimated weights \gls{estobjvec} are the measurements  $ \mathbf{g} $
+%
+%
+Since this is \gls{isomorphic sensing}, the estimated weights \gls{estobjvec} are the measurements  $ \mb{g} $
+%
+%
 \begin{equation}
-	\mathbf{ \hat{ f }} = \mathbf{g}. 
+	\mb{ \hat{ f }} = \mb{g}. 
 \end{equation}
-Where the error between the estimated weights and the actual weights is $ \mb{\epsilon} = \mbh{f} - \mb{f} $. For simplicity, I assume a zero mean distribution for the noise. Therefore, the isomorphic measurements are unbiased.\footnote{Unbiased means that on average the estimator will produce the ground truth} For an unbiased estimator, the \gls{mse} of the estimated weights is the variance
+%
+%
+Where the error between the estimated weights and the actual weights is $ \mb{\epsilon} = \mbh{f} - \mb{f} $. For simplicity, I assume a zero mean distribution for the noise. Therefore, the isomorphic measurements are unbiased.\footnote{In statistics, the bias of an estimator is the difference between this estimator's expected value and the true value of the parameter being estimated. An estimator with zero bias is called unbiased.} For an unbiased estimator, the \gls{mse} of 
+%
+%
 \begin{equation}
-	E [  \mb{\epsilon} ^2 ] = E [ ( \mbh{f} - \mb{f} )^2 ] = \sigma^2.
+	E [  \epsilon^2 ] = E [ ( \hat{f}_m - f_m )^2 ] = \sigma^2.
 \end{equation}
+%
+%
 This puts a lower bound on the \gls{mse} for an isomorphic measurement. 
+
+
 
 \section{Multiplexing}
 
@@ -50,7 +65,7 @@ A Hadamard matrix of order $N$ is defined as a matrix \gls{hadamardn} as the $N 
 \end{equation}
 where $\mb{I}_N$ is an $N \times N$ identity matrix. 
 
-In computational spectroscopy and imaging, Hadamard codes are extremely popular. Hadamard codes are provably optimal in the case where one is allowed to take a full set of measurements, meaning that \gls{objvec} and \gls{measvec} from \Cref{eq:gHf} are both vectors in $N$ dimensional space \cite{harwit2012hadamard}. 
+In computational spectroscopy and imaging, Hadamard codes are extremely popular. \emph{Hadamard codes are provably optimal in the case where one is allowed to take a full set of measurements with additive noise}, meaning that \gls{objvec} and \gls{measvec} from \Cref{eq:gHf} are both vectors in $N$ dimensional space \cite{harwit2012hadamard}. Even in the presences of addictive noise, $\mb{e}$
 
 A Hadamard multiplexed measurement is written as
 %
@@ -69,7 +84,7 @@ which is $4$ times lower than using an isomorphic measurement scheme. In general
 	\text{MSE} = \frac{\sigma^2}{N}
 	\label{eq:hadamardmse}
 \end{equation}
-where $N$ is the dimension of the object vector $\mb{f}$, which is equal to the number of measurements \gls{nummeas}. Hotelling proved in 1944 that for a measurement matrix with elements $h_{mn} \in \{-1, +1\}$, the lowest possible MSE for the case of a full set of measurements with a linear unbiased estimator is $\text{MSE} = \frac{\sigma^2}{N}$ \cite{brady2009optical}. Therefore, one cannot possibly do better than Hadamard coding in this case. 
+where $N$ is the dimension of the object vector $\mb{f}$, which is equal to the number of measurements \gls{nummeas}. Hotelling proved in 1944 that for a measurement matrix with elements $h_{mn} \in \{-1, +1\}$, the lowest possible MSE for the case of a full set of measurements with a linear unbiased estimator is $\text{MSE} = {\sigma^2} / {N}$ \cite{brady2009optical}. Therefore, one cannot possibly do better than Hadamard coding in this case. 
 
 In many practical cases in computational sensing, making a code with simultaneous positive and negative modulation of the signal is not possible. While this may be possible using incoherent light where a phase delay maybe used to produce a negative electric field. For incoherent light, the system response is linear in intensity \cite{goodman2005introduction}. 
 
@@ -89,7 +104,7 @@ In the case when the full set of measurements are available $\ap{N_m = N}$, I ha
 
 \subsection{The Fellgett Advantage}
 
-The \gls{Fellgett advantage} is the improvement in \gls{snr} that occurs when an instrument takes multiplexed measurements compared to isomorphic measurements \cite{fellgett1958principes, davis2001fourier}. Physically the \gls{Fellgett advantage}  occurs because a single detector element produces a noise contribution whether it is sampling a single part of the signal or multiple parts of the signal. Maximizing the \acrfull{snr} of the estimated object signal-of-interest for a given system throughput and detector noise is major design consideration in computational optical sensing particularly in the area of spectroscopy. There are two notable ways to accomplish multiplexing in spectroscopy: Hadamard multiplexing in dispersive spectrometers and interferometric based multiplexing such as the \gls{fts}. 
+The \gls{Fellgett advantage} is the improvement in \gls{snr} that occurs when an instrument takes multiplexed measurements compared to isomorphic measurements \cite{fellgett1958principes, davis2001fourier}. Physically the \gls{Fellgett advantage}  occurs because a single detector element produces a noise contribution whether it is sampling a single element of the signal or the sum of multiple signal elements of the signal. Maximizing the \acrfull{snr} of the estimated object signal-of-interest for a given system throughput and detector noise is major design consideration in computational optical sensing particularly in the area of spectroscopy. There are two notable ways to accomplish multiplexing in spectroscopy: Hadamard multiplexing in dispersive spectrometers and interferometric based multiplexing such as the \gls{fts}. 
 
 The \gls{fts} architecture is a similar to the Michelson interferometer, see Figure \ref{fig:fourierTransformSpec}. The \gls{fts} operates by taking the autocorrelation of the complex electric field as a function of time delay by moving one of the mirrors in the interferometer \cite{davis2001fourier}. The Wiener-Khinchin theorem says that for a wide-sense stationary random process, the Fourier transform of the autocorrelation is the power spectral density \cite{goodman2015statistical}. Thus a computational post-processing step is required to reconstruct the spectrum from the measured autocorrelation data. Since the \gls{fts} measures combinations of multiple wavelengths at each detector readout, it also exhibits the \gls{Fellgett advantage}. It turns out that in a \gls{fts} the \gls{mse} obtained is a factor of two greater than the Hadamard multiplexing spectrometer \cite{tai1976fourier}. 
 
@@ -107,7 +122,7 @@ where $N_{\lambda}$ is the number of spectral channels.
 
 \section{Principal Component Analysis}
 
-Principal component analysis (PCA) is a technique that attempts to recast a dataset in manner that finds correlations in data that may not be evident in their native basis and creates a set of basis vectors in which the data has a low dimensionalpoints al representation. \Gls{pca} works by producing a set of vectors that point along the direction of maximum variance while being simultaneously orthogonal to each other. These are called the \emph{principal components}. The first principal component vector is parallel to the direction of maximum variance. The second principal component points in the direction that also maximizes variance but is orthogonal to the first principal component. The third principal component is orthogonal to the first and second principal components and points in the direction that maximizes the variance given those constraints. And so on. 
+Principal component analysis (PCA) is a dimensionality reduction technique that attempts to recast a dataset in manner that finds correlations in data that may not be evident in their native basis and creates a set of basis vectors in which the data has a low dimensional representation. \Gls{pca} works by producing a set of vectors that point along the direction of maximum variance while being simultaneously orthogonal to each other. These are called the \emph{principal components}. The first principal component vector is parallel to the direction of maximum variance. The second principal component points in the direction of maximum variance that is not explained by the first principal component. And so on. 
 
 Imagine one has a dataset $\mb{S}$ which consists of $N$ spectra with \gls{numspecchan} spectral channels. Instead of looking at the data as just intensity versus spectral channel, \gls{pca} attempts to construct a set of new vectors (also called features) that show as much variation in the spectra as possible. In other words, first direction (principal component) is used to recast the data to look as different (uncorrelated) as possible. This allows us to discriminate the data, as best we can with just one direction. The second principal component is the direction that provides the second most ability to discriminate the data, and so on. 
 
@@ -124,14 +139,18 @@ C_{\mb{s}mn} = \frac{1}{N} \mb{s}_m \mb{s}_n^{T}.
 %
 A large covariance means they look alike and therefore are difficult to disambiguate. Geometrically, it means that $\mb{s}_m$ and $\mb{s}_n$ tend to point in the same direction (assuming their length is approximately the same). If the entire collection of spectra $\mb{S}$ were mutually orthogonal, being able to tell one spectrum apart from another would be easy. You would just have a collection of spikes at different spectral channels. The covariance matrix in this case would be a diagonal matrix. Therefore, it is desirable to have covariance matrices that are diagonal matrices since they indicate low correlation between the datasets and improves one's ability to distinguish between the data.
 
-Since there is typically some redundancy between spectra, the off-diagonal elements of the covariance matrix will be non-zero. \Gls{pca} allows one to recast the data to make it as uncorrelated as possible in a new basis. 
+Since there is typically some redundancy between spectra, the off-diagonal elements of the covariance matrix will be non-zero. \Gls{pca} finds a basis in which the covariance matrix is diagonalized. In this basis, the data is uncorrelated.
+% 
 \begin{equation}
 	\mb{Y} = \mb{PS}
 \end{equation}
+%
 where $\mb{Y}$ is the data projected onto the principal component basis $\mb{P}$. The \emph{rows} of matrix $\mb{P}$ are the principal components.  The covariance of the projected data
+%
 \begin{equation}
 	\mb{C_{Y}} = \frac{1}{N} \mb{Y} \mb{Y}^{T} 
 \end{equation}
+%
 is a now diagonal matrix. Indeed, the principal components are the optimal way to discriminate the spectra in the dataset \cite{jolliffe2002principal}. It turns out the principal components are the \emph{eigenvectors of the covariance matrix $\mb{C}_{\mb{S}}$ are the principal components} \cite{shlens2014tutorial}. 
 
 Since the full set of principal components forms a basis, each spectra $\mb{s}$ in $\mb{S}$ can be written as a superposition of principal components without any error
@@ -141,7 +160,7 @@ Since the full set of principal components forms a basis, each spectra $\mb{s}$ 
 Where $\gamma_{n}$ is the $n^{th}$ eigenvalue associated with eigenvector $\mb{p}_{n}$. In many cases, only a few of the first principal components are needed in the summation to approximate the original data well, $M \ll N_{\lambda} $. Note that each eigenvector has an associated eigenvalue. The eigenvalues are also informative because the relative magnitude of the eigenvalue can tell us how many principal components are really needed to discriminate all of the spectra \cite{poon2009image}. The magnitude of the eigenvalue $\gamma_{n}$ tells us how well useful the associated eigenvector is at discriminating the data.
 
 
-This is another reason why \gls{pca} is so useful. It can be used as a way to perform dimensionality reduction. In other words, seemingly complicated data can be summarized by only for few principal components by exploiting the correlations between the data. This concept is analogous to lossy compression in signal processing. Simply project the data onto the first several principal components associated with the largest $M$ eigenvalues. The data now has an approximately sparse representation. 
+This is another reason why \gls{pca} is so useful. It can be used as a way to perform dimensionality reduction. In other words, seemingly complicated data can be summarized by only a few principal components by exploiting the correlations between the data. This concept is analogous to lossy compression in signal processing. Simply project the data onto the first several principal components associated with the largest $M$ eigenvalues. The data now has an approximately sparse representation. 
 
 In will show in \Cref{chap:Afssic}, that the \gls{afssi-c} relies on a variation of Principal Component Analysis (PCA) for discriminating between spectra. In addition to \gls{pca}, the AFSSI-C uses a Bayesian technique to create adaptive codes. I will now discuss some of fundamentals of Bayesian statistics. 
 
@@ -149,7 +168,7 @@ In will show in \Cref{chap:Afssic}, that the \gls{afssi-c} relies on a variation
 
 A hypothesis is nothing more than a claim or premise that one is interested in verifying. In imaging and spectroscopy, one example is that at a certain location in the field of view, the hypothesis is that a spectrum is present. Another hypothesis is that the mean value of the signal is some value. Often times one is interested in estimating parameters of stochastic processes, which we denote $\theta$. 
 
-Bayesian statistics allows one to treat the hypothesis or parameters as random variables rather than deterministic constants. At the heart of Bayesian approaches is Bayes' theorem, which is a way of computing probabilities of a hypothesis given some evidence which are related to the hypothesis. For example, Bayes' theorem can be used to decide which of two bags of candy has been opened or if a spectrum is present. The idea is that one  can make a more informed calculation of probability if one is able to update the probability given some new piece of evidence that one may have not had at the beginning.
+Bayesian statistics allows one to treat the hypothesis or parameters as random variables rather than deterministic constants. At the heart of Bayesian approaches is Bayes' theorem, which is a way of computing probabilities of a hypothesis given some evidence which are related to the hypothesis. The idea is that one  can make a more informed calculation of probability if one is able to update the probability given some new piece of evidence that one may have not had at the beginning.
 
 The derivation of Bayes' theorem follows from the definition of conditional probability. The conditional probability of event $A$ occurring given that $B$ occurred is:
 
@@ -311,7 +330,7 @@ The sparsity-incoherence definition asserts that true compressive sensing is whe
 
 At first glance, \gls{compressive sensing} seems to go against the Nyquist-Shannon sampling theorem, however the sampling theorem's guarantee of exact reconstruction of a continuous signal relies on the assumption of a bandlimited signal and uniform periodic sampling.
 
-Most continuous signals $f(x)$ can be written as a discrete summation of orthonormal basis functions
+Any continuous signal $f(x)$ can be written as a discrete summation of orthonormal basis functions
 \begin{equation}
 	f(x) = \sum_{n=1}^{N} x_n \Psi_n(x),
 	\label{eq:expansionEquation1}
@@ -350,14 +369,14 @@ One important concept in \gls{compressive sensing} is coherence. The coherence b
 \end{equation}
 which defines coherence as a measure of the largest correlation between any two columns of $\mb{H}$ and $\mb{\Psi}$. 
 
-Ideally, one would like to use as less measurements as possible without degrading the reconstructed signal. In \gls{compressive sensing}, the amount of measurements needed is a function of the sparsity and the coherence. Given a coefficient sequence $\mb{x}$ that is $K$-sparse then one needs
+Ideally, one would like to use as few measurements as possible without degrading the reconstructed signal. In \gls{compressive sensing}, the amount of measurements needed is a function of the sparsity and the coherence. Given a coefficient sequence $\mb{x}$ that is $K$-sparse then one needs
 \begin{equation}
 N_m \geq C \cdot \mu^2 ( \mb{H} , \mb{\Psi} ) \cdot K \cdot \log n
 \label{eq:minMeas1}
 \end{equation}
 for a high probability of reconstruction, where $C$ is just a constant and $N$ is the dimensionality of the original signal \cite{candes2008introduction}.
 
-\Cref{eq:minMeas1} shows the importance of sparsity and coherence in compressive sensing. Lower coherence and sparsity allows one to use less measurements \cite{duarte2008single}. The more incoherent, and therefore lower correlation, the two baseds are, the higher the probability of succesful reconstruction of compressive measurements. It turns out that random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}. 
+\Cref{eq:minMeas1} shows the importance of sparsity and coherence in compressive sensing. Lower coherence and sparsity allows one to use fewer measurements \cite{duarte2008single}. The more incoherent, and therefore lower correlation, the two bases are, the higher the probability of succesful reconstruction of compressive measurements. It turns out that random matrices have a high probability of being incoherent with any basis \cite{candes2008introduction}. 
 
 The isometery constant $\delta_K$ of a matrix \gls{A} is the smallest number such that 
 \begin{equation}
@@ -390,17 +409,17 @@ which is the $\ell_2$ norm between the given data \gls{measvec} and the forward 
 \end{equation}
 where $\mbh{x}$ is the estimated value of $\mb{x}$.\footnote{Note that it is important to realize that in practice one should never use the actual inverse of $\mb{A}^T \mb{A}$ due to the various numerical computing issues. One should resort to computing the psuedoinverse.}
 
-The derivation of the closed form of the least squares estimator is given in Appendix \ref{app:Derivation of the Least Squares Estimator}. Alternatively, if the vector $\mb{x}$ is very large, solving the inverse problem in closed form maybe too computationally intensive. In this case, one may use the gradient descent algorithm or other types of iterative optimization algorithms to solve the least squares problem. While the \gls{ls} estimator may provide a solution when $N_m \ll N$, these solutions tend to overfit the data in these situations, do not take advantage of the prior knowledge of sparsity to reduce the solution space, and $\mb{A}\mbh{x}$ is not unique. Therefore, an unconstrained \gls{ls} approach do not work well for the compressive sensing problem.
+The derivation of the closed form of the least squares estimator is given in Appendix \ref{app:Derivation of the Least Squares Estimator}. Alternatively, if the vector $\mb{x}$ is very large, solving the inverse problem in closed form maybe too computationally intensive. In this case, one may use the gradient descent algorithm or other types of iterative optimization algorithms to solve the least squares problem. While the \gls{ls} estimator may provide a solution when $N_m \ll N$, these solutions tend to overfit the data in these situations, do not take advantage of the prior knowledge of sparsity to reduce the solution space, and $\mb{A}\mbh{x}$ is not unique. Therefore, an unconstrained \gls{ls} approach does not work well for the compressive sensing problem.
 
-There is a vast number of algorithms that are designed for compressive sensing and new ones are being published constantly. A full discussion of each algorithm is not within the context of this dissertation. The fundamental concept of the ones used by the author will be briefly discussed now and implementation details will be provided in the relavent chapters. 
+There are a vast number of algorithms that are designed for compressive sensing and new ones are being published constantly. A full discussion of each algorithm is not within the context of this dissertation. The fundamental concept of the ones used by the author will be briefly discussed now and implementation details will be provided in the relevant chapters. 
 
 Many of the algorithms for compressive sensing are optimization algorithms. Optimization algorithms are problems which serve to minimize (or maximize) an objective function $F_0$
 %
 \begin{equation}
-	\mbh{x} = \argminA_{\mb{x \in \mathbb{R}^N }} \: F_0 \left( \mb{x} \right).
+	\mbh{x} = \argminA_{\mb{x \in \mathbb{R}^N }} \: F_0 \left( \mb{x} \right),
 \end{equation}
 %
-Which is called an unconstrained optimization problem. Similarly, solving the problem
+which is called an unconstrained optimization problem. Similarly, solving the problem
 %
 \begin{equation}
 	\mbh{x} = \argminA_{\mb{x \in \mathbb{R}^N }} \: F_0 \left( \mb{x} \right) \text{\; subject to \;} F_n \left( \mb{x} \right) \leq b_n \text{\; \;}\forall \text{\;} n
@@ -427,7 +446,7 @@ where $\| \mb{x} \|_1 = \sum_{n}^{N}|x_n|$, and get excellent reconstruction in 
 A more practical version of \Cref{eq:l1min} is written as
 %
 \begin{equation}
-	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_1
+	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} - \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_1
 	\label{eq:l1regls}
 \end{equation}
 %

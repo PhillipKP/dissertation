@@ -515,7 +515,7 @@ We will now derive a simple update procedure. The log of a product is the sum of
     \mathscr{L}_{ij}^{\left\{g_{m-1}\right\}}
 \end{equation}
 
-\begin{equation}\label{eq:LLRUpdate}
+\begin{equation}\label{eq:LLRUpdate2}
     \boxed{
         \mathscr{L}_{ij}^{\left\{g_m\right\}}
         =
@@ -606,7 +606,7 @@ We will discuss an example that shows how we begin the update procedure after th
 
 Similar to the likelihood ratio matrix, the log-likelihood ratio matrix is used to keep track of the ratio of the probabilities of each hypothesis.
 
-After each measurement $m$, each log-likelihood ratio is updated using equation ~\ref{eq:LLRUpdate}
+After each measurement $m$, each log-likelihood ratio is updated using equation ~\ref{eq:LLRUpdate2}
 
 Then the conditional probabilities of each hypothesis $\mbox{P}(h_l | \left\{ g \right\}_m)$ can be calculated using the following algorithm:
 

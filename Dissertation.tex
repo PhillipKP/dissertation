@@ -30,11 +30,6 @@
 \usepackage{appendix}
 \usepackage{mleftright}
 
-%% Allows for non-italic unit short hands
-\usepackage{textcomp} 
-\usepackage{palatino}
-%%
-
 
 \usepackage{rotating} % Allows us to rotate figures
 \usepackage{calc}
@@ -59,6 +54,9 @@
 
 \usepackage[numbered,framed]{matlab-prettifier}
 
+% This package allows us to correctly format units
+\usepackage{siunitx}
+
 % This package allows me to use different font for inline code
 \usepackage{courier}
 
@@ -78,18 +76,38 @@
 % of contents
 \glstoctrue
 
+
+%%
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%% Define new commands here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Shorter command for math bold font
-\newcommand{\mb}[1]{\mathbf{#1}}
+%\newcommand{\mb}[1]{\mathbf{#1}}
+\newcommand{\mb}[1]{ \displaystyle \mathbf{#1} }
+
 % Custom command to math bold font with a transpose operator
-\newcommand{\mbt}[1]{\mathbf{#1}^T}
+\newcommand{\mbt}[1]{\displaystyle \mathbf{#1}^T}
+% \newcommand{\mbt}[1]{ \bm{#1}^T}}
+
 % Custom command math bold font with an inverse sign
-\newcommand{\mbi}[1]{\mathbf{#1}^{-1}}
+\newcommand{\mbi}[1]{\displaystyle \mathbf{#1}^{-1}}
+%\newcommand{\mbi}[1]{\bm{#1}^{-1}}
+
+
+
 % Custom command math bold font with a hat sign
-\newcommand{\mbh}[1]{\hat{ \mathbf{#1} } }
-\newcommand{\smb}[1]{$ \mathbf{#1} $}
-\newcommand{\smbh}[1]{$ \hat { \mathbf{#1} } $}
+\newcommand{\mbh}[1]{\hat{ \displaystyle \mathbf{#1} } }
+%\newcommand{\mbh}[1]{\hat{\bm{#1} }}
+
+\newcommand{\smb}[1]{$ \displaystyle \mathbf{#1} $}
+%\newcommand{\smb}[1]{$ \bm{#1} $}
+
+\newcommand{\smbh}[1]{$ \hat { \displaystyle \mathbf{#1} } $}
+%\newcommand{\smbh}[1]{$ \hat { \bm{#1} } $}
+
+
 
 % Custom command to create paraenthesis that auto size anything you put in the 
 % argument of this command
