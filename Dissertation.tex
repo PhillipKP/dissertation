@@ -33,6 +33,7 @@
 
 \usepackage{rotating} % Allows us to rotate figures
 \usepackage{calc}
+
 % This package allows us to make a list of acronyms, the option nomain is used
 % because we actually don't want a glossary, the second option is used because 
 % we want to define acronyms and display a list of used acronyms, 
@@ -125,6 +126,9 @@
 % Define the arg min formatting
 \DeclareMathOperator*{\argminA}{arg\,min} 
 
+% Define the arg max formatting
+\DeclareMathOperator*{\argmaxA}{arg\,max} 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%% Load a seperate files where I define different glossary entries %%%%%%%%
@@ -200,6 +204,7 @@
 	\include{scoutSimCode}
 	\include{apLogLikelihood}
 	\include{apAfssicExperimentalResults}
+	\include{adaptiveUnmixAlgo}
 \end{appendices}
 
 
