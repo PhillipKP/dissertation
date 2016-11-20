@@ -457,7 +457,7 @@ In statistics, $\ell_1$ regularized \gls{ls} is often referred to as the \gls{la
 A related regression technique which is also used to regularize statistical models to prevent overfitting called is \gls{ridge regression},
 %
 \begin{equation}
-	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} = \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_2.
+	\mbh{x} = \argminA_{\mb{x}} \: \| \mb{Ax} - \mb{g} \|_{2}^{2} + \tau \| \mb{x} \|_2.
 	\label{eq:l2regls}
 \end{equation}
 %
