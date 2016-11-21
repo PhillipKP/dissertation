@@ -84,7 +84,7 @@ so the forward model can be written as
 In this equation, the 2-dimensional difference frame and object scene have a resolution of $ R_x \times R_y$ elements, and are lexicographically reordered into a $N \times 1$ column vector, $\Delta \mb{f}$ and $\mb{f}$. Similarly, the difference measurement and measurement $\Delta \mb{g}$ and $\mb{g}$ are $N_m \times 1$ vectors representing a 2-dimensional \gls{fpa} readout with a $ r_x \times r_y$ matrix which represents the low resolution measurement. The detector noise is represented by the $ N_m \times 1 $ vector $\mb{e}$. The system matrix $\mb{H}$ is thus an $N_m \times N $ matrix, where $N_m \ll N$ in order to the system to be considered compressive. The $n^{th}$ column of the matrix is the \gls{psf} of the $n^{th}$ location in the object scene. The resulting system matrix $\mb{H}$ demonstrates that the \gls{scout} is a spatially variant optical system and presents a block structure, as seen in the example shown in \Cref{fig:scoutSysResponse}.
 
 \begin{sidewaysfigure}
-	\includegraphics[scale=0.65]{scoutSysResponse}
+	\includegraphics[scale=0.47]{scoutSysResponse.png}
 	\captionof{figure}[An example of the system matrix of the \gls{scout}.]{An example of an experimentally measured of the system matrix of the \gls{scout} system. The approximate block-Toeplitz structure is clearly evident, as is the deviation from the Bernoulli or Gaussian ensembles typically considered in CS treatments. }
 	\label{fig:scoutSysResponse}
 \end{sidewaysfigure}
