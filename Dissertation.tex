@@ -11,11 +11,11 @@
 %
 % Alternatively you can just run the custom script by typing sh compileAll.sh
 
-\documentclass[dissertation,CC-BY-ND]{uathesis}
+\documentclass[dissertation,CC]{uathesis}
 
 \usepackage[a4paper,width=150mm,top=25mm,bottom=25mm]{geometry}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
+%\usepackage[T1]{fontenc}
+%\usepackage[utf8]{inputenc}
 \usepackage{authblk}
 \usepackage{graphicx}
 \usepackage[cmex10]{amsmath}
@@ -30,6 +30,22 @@
 \usepackage{appendix}
 \usepackage{mleftright}
 
+% Formats chapter and section titles
+\usepackage{titlesec}
+
+% Adds the bibliography to the table of contents
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+%\titleformat{\chapter}[display]
+%  {\normalfont\normalfont\huge\bfseries\color{black}}
+%  {\chaptertitlename\ \thechapter}{20pt}{\huge}
+
+\titleformat*{\section}{\Large\bfseries}
+\titleformat*{\subsection}{\large\bfseries}
+\titleformat*{\subsubsection}{\normalsize\bfseries}
+
+
+
 
 \usepackage{rotating} % Allows us to rotate figures
 \usepackage{calc}
@@ -42,17 +58,15 @@
 \usepackage[font=small,labelfont=bf, justification=justified,format=plain]{caption} % 'format=plain' avoids hanging indentation
 
 % This is for fancy headers
-
 \usepackage[english]{babel}
+
 %\DeclareUnicodeCharacter{\u8}{ }
 
-% Use these packages for algorithms
-
+% Use these packages for formatting algorithms
 \usepackage{algorithm}
 \usepackage{algpascal}
 
 % For pasting in matlab code
-
 \usepackage[numbered,framed]{matlab-prettifier}
 
 % This package allows us to correctly format units
@@ -60,6 +74,8 @@
 
 % This package allows me to use different font for inline code
 \usepackage{courier}
+
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -73,14 +89,8 @@
 % This is rquires to make a glossary, a list of acronyms, or a list of 
 \makeglossaries
 
-% Adds any glossaries, list of acronyms, list of symbols we want to the table 
-% of contents
+% Adds any glossaries, list of acronyms, list of symbols we want to the table of contents
 \glstoctrue
-
-
-%%
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%% Define new commands here %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -110,8 +120,7 @@
 
 
 
-% Custom command to create paraenthesis that auto size anything you put in the 
-% argument of this command
+% Custom command to create paraenthesis that auto size anything you put in the argument of this command
 \newcommand\ap[1]{\mleft( #1 \mright) }
 
 \newcommand\given[1][]{\:#1\vert\:}
@@ -122,7 +131,6 @@
 % Custom command to make a probabilities
 \newcommand{\prob}[1]{ P\mleft( #1 \mright) }
 
-
 % Define the arg min formatting
 \DeclareMathOperator*{\argminA}{arg\,min} 
 
@@ -131,8 +139,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%% Load a seperate files where I define different glossary entries %%%%%%%%
-
+% Load a seperate files where I define different glossary entries %%%%%%%%
 \loadglsentries{glossaryentries}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,13 +162,14 @@
 	
 \maketitlepage
 {COLLEGE OF OPTICAL SCIENCES} % Title of the department
-{2016}	
+{2017}	
 
 \approval
 {9 December 2016}		% Defense Date	
 {Amit Ashok}  		% 1st committee member
-{Rongguang Liang}		% 2nd committee membe
-{Michael E. Gehm}
+{Michael E. Gehm}	% 2nd committee member
+{Rongguang Liang}	% 3rd committee member
+
 
 \statementbyauthor
 % If this is a Thesis, use the following form, with your thesis director's

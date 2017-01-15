@@ -55,9 +55,9 @@
 }
 
 \newboolean{Copyright}
-\setboolean{Copyright}{false}
+\setboolean{Copyright}{true}
 \DeclareOption{copyright}{%
-	\setboolean{Copyright}{false}
+	\setboolean{Copyright}{true}
 }
 
 % This next bit could probably be made more elegant
@@ -625,7 +625,17 @@ under my direction and recommend that it be accepted as fulfilling the
 \cline{1-1}
 Dissertation Director: #2	&			\\
 \end{tabular*}
+
+\begin{tabular*}{\textwidth}{p{4in}@{\extracolsep{\fill}}l}
+              & Date: #1  \\
+\cline{1-1}
+Dissertation Director: #3 &     \\
+\end{tabular*}
+
+
 \end{flushleft}
+
+
 }
 
 }
@@ -661,18 +671,10 @@ of source is made. Requests for permission for extended quotation from or reprod
 
 \vspace{1in}
 
-\begin{flushleft}
-\begin{tabular*}{\textwidth}{p{2.5in}@{\extracolsep{\fill}}rp{2.5in}}
-\ifthenelse{ \equal{\ThesisType}{Thesis} }
-{
-							& SIGNED:	& 	\\
-\cline{3-3}
-							&			& \hfill \FullName	\\
-} {
-							& SIGNED:	& \FullName	\\
-}
-\end{tabular*}
-\end{flushleft}
+
+\centerline{SIGNED: \FullName}
+
+
 
 % If this is a Thesis, we need a permission and date statement.
 \ifthenelse{ \equal{\ThesisType}{Thesis} }
@@ -730,6 +732,11 @@ Date
 \renewcommand{\baselinestretch}{1}	% single spaced here
 \small\normalsize					% size switch to make the spacing behave
 
+% This is formats the acknowledgements title and requires the titlesec package in the preamble
+\titleformat{\chapter}[display]
+  {\normalfont\normalfont\huge\bfseries\color{black}}
+  {\chaptertitlename\ \thechapter}{20pt}{\huge}
+
 \chapter*{ACKNOWLEDGEMENTS}
 
 \InputIfFileExists{#1}
@@ -749,6 +756,11 @@ Date
 %%
 
 \newcommand{\incdedication}[1]{
+
+% This is formats the dedication title and requires the titlesec package in the preamble
+\titleformat{\chapter}[display]
+  {\normalfont\normalfont\huge\bfseries\color{black}\centering}
+  {\chaptertitlename\ \thechapter}{20pt}{\huge}
 
 \chapter*{DEDICATION}
 
@@ -842,6 +854,13 @@ The University of Arizona, #4
 	\@restonecolfalse			%  /
 \fi								% /
 
+
+% This is formats the contents title and requires the titlesec package in the preamble
+\titleformat{\chapter}[display]
+  {\normalfont\normalfont\huge\bfseries\color{black}}
+  {\chaptertitlename\ \thechapter}{20pt}{\huge}
+
+
 % vspace added to account for the TOC, LOF, & LOT running header business.
 \chapter*{\vspace*{-0.5in}\contentsname}
 
@@ -876,6 +895,13 @@ The University of Arizona, #4
     \else
       \@restonecolfalse
     \fi
+
+% This is formats the list of figures title and requires the titlesec package in the preamble
+\titleformat{\chapter}[display]
+  {\normalfont\normalfont\huge\bfseries\color{black}}
+  {\chaptertitlename\ \thechapter}{20pt}{\huge}
+
+
 	% vspace added to account for the TOC, LOF, & LOT running header business.
     \chapter*{\vspace*{-0.5in}\listfigurename}%
 
