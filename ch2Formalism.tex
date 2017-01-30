@@ -210,9 +210,9 @@ One interpretation of Bayes' theorem is called the Diachronic interpretation, wh
 	\label{eq:diachronic}
 \end{equation}
 
-The term $ P \left( \theta \given[\big] g \right) $ is called the \gls{posterior}. It represents the belief in the hypothesis given the data. The term $ P \left( \theta \right) $ is called the \gls{prior}. $P \left( g \given[\big] \theta \right)$ is called the \gls{likelihood}. $P \left( \theta \right)$ is called the normalizing constant, which computed to ensure that the posterior probabilities sum to $1$.  The normalizing constant can be written as 
+The term $ P \left( \theta \given[\big] g \right) $ is called the \gls{posterior}. It represents the belief in the hypothesis given the data. The term $ P \left( \theta \right) $ is called the \gls{prior}. $P \left( g \given[\big] \theta \right)$ is called the \gls{likelihood}. $P \left( g \right)$ is called the normalizing constant, which computed to ensure that the posterior probabilities sum to $1$.  The normalizing constant can be written as 
 \begin{equation}
-P \left( \theta \right) = \sum_{i} P \left( \theta_i \right) P \left( g_i \given[\big] \theta_i \right)
+P \left( g \right) = \sum_{i} P \left( \theta_i \right) P \left( g_i \given[\big] \theta_i \right)
 \label{eq:normalizingConstant}
 \end{equation}
 One can repeatedly apply Bayes' theorem given new measurement data. 
@@ -274,12 +274,12 @@ Intuitively, drawing a cherry flavored candy has reduced our belief that bag 1 w
 Imagine a situation similar to the candy example, where given a set of hypotheses, $ \{ {h}_1, {h}_2, \cdots, h_{N_R} \}$, one is interested in finding which hypothesis is the most likely, after new measurement $g_m$ is made. The method of \acrfull{map} says the hypothesis $ {h}_k $ which maximizes the posterior probability is the most likely one. 
 
 \begin{equation}
-	\mbh{h}_{map} = \argminA_{k} \: p\left( {h}_k \given[\big] g \right) 
+	\mbh{h}_{map} = \argmaxA_{k} \: p\left( {h}_k \given[\big] g \right) 
 	\label{eq:map}
 \end{equation} 
 Using Bayes' theorem I can rewrite Equation \ref{eq:map} as 
 \begin{equation}
-	\mbh{h}_{map} = \argminA_{k} \: \frac{ p\left( g  \given[\big] {h}_k \right) p\left( {h}_k \right) } { p\left(  g \right) }
+	\mbh{h}_{map} = \argmaxA_{k} \: \frac{ p\left( g  \given[\big] {h}_k \right) p\left( {h}_k \right) } { p\left(  g \right) }
 \end{equation} 
 Maximizing the posterior is now equal to maximizing the likelihood and prior. In certain cases, one needs to decide between two sets of parameters or hypotheses. One can do an analogous technique of comparing the posteriors by using a ratio
 %
